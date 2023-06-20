@@ -348,6 +348,18 @@ return [
                 ],
             ],
         ],
+        [
+            'text'    => 'Consultas',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+            ],
+        ],
+        [
+            'text'    => 'Reportes',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+            ],
+        ],
     ],
 
     /*
