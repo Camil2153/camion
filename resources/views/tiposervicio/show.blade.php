@@ -20,19 +20,19 @@
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Nom Tip Ser:</strong>
+                            <strong>Nombre:</strong>
                             {{ $tiposervicio->nom_tip_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Des Tip Ser:</strong>
+                            <strong>Descriçión:</strong>
                             {{ $tiposervicio->des_tip_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Int Tie Tip Ser:</strong>
+                            <strong>Intervalo de Tiempo:</strong>
                             {{ $tiposervicio->int_tie_tip_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Int Kil Tip Ser:</strong>
+                            <strong>Intervalo de Kilometraje:</strong>
                             {{ $tiposervicio->int_kil_tip_ser }}
                         </div>
 

@@ -20,27 +20,27 @@
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Num Ser Com:</strong>
+                            <strong>Número de Serie:</strong>
                             {{ $componente->num_ser_com }}
                         </div>
                         <div class="form-group">
-                            <strong>Nom Com:</strong>
+                            <strong>Nombre:</strong>
                             {{ $componente->nom_com }}
                         </div>
                         <div class="form-group">
-                            <strong>Mar Com:</strong>
+                            <strong>Marca:</strong>
                             {{ $componente->mar_com }}
                         </div>
                         <div class="form-group">
-                            <strong>Des Com:</strong>
+                            <strong>Descripción:</strong>
                             {{ $componente->des_com }}
                         </div>
                         <div class="form-group">
-                            <strong>Sis Com:</strong>
+                            <strong>Sistema:</strong>
                             {{ $componente->sis_com }}
                         </div>
                         <div class="form-group">
-                            <strong>Cos Com:</strong>
+                            <strong>Costo:</strong>
                             {{ $componente->cos_com }}
                         </div>
 

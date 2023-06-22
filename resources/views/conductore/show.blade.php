@@ -20,23 +20,23 @@
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Ced Con:</strong>
+                            <strong>Cédula:</strong>
                             {{ $conductore->ced_con }}
                         </div>
                         <div class="form-group">
-                            <strong>Nom Con:</strong>
+                            <strong>Nombre:</strong>
                             {{ $conductore->nom_con }}
                         </div>
                         <div class="form-group">
-                            <strong>Num Lic Con:</strong>
-                            {{ $conductore->num_lic_con }}
+                            <strong>Dirección:</strong>
+                            {{ $conductore->dir_con }}
                         </div>
                         <div class="form-group">
-                            <strong>Num Tel Con:</strong>
+                            <strong>No. Teléfono:</strong>
                             {{ $conductore->num_tel_con }}
                         </div>
                         <div class="form-group">
-                            <strong>Cor Ele Con:</strong>
+                            <strong>Correo electrónico:</strong>
                             {{ $conductore->cor_ele_con }}
                         </div>
 

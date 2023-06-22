@@ -13,17 +13,17 @@
         </div>
   
         <div class="form-group">
-            {{ Form::label('direccion') }}
+            {{ Form::label('Direccion') }}
             {{ Form::text('dir_con', $conductore->dir_con, ['class' => 'form-control' . ($errors->has('dir_con') ? ' is-invalid' : '')]) }}
             {!! $errors->first('dir_con', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('No. Telefono') }}
+            {{ Form::label('No. Teléfono') }}
             {{ Form::text('num_tel_con', $conductore->num_tel_con, ['class' => 'form-control' . ($errors->has('num_tel_con') ? ' is-invalid' : '')]) }}
             {!! $errors->first('num_tel_con', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Correo electronico') }}
+            {{ Form::label('Correo electrónico') }}
             {{ Form::text('cor_ele_con', $conductore->cor_ele_con, ['class' => 'form-control' . ($errors->has('cor_ele_con') ? ' is-invalid' : '')]) }}
             {!! $errors->first('cor_ele_con', '<div class="invalid-feedback">:message</div>') !!}
         </div>

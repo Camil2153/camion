@@ -34,6 +34,6 @@
 
         <div class="box-footer mt20">
         <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>
-        <a href="  {{ route('conductores.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
+        <a href="  {{ route('componentes.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
     </div>
 </div>

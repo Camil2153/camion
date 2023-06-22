@@ -20,19 +20,19 @@
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Fec Gas:</strong>
+                            <strong>Fecha:</strong>
                             {{ $gasto->fec_gas }}
                         </div>
                         <div class="form-group">
-                            <strong>Mon Gas:</strong>
+                            <strong>Monto:</strong>
                             {{ $gasto->mon_gas }}
                         </div>
                         <div class="form-group">
-                            <strong>Des Gas:</strong>
+                            <strong>Descripción:</strong>
                             {{ $gasto->des_gas }}
                         </div>
                         <div class="form-group">
-                            <strong>Categoriagastos Id:</strong>
+                            <strong>Categoria:</strong>
                             {{ $gasto->categoriagasto->nom_cat_gas }}
                         </div>
 

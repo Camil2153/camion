@@ -344,7 +344,17 @@ return [
                 [
                     'text' => 'Gastos',
                     'url'  => 'gastos',
-                    'icon' => 'fas fa-fw fa-file',
+                    'icon' => 'fa fa-credit-card',
+                ],
+                [
+                    'text' => 'Ciudades',
+                    'url'  => 'ciudades',
+                    'icon' => 'fa fa-map-signs',
+                ],
+                [
+                    'text' => 'Rutas',
+                    'url'  => 'rutas',
+                    'icon' => 'fa fa-road',
                 ],
             ],
         ],

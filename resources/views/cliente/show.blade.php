@@ -20,27 +20,27 @@
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Nom Cli:</strong>
+                            <strong>Nombre:</strong>
                             {{ $cliente->nom_cli }}
                         </div>
                         <div class="form-group">
-                            <strong>Nom Com Cli:</strong>
+                            <strong>Nombre Comercial:</strong>
                             {{ $cliente->nom_com_cli }}
                         </div>
                         <div class="form-group">
-                            <strong>Dir Cli:</strong>
+                            <strong>Dirección:</strong>
                             {{ $cliente->dir_cli }}
                         </div>
                         <div class="form-group">
-                            <strong>Col Cli:</strong>
+                            <strong>Colonia:</strong>
                             {{ $cliente->col_cli }}
                         </div>
                         <div class="form-group">
-                            <strong>Rfc Cli:</strong>
+                            <strong>RFC:</strong>
                             {{ $cliente->rfc_cli }}
                         </div>
                         <div class="form-group">
-                            <strong>Ciu Cli:</strong>
+                            <strong>Ciudad:</strong>
                             {{ $cliente->ciu_cli }}
                         </div>
 
