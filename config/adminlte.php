@@ -356,6 +356,16 @@ return [
                     'url'  => 'rutas',
                     'icon' => 'fa fa-road',
                 ],
+                [
+                    'text' => 'Paises',
+                    'url'  => 'paises',
+                    'icon' => 'fa fa-globe',
+                ],
+                [
+                    'text' => 'Empresas',
+                    'url'  => 'empresas',
+                    'icon' => 'fa fa-building',
+                ],
             ],
         ],
         [

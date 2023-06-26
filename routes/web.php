@@ -18,7 +18,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::resource('users', App\Http\Controllers\UserController::class)->only(['index', 'edit', 'update']);
+Route::resource('empresas', App\Http\Controllers\EmpresaController::class);
+Route::resource('paises', App\Http\Controllers\PaiseController::class);
+Route::resource('users', App\Http\Controllers\UserController::class);
 Route::resource('rutas', App\Http\Controllers\RutaController::class);
 Route::resource('ciudades', App\Http\Controllers\CiudadeController::class);
 Route::resource('gastos', App\Http\Controllers\GastoController::class);
