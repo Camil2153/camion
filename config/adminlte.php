@@ -340,6 +340,11 @@ return [
                     'text' => 'Sistemas',
                     'url'  => 'sistemas',
                     'icon' => 'fa fa-assistive-listening-systems',
+                ],                
+                [
+                    'text' => 'Clientes',
+                    'url'  => 'clientes',
+                    'icon' => 'fas fa-fw fa-user',
                 ],
                 [
                     'text' => 'Conductores',
@@ -350,11 +355,6 @@ return [
                     'text' => 'Componentes',
                     'url'  => 'componentes',
                     'icon' => 'fas fa-fw fa-cog',
-                ],
-                [
-                    'text' => 'Clientes',
-                    'url'  => 'clientes',
-                    'icon' => 'fas fa-fw fa-user',
                 ],
                 [
                     'text' => 'Tipos de servicios',
