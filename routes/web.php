@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::resource('sistemas', App\Http\Controllers\SistemaController::class);
 Route::resource('empresas', App\Http\Controllers\EmpresaController::class);
 Route::resource('paises', App\Http\Controllers\PaiseController::class);
 Route::resource('users', App\Http\Controllers\UserController::class);

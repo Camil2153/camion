@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('componentes', function (Blueprint $table) {
-            $table->string('num_ser_com')->primary();
-            $table->string('nom_com');
-            $table->string('mar_com');
-            $table->string('des_com');
-            $table->string('sis_com');
-            $table->string('cos_com');
+        Schema::create('sistemas', function (Blueprint $table) {
+            $table->string('cod_sis', 2)->primary();
+            $table->string('nom_sis', 15);
             $table->timestamps();
-        });
+        }); 
+        //
     }
 
     /**

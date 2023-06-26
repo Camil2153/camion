@@ -366,6 +366,11 @@ return [
                     'url'  => 'empresas',
                     'icon' => 'fa fa-building',
                 ],
+                [
+                    'text' => 'Sistemas',
+                    'url'  => 'sistemas',
+                    'icon' => 'fa fa-assistive-listening-systems',
+                ],
             ],
         ],
         [
