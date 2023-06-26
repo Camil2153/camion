@@ -324,7 +324,7 @@ return [
                 [
                     'text' => 'Componentes',
                     'url'  => 'componentes',
-                    'icon' => 'fas fa-fw fa-cog'
+                    'icon' => 'fas fa-fw fa-cog',
                 ],
                 [
                     'text' => 'Clientes',
@@ -342,9 +342,9 @@ return [
                     'icon' => 'fas fa-fw fa-server',
                 ],
                 [
-                    'text' => 'Gastos',
-                    'url'  => 'gastos',
-                    'icon' => 'fa fa-credit-card',
+                    'text' => 'Usuarios',
+                    'url'  => 'users',
+                    'icon' => 'fa fa-users',
                 ],
                 [
                     'text' => 'Ciudades',
