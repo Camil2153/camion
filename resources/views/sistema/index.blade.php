@@ -20,8 +20,8 @@
                 
                 <th>Código</th>
                 <th>Nombre</th>
-
-                <th></th>
+                <th>Acciones</th>
+                
             </tr>
         </thead>
         <tbody>

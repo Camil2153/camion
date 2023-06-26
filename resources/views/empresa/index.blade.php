@@ -22,8 +22,8 @@
                 <th>Nombre</th>
                 <th>Dirección</th>
                 <th>Pais</th>
+                <th>Acciones</th>
 
-                <th></th>
             </tr>
         </thead>
         <tbody>

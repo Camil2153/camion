@@ -3,53 +3,49 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Lista de rutas</h1>
+    <h1>Lista de componentes</h1>
 
     <div class="float-right">
-                                <a href="{{ route('rutas.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
-                                  {{ __('Nuevo') }}
+                                <a href="{{ route('componentes.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
+                                {{ __('Nuevo') }}
                                 </a>
-                              </div>
+                            </div>
 @stop
 
 @section('content')
     <table id="example" class="table table-striped table-bordered" style="width:100%">
-        <thead>
+        <thead class="thead">
             <tr>
                 <th>No</th>
                 
-                <th>Código</th>
+                <th>Número de serie</th>
                 <th>Nombre</th>
-                <th>Origen</th>
-                <th>Destino</th>
-                <th>Distancia</th>
-                <th>Duración</th>
-                <th>Restricciones</th>
-                <th>Complejidad</th>
-                <th>Estado</th>
+                <th>Marca</th>
+                <th>Descripción</th>
+                <th>Costo</th>
+                <th>Sistema</th>
+                <th>Empresa</th>
+                <th>Acciones</th>
 
-                <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($rutas as $ruta)
+            @foreach ($componentes as $componente)
                 <tr>
                     <td>{{ ++$i }}</td>
                     
-                    <td>{{ $ruta->cod_rut }}</td>
-                    <td>{{ $ruta->nom_rut }}</td>
-                    <td>{{ $ruta->origenCiudad->nom_ciu }}</td>
-                    <td>{{ $ruta->destinoCiudad->nom_ciu }}</td>
-                    <td>{{ $ruta->dis_rut }}</td>
-                    <td>{{ $ruta->dur_rut }}</td>
-                    <td>{{ $ruta->res_rut }}</td>
-                    <td>{{ $ruta->com_rut }}</td>
-                    <td>{{ $ruta->est_rut }}</td>
+                    <td>{{ $componente->num_ser_com }}</td>
+                    <td>{{ $componente->nom_com }}</td>
+                    <td>{{ $componente->mar_com }}</td>
+                    <td>{{ $componente->desc_com }}</td>
+                    <td>{{ $componente->cos_com }}</td>
+                    <td>{{ $componente->sistema->nom_sis }}</td>
+                    <td>{{ $componente->empresa->nom_emp }}</td>
 
                     <td>
-                        <form action="{{ route('rutas.destroy',$ruta->cod_rut) }}" method="POST">
-                            <a class="btn btn-sm btn-secundary" href="{{ route('rutas.show',$ruta->cod_rut) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>
-                            <a class="btn btn-sm btn-secundary" href="{{ route('rutas.edit',$ruta->cod_rut) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
+                        <form action="{{ route('componentes.destroy',$componente->num_ser_com) }}" method="POST">
+                            <a class="btn btn-sm btn-secundary" href="{{ route('componentes.show',$componente->num_ser_com) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>
+                            <a class="btn btn-sm btn-secundary" href="{{ route('componentes.edit',$componente->num_ser_com) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-secundary btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('') }}</button>
@@ -59,7 +55,6 @@
             @endforeach
         </tbody>
     </table>
-
 @stop
 
 @section('css')

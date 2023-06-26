@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Ver Ruta</h1>
+    <h1>Ver Componente</h1>
 @stop
 
 @section('content')
@@ -13,47 +13,39 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-right">
-                            <a class="btn btn-secundary border border-secondary btn-sm" href="{{ route('rutas.index') }}"> {{ __('Volver') }}</a>
+                            <a class="btn btn-secundary border border-secondary btn-sm" href="{{ route('componentes.index') }}"> {{ __('Volver') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Código:</strong>
-                            {{ $ruta->cod_rut }}
+                            <strong>Número de serie:</strong>
+                            {{ $componente->num_ser_com }}
                         </div>
                         <div class="form-group">
                             <strong>Nombre:</strong>
-                            {{ $ruta->nom_rut }}
+                            {{ $componente->nom_com }}
                         </div>
                         <div class="form-group">
-                            <strong>Origen:</strong>
-                            {{ $ruta->origenCiudad->nom_ciu }}
+                            <strong>Marca:</strong>
+                            {{ $componente->mar_com }}
                         </div>
                         <div class="form-group">
-                            <strong>Destino:</strong>
-                            {{ $ruta->destinoCiudad->nom_ciu }}
+                            <strong>Descripción:</strong>
+                            {{ $componente->desc_com }}
                         </div>
                         <div class="form-group">
-                            <strong>Distancia:</strong>
-                            {{ $ruta->dis_rut }}
+                            <strong>Costo:</strong>
+                            {{ $componente->cos_com }}
                         </div>
                         <div class="form-group">
-                            <strong>Duración:</strong>
-                            {{ $ruta->dur_rut }}
+                            <strong>Sistema:</strong>
+                            {{ $componente->sistema->nom_sis }}
                         </div>
                         <div class="form-group">
-                            <strong>Restricciones:</strong>
-                            {{ $ruta->res_rut }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Complejidad:</strong>
-                            {{ $ruta->com_rut }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Estado:</strong>
-                            {{ $ruta->est_rut }}
+                            <strong>Empresa:</strong>
+                            {{ $componente->empresa->nom_emp }}
                         </div>
 
                     </div>

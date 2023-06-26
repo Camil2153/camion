@@ -25,8 +25,8 @@
                 <th>Número de teléfono</th>
                 <th>Correo electrónico</th>
                 <th>Empresa</th>
+                <th>Acciones</th>
 
-                <th></th>
             </tr>
         </thead>
         <tbody>
