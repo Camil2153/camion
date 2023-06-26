@@ -27,7 +27,6 @@ return new class extends Migration
             $table->foreign('emp_com')->references('nit_emp')->on('empresas');
             $table->timestamps();
         });
-        //
     }
 
     /**

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('nom_sis', 15);
             $table->timestamps();
         }); 
-        //
     }
 
     /**

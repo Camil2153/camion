@@ -317,6 +317,31 @@ return [
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
+                    'text' => 'Usuarios',
+                    'url'  => 'users',
+                    'icon' => 'fa fa-users',
+                ],
+                [
+                    'text' => 'Paises',
+                    'url'  => 'paises',
+                    'icon' => 'fa fa-globe',
+                ],
+                [
+                    'text' => 'Ciudades',
+                    'url'  => 'ciudades',
+                    'icon' => 'fa fa-map-signs',
+                ],
+                [
+                    'text' => 'Empresas',
+                    'url'  => 'empresas',
+                    'icon' => 'fa fa-building',
+                ],
+                [
+                    'text' => 'Sistemas',
+                    'url'  => 'sistemas',
+                    'icon' => 'fa fa-assistive-listening-systems',
+                ],
+                [
                     'text' => 'Conductores',
                     'url'  => 'conductores',
                     'icon' => 'fa fa-id-card',
@@ -342,35 +367,10 @@ return [
                     'icon' => 'fas fa-fw fa-server',
                 ],
                 [
-                    'text' => 'Usuarios',
-                    'url'  => 'users',
-                    'icon' => 'fa fa-users',
-                ],
-                [
-                    'text' => 'Ciudades',
-                    'url'  => 'ciudades',
-                    'icon' => 'fa fa-map-signs',
-                ],
-                [
                     'text' => 'Rutas',
                     'url'  => 'rutas',
                     'icon' => 'fa fa-road',
-                ],
-                [
-                    'text' => 'Paises',
-                    'url'  => 'paises',
-                    'icon' => 'fa fa-globe',
-                ],
-                [
-                    'text' => 'Empresas',
-                    'url'  => 'empresas',
-                    'icon' => 'fa fa-building',
-                ],
-                [
-                    'text' => 'Sistemas',
-                    'url'  => 'sistemas',
-                    'icon' => 'fa fa-assistive-listening-systems',
-                ],
+                ],  
             ],
         ],
         [
