@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Conductore;
 use Illuminate\Http\Request;
+use App\Models\Empresa;
 
 class ConductoreController extends Controller
 {
@@ -28,7 +29,8 @@ class ConductoreController extends Controller
     public function create()
     {
         $conductore = new Conductore();
-        return view('conductore.create', compact('conductore'));
+        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
+        return view('conductore.create', compact('conductore', 'empresas'));
     }
 
     /**
@@ -50,12 +52,12 @@ class ConductoreController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string $ced_con
+     * @param  string $dni_con
      * @return \Illuminate\Http\Response
      */
-    public function show($ced_con)
+    public function show($dni_con)
     {
-        $conductore = Conductore::where('ced_con', $ced_con)->first();
+        $conductore = Conductore::where('dni_con', $dni_con)->first();
 
         if ($conductore) {
             return view('conductore.show', compact('conductore'));
@@ -68,15 +70,16 @@ class ConductoreController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  string $ced_con
+     * @param  string $dni_con
      * @return \Illuminate\Http\Response
      */
-    public function edit($ced_con)
+    public function edit($dni_con)
     {
-        $conductore = Conductore::where('ced_con', $ced_con)->first();
+        $conductore = Conductore::where('dni_con', $dni_con)->first();
+        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
 
         if ($conductore) {
-            return view('conductore.edit', compact('conductore'));
+            return view('conductore.edit', compact('conductore', 'empresas'));
         }
 
         return redirect()->route('conductores.index')
@@ -87,14 +90,14 @@ class ConductoreController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  string $ced_con
+     * @param  string $dni_con
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $ced_con)
+    public function update(Request $request, $dni_con)
     {
         request()->validate(Conductore::$rules);
 
-        $conductore = Conductore::where('ced_con', $ced_con)->first();
+        $conductore = Conductore::where('dni_con', $dni_con)->first();
 
         if ($conductore) {
             $conductore->update($request->all());
@@ -109,12 +112,12 @@ class ConductoreController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string $ced_con
+     * @param  string $dni_con
      * @return \Illuminate\Http\Response
      */
-    public function destroy($ced_con)
+    public function destroy($dni_con)
     {
-        $conductore = Conductore::where('ced_con', $ced_con)->first();
+        $conductore = Conductore::where('dni_con', $dni_con)->first();
 
         if ($conductore) {
             $conductore->delete();

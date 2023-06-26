@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Ver Conductor</h1>
+    <h1>Ver conductor</h1>
 @stop
 
 @section('content')
@@ -20,24 +20,32 @@
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Cédula:</strong>
-                            {{ $conductore->ced_con }}
+                            <strong>DNI:</strong>
+                            {{ $conductore->dni_con }}
                         </div>
                         <div class="form-group">
                             <strong>Nombre:</strong>
                             {{ $conductore->nom_con }}
                         </div>
                         <div class="form-group">
-                            <strong>Dirección:</strong>
+                            <strong>Fecha de nacimiento:</strong>
+                            {{ $conductore->fec_nac_con }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Dirrección:</strong>
                             {{ $conductore->dir_con }}
                         </div>
                         <div class="form-group">
-                            <strong>No. Teléfono:</strong>
+                            <strong>Número de teléfono:</strong>
                             {{ $conductore->num_tel_con }}
                         </div>
                         <div class="form-group">
                             <strong>Correo electrónico:</strong>
                             {{ $conductore->cor_ele_con }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Empresa:</strong>
+                            {{ $conductore->empresa->nom_emp }}
                         </div>
 
                     </div>

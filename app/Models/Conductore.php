@@ -7,32 +7,33 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Conductore
  *
- * @property $ced_con
+ * @property $dni_con
  * @property $nom_con
+ * @property $fec_nac_con
  * @property $dir_con
  * @property $num_tel_con
  * @property $cor_ele_con
+ * @property $emp_con
  * @property $created_at
  * @property $updated_at
  *
+ * @property Empresa $empresa
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Conductore extends Model
 {
-  /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'ced_con';
+
+    protected $primaryKey = 'dni_con';
     
     static $rules = [
-		'ced_con' => 'required',
+		'dni_con' => 'required',
 		'nom_con' => 'required',
+		'fec_nac_con' => 'required',
 		'dir_con' => 'required',
 		'num_tel_con' => 'required',
 		'cor_ele_con' => 'required',
+		'emp_con' => 'required',
     ];
 
     protected $perPage = 20;
@@ -42,8 +43,16 @@ class Conductore extends Model
      *
      * @var array
      */
-    protected $fillable = ['ced_con','nom_con','dir_con','num_tel_con','cor_ele_con'];
+    protected $fillable = ['dni_con','nom_con','fec_nac_con','dir_con','num_tel_con','cor_ele_con','emp_con'];
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function empresa()
+    {
+        return $this->hasOne('App\Models\Empresa', 'nit_emp', 'emp_con');
+    }
+    
 
 }

@@ -7,45 +7,53 @@
 
     <div class="float-right">
                                 <a href="{{ route('conductores.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
-                                  {{ __('Nuevo') }}
+                                {{ __('Nuevo') }}
                                 </a>
-                              </div>
+                            </div>
 @stop
 
 @section('content')
     <table id="example" class="table table-striped table-bordered" style="width:100%">
-        <thead>
+        <thead class="thead">
             <tr>
-                <th>Cédula</th>
+                <th>No</th>
+                
+                <th>DNI</th>
                 <th>Nombre</th>
-                <th>Dirección</th>
+                <th>Fecha de nacimiento</th>
+                <th>Dirreción</th>
                 <th>Número de teléfono</th>
                 <th>Correo electrónico</th>
-                <th>Acciones</th>
+                <th>Empresa</th>
+
+                <th></th>
             </tr>
         </thead>
         <tbody>
-                            @foreach ($conductores as $conductore)
-                                    <tr>
-                                        
-                                        <td>{{ $conductore->ced_con }}</td>
-                                        <td>{{ $conductore->nom_con }}</td>
-                                        <td>{{ $conductore->dir_con }}</td>
-                                        <td>{{ $conductore->num_tel_con }}</td>
-                                        <td>{{ $conductore->cor_ele_con }}</td>
+            @foreach ($conductores as $conductore)
+                <tr>
+                    <td>{{ ++$i }}</td>
+                    
+                    <td>{{ $conductore->dni_con }}</td>
+                    <td>{{ $conductore->nom_con }}</td>
+                    <td>{{ $conductore->fec_nac_con }}</td>
+                    <td>{{ $conductore->dir_con }}</td>
+                    <td>{{ $conductore->num_tel_con }}</td>
+                    <td>{{ $conductore->cor_ele_con }}</td>
+                    <td>{{ $conductore->empresa->nom_emp }}</td>
 
-                                        <td>
-                                            <form action="{{ route('conductores.destroy',$conductore->ced_con) }}" method="POST">
-                                                <a class="btn btn-sm btn-secundary" href="{{ route('conductores.show',$conductore->ced_con) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>
-                                                <a class="btn btn-sm btn-secundary" href="{{ route('conductores.edit',$conductore->ced_con) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-secundary btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('') }}</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                            @endforeach
-        </tfoot>
+                    <td>
+                        <form action="{{ route('conductores.destroy',$conductore->dni_con) }}" method="POST">
+                            <a class="btn btn-sm btn-secundary" href="{{ route('conductores.show',$conductore->dni_con) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>
+                            <a class="btn btn-sm btn-secundary" href="{{ route('conductores.edit',$conductore->dni_con) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-secundary btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('') }}</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
     </table>
 @stop
 

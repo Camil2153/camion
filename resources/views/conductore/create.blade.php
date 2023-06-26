@@ -14,8 +14,6 @@
                 @includeif('partials.errors')
 
                 <div class="card card-default">
-                    <div class="card-header">
-                        
                     <div class="card-body">
                         <form method="POST" action="{{ route('conductores.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
