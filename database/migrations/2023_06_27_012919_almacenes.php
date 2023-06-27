@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('almacenes', function (Blueprint $table) {
-            $table->string('cod_alm', 3)->primary();
+            $table->string('cod_alm', 4)->primary();
             $table->string('com_alm', 15); // Corregido: usar tipo de dato string
         
             // Definición de la relación con la tabla de paises para la columna pai_emp

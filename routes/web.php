@@ -20,7 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::resource('rutas', App\Http\Controllers\RutaController::class);
 Route::resource('gastos', App\Http\Controllers\GastoController::class);
-Route::resource('categoriagastos', App\Http\Controllers\CategoriagastoController::class);
+Route::resource('categorias-gastos', App\Http\Controllers\CategoriasGastoController::class);
 Route::resource('tipos-servicios', App\Http\Controllers\TiposServicioController::class);
 Route::resource('componentes', App\Http\Controllers\ComponenteController::class);
 Route::resource('almacenes', App\Http\Controllers\AlmaceneController::class);

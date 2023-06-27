@@ -373,7 +373,7 @@ return [
                 ],
                 [
                     'text' => 'Categorias de gastos',
-                    'url'  => 'categoriagastos',
+                    'url'  => 'categorias-gastos',
                     'icon' => 'fas fa-fw fa-server',
                 ],
                 [
