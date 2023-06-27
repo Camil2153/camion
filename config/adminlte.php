@@ -362,6 +362,11 @@ return [
                     'icon' => 'fa fa-road',
                 ], 
                 [
+                    'text' => 'Viajes',
+                    'url'  => 'viajes',
+                    'icon' => 'fa fa-suitcase',
+                ], 
+                [
                     'text' => 'Almacenes',
                     'url'  => 'almacenes',
                     'icon' => 'fa fa-archive',
@@ -370,6 +375,11 @@ return [
                     'text' => 'Componentes',
                     'url'  => 'componentes',
                     'icon' => 'fas fa-fw fa-cog',
+                ],
+                [
+                    'text' => 'Talleres',
+                    'url'  => 'talleres',
+                    'icon' => 'fa fa-wrench',
                 ],
                 [
                     'text' => 'Tipos de servicios',
