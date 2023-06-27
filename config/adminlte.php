@@ -363,7 +363,7 @@ return [
                 ],
                 [
                     'text' => 'Tipos de servicios',
-                    'url'  => 'tiposervicios',
+                    'url'  => 'tipos-servicios',
                     'icon' => 'fas fa-fw fa-server',
                 ],
                 [

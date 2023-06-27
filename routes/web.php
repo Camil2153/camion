@@ -21,7 +21,7 @@ Auth::routes();
 Route::resource('rutas', App\Http\Controllers\RutaController::class);
 Route::resource('gastos', App\Http\Controllers\GastoController::class);
 Route::resource('categoriagastos', App\Http\Controllers\CategoriagastoController::class);
-Route::resource('tiposervicios', App\Http\Controllers\TiposervicioController::class);
+Route::resource('tipos-servicios', App\Http\Controllers\TiposServicioController::class);
 Route::resource('componentes', App\Http\Controllers\ComponenteController::class);
 Route::resource('camiones', App\Http\Controllers\CamioneController::class);
 Route::resource('conductores', App\Http\Controllers\ConductoreController::class)->middleware('auth');
