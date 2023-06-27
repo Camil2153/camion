@@ -352,6 +352,11 @@ return [
                     'icon' => 'fa fa-id-card',
                 ],
                 [
+                    'text' => 'Documentos conductores',
+                    'url'  => 'documentos-conductores',
+                    'icon' => 'fa fa-file',
+                ],
+                [
                     'text' => 'Camiones',
                     'url'  => 'camiones',
                     'icon' => 'fa fa-truck',
