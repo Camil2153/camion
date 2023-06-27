@@ -18,14 +18,14 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::resource('rutas', App\Http\Controllers\RutaController::class);
 Route::resource('gastos', App\Http\Controllers\GastoController::class);
 Route::resource('categorias-gastos', App\Http\Controllers\CategoriasGastoController::class);
 Route::resource('tipos-servicios', App\Http\Controllers\TiposServicioController::class);
 Route::resource('componentes', App\Http\Controllers\ComponenteController::class);
 Route::resource('almacenes', App\Http\Controllers\AlmaceneController::class);
+Route::resource('rutas', App\Http\Controllers\RutaController::class);
 Route::resource('camiones', App\Http\Controllers\CamioneController::class);
-Route::resource('conductores', App\Http\Controllers\ConductoreController::class)->middleware('auth');
+Route::resource('conductores', App\Http\Controllers\ConductoreController::class);
 Route::resource('clientes', App\Http\Controllers\ClienteController::class);
 Route::resource('sistemas', App\Http\Controllers\SistemaController::class);
 Route::resource('empresas', App\Http\Controllers\EmpresaController::class);

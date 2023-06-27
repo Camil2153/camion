@@ -355,7 +355,12 @@ return [
                     'text' => 'Camiones',
                     'url'  => 'camiones',
                     'icon' => 'fa fa-truck',
-                ],
+                ],                
+                [
+                    'text' => 'Rutas',
+                    'url'  => 'rutas',
+                    'icon' => 'fa fa-road',
+                ], 
                 [
                     'text' => 'Almacenes',
                     'url'  => 'almacenes',
@@ -377,10 +382,10 @@ return [
                     'icon' => 'fas fa-fw fa-server',
                 ],
                 [
-                    'text' => 'Rutas',
-                    'url'  => 'rutas',
-                    'icon' => 'fa fa-road',
-                ],  
+                    'text' => 'Gastos',
+                    'url'  => 'gastos',
+                    'icon' => 'fa fa-credit-card',
+                ],
             ],
         ],
         [

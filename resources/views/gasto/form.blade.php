@@ -1,0 +1,40 @@
+<div class="box box-info padding-1">
+    <div class="box-body">
+        
+        <div class="form-group">
+            {{ Form::label('Código') }}
+            {{ Form::text('cod_gas', $gasto->cod_gas, ['class' => 'form-control' . ($errors->has('cod_gas') ? ' is-invalid' : '')]) }}
+            {!! $errors->first('cod_gas', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('Monto') }}
+            {{ Form::text('mon_gas', $gasto->mon_gas, ['class' => 'form-control' . ($errors->has('mon_gas') ? ' is-invalid' : '')]) }}
+            {!! $errors->first('mon_gas', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('Fecha') }}
+            {{ Form::date('fec_gas', $gasto->fec_gas, ['class' => 'form-control' . ($errors->has('fec_gas') ? ' is-invalid' : '')]) }}
+            {!! $errors->first('fec_gas', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('Categoria') }}
+            {{ Form::select('cat_gas', $categorias, $gasto->cat_gas, ['class' => 'form-control' . ($errors->has('cat_gas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar categoria']) }}
+            {!! $errors->first('cat_gas', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('Ruta') }}
+            {{ Form::select('rut_gas', $rutas, $gasto->rut_gas, ['class' => 'form-control' . ($errors->has('rut_gas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar ruta']) }}
+            {!! $errors->first('rut_gas', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('Empresa') }}
+            {{ Form::select('emp_gas', $empresas, $gasto->emp_gas, ['class' => 'form-control' . ($errors->has('emp_gas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
+            {!! $errors->first('emp_gas', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+
+    </div>
+    <div class="box-footer mt20">
+        <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>
+        <a href="  {{ route('gastos.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
+    </div>
+</div>
