@@ -23,6 +23,7 @@ Route::resource('gastos', App\Http\Controllers\GastoController::class);
 Route::resource('categoriagastos', App\Http\Controllers\CategoriagastoController::class);
 Route::resource('tipos-servicios', App\Http\Controllers\TiposServicioController::class);
 Route::resource('componentes', App\Http\Controllers\ComponenteController::class);
+Route::resource('almacenes', App\Http\Controllers\AlmaceneController::class);
 Route::resource('camiones', App\Http\Controllers\CamioneController::class);
 Route::resource('conductores', App\Http\Controllers\ConductoreController::class)->middleware('auth');
 Route::resource('clientes', App\Http\Controllers\ClienteController::class);

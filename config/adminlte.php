@@ -357,6 +357,11 @@ return [
                     'icon' => 'fa fa-truck',
                 ],
                 [
+                    'text' => 'Almacenes',
+                    'url'  => 'almacenes',
+                    'icon' => 'fa fa-archive',
+                ],
+                [
                     'text' => 'Componentes',
                     'url'  => 'componentes',
                     'icon' => 'fas fa-fw fa-cog',

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('pla_cam', 7)->primary();
             $table->string('mar_cam', 15);
             $table->string('mod_cam', 4);
-            $table->string('tip_cam', 10);
-            $table->string('est_cam', 10);
+            $table->string('tip_cam', 20);
+            $table->string('est_cam', 20);
             $table->integer('kil_cam');
             $table->integer('cap_cam');
             $table->integer('cont_cam');

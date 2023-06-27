@@ -18,12 +18,12 @@
         </div>
         <div class="form-group">
             {{ Form::label('Tipo') }}
-            {{ Form::text('tip_cam', $camione->tip_cam, ['class' => 'form-control' . ($errors->has('tip_cam') ? ' is-invalid' : '')]) }}
+            {{ Form::select('tip_cam', ['convencional' => 'Convencional', 'plataforma plana' => 'Plataforma Plana', 'cisterna' => 'Cisterna', 'volteo' => 'Volteo', 'refrigerado' => 'Refrigerado', 'portacontenedores' => 'Portacontenedores'], $camione->tip_cam, ['class' => 'form-control' . ($errors->has('tip_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar tipo']) }}
             {!! $errors->first('tip_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Estado') }}
-            {{ Form::text('est_cam', $camione->est_cam, ['class' => 'form-control' . ($errors->has('est_cam') ? ' is-invalid' : '')]) }}
+            {{ Form::select('est_cam', ['disponible' => 'Disponible', 'en mantenimiento' => 'En Mantenimiento', 'fuera de servicio' => 'Fuera de Servicio'], $camione->est_cam, ['class' => 'form-control' . ($errors->has('est_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
             {!! $errors->first('est_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

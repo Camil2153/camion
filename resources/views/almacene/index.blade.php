@@ -3,10 +3,10 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Lista de conductores</h1>
+    <h1>Lista de almacenes</h1>
 
     <div class="float-right">
-                                <a href="{{ route('conductores.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('almacenes.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
                                 {{ __('Nuevo') }}
                                 </a>
                             </div>
@@ -18,34 +18,40 @@
             <tr>
                 <th>No</th>
                 
-                <th>DNI</th>
-                <th>Nombre</th>
-                <th>Fecha de nacimiento</th>
-                <th>Dirección</th>
-                <th>Número de teléfono</th>
-                <th>Correo electrónico</th>
+                <th>Código</th>
+                <th>Componente</th>
+                <th>Categoria</th>
+                <th>Cantidad</th>
+                <th>Ubicación</th>
+                <th>Proveedor</th>
+                <th>Fecha de adquisición</th>
+                <th>Fecha de vencimiento</th>
+                <th>Estado</th>
                 <th>Empresa</th>
                 <th>Acciones</th>
 
             </tr>
         </thead>
         <tbody>
-            @foreach ($conductores as $conductore)
+            @foreach ($almacenes as $almacene)
                 <tr>
                     <td>{{ ++$i }}</td>
                     
-                    <td>{{ $conductore->dni_con }}</td>
-                    <td>{{ $conductore->nom_con }}</td>
-                    <td>{{ $conductore->fec_nac_con }}</td>
-                    <td>{{ $conductore->dir_con }}</td>
-                    <td>{{ $conductore->num_tel_con }}</td>
-                    <td>{{ $conductore->cor_ele_con }}</td>
-                    <td>{{ $conductore->empresa->nom_emp }}</td>
+                    <td>{{ $almacene->cod_alm }}</td>
+                    <td>{{ $almacene->componente->nom_com }}</td>
+                    <td>{{ $almacene->cat_alm }}</td>
+                    <td>{{ $almacene->can_alm }}</td>
+                    <td>{{ $almacene->ubi_alm }}</td>
+                    <td>{{ $almacene->pro_alm }}</td>
+                    <td>{{ $almacene->fec_adq_alm }}</td>
+                    <td>{{ $almacene->fec_ven_alm }}</td>
+                    <td>{{ $almacene->est_alm }}</td>
+                    <td>{{ $almacene->empresa->nom_emp }}</td>
 
                     <td>
-                        <form action="{{ route('conductores.destroy',$conductore->dni_con) }}" method="POST">
-                            <a class="btn btn-sm btn-secundary" href="{{ route('conductores.show',$conductore->dni_con) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>
-                            <a class="btn btn-sm btn-secundary" href="{{ route('conductores.edit',$conductore->dni_con) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
+                        <form action="{{ route('almacenes.destroy',$almacene->cod_alm) }}" method="POST">
+                            <a class="btn btn-sm btn-secundary" href="{{ route('almacenes.show',$almacene->cod_alm) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>
+                            <a class="btn btn-sm btn-secundary" href="{{ route('almacenes.edit',$almacene->cod_alm) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-secundary btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('') }}</button>
