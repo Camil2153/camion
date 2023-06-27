@@ -352,6 +352,11 @@ return [
                     'icon' => 'fa fa-id-card',
                 ],
                 [
+                    'text' => 'Camiones',
+                    'url'  => 'camiones',
+                    'icon' => 'fa fa-truck',
+                ],
+                [
                     'text' => 'Componentes',
                     'url'  => 'componentes',
                     'icon' => 'fas fa-fw fa-cog',
