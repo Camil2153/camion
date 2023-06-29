@@ -12,9 +12,6 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Servicio</span>
-                        </div>
                         <div class="float-right">
                             <a class="btn btn-primary" href="{{ route('servicios.index') }}"> {{ __('Back') }}</a>
                         </div>

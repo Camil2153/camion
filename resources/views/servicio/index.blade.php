@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Lista de Servicios</h1>
+    <h1>Lista de servicios</h1>
 
     <div class="float-right">
                                 <a href="{{ route('servicios.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
@@ -16,18 +16,18 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-										<th>Codigo</th>
+										<th>Código</th>
 										<th>Tipo de Servicio</th>
 										<th>Camion</th>
-										<th>Descripcion</th>
-										<th>Fecha</th>
+										<th>Descripción</th>
+										<th>Fecha de Servicio</th>
 										<th>Kilometraje</th>
 										<th>Costo</th>
 										<th>Responsable</th>
 										<th>Taller</th>
 										<th>Empresa</th>
+                                        <th>Acciones</th>
 
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,9 +47,9 @@
 											<td>{{ $servicio->emp_ser }}</td>
 
                                             <td>
-                                                <form action="{{ route('servicios.destroy',$servicio->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('servicios.show',$servicio->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('servicios.edit',$servicio->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('servicios.destroy',$servicio->cod_ser) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('servicios.show',$servicio->cod_ser) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('servicios.edit',$servicio->cod_ser) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
