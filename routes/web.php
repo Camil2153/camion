@@ -18,6 +18,10 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::resource('documentos-camiones', App\Http\Controllers\DocumentosCamioneController::class);
+Route::resource('fallas', App\Http\Controllers\FallaController::class);
+Route::resource('viajes', App\Http\Controllers\ViajeController::class);
+Route::resource('servicios', App\Http\Controllers\ServicioController::class);
 Route::resource('gastos', App\Http\Controllers\GastoController::class);
 Route::resource('categorias-gastos', App\Http\Controllers\CategoriasGastoController::class);
 Route::resource('tipos-servicios', App\Http\Controllers\TiposServicioController::class);

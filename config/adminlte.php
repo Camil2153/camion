@@ -360,7 +360,12 @@ return [
                     'text' => 'Camiones',
                     'url'  => 'camiones',
                     'icon' => 'fa fa-truck',
-                ],                
+                ],        
+                [
+                    'text' => 'Documentos Camiones',
+                    'url'  => 'documentos-camiones',
+                    'icon' => 'fa fa-file',
+                ],             
                 [
                     'text' => 'Rutas',
                     'url'  => 'rutas',
@@ -382,6 +387,11 @@ return [
                     'icon' => 'fas fa-fw fa-cog',
                 ],
                 [
+                    'text' => 'Fallas',
+                    'url'  => 'fallas',
+                    'icon' => 'fa fa-times-circle',
+                ],
+                [
                     'text' => 'Talleres',
                     'url'  => 'talleres',
                     'icon' => 'fa fa-wrench',
@@ -392,6 +402,11 @@ return [
                     'icon' => 'fas fa-fw fa-server',
                 ],
                 [
+                    'text' => 'Servicios',
+                    'url'  => 'servicios',
+                    'icon' => 'fa fa-wrench',
+                ],
+                [
                     'text' => 'Categorias de gastos',
                     'url'  => 'categorias-gastos',
                     'icon' => 'fas fa-fw fa-server',
@@ -400,6 +415,17 @@ return [
                     'text' => 'Gastos',
                     'url'  => 'gastos',
                     'icon' => 'fa fa-credit-card',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Simulador',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Viajes',
+                    'url'  => 'viajes',
+                    'icon' => 'fa fa-plane',
                 ],
             ],
         ],
