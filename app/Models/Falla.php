@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property $cod_fal
  * @property $com_fal
- * @property $des_fal
+ * @property $desc_fal
  * @property $fec_fal
  * @property $kil_fal
  * @property $tie_ina_fal
@@ -34,12 +34,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Falla extends Model
 {
+    
     protected $primaryKey = 'cod_fal';
 
     static $rules = [
 		'cod_fal' => 'required',
-		'com_fal' => 'required',
-		'des_fal' => 'required',
+		'desc_fal' => 'required',
 		'fec_fal' => 'required',
 		'kil_fal' => 'required',
 		'tie_ina_fal' => 'required',
@@ -61,7 +61,7 @@ class Falla extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_fal','com_fal','des_fal','fec_fal','kil_fal','tie_ina_fal','gra_fal','est_act_fal','res_det_fal','res_rep_fal','acc_fal','cos_fal','cam_fal','tal_fal','emp_fal'];
+    protected $fillable = ['cod_fal','com_fal','desc_fal','fec_fal','kil_fal','tie_ina_fal','gra_fal','est_act_fal','res_det_fal','res_rep_fal','acc_fal','cos_fal','cam_fal','tal_fal','emp_fal'];
 
 
     /**

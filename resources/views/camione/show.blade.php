@@ -48,7 +48,7 @@
                             {{ $camione->cap_cam }}
                         </div>
                         <div class="form-group">
-                            <strong>Contenido:</strong>
+                            <strong>Promedio de combustible:</strong>
                             {{ $camione->cont_cam }}
                         </div>
                         <div class="form-group">

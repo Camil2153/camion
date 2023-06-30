@@ -32,7 +32,7 @@
                             {{ $conductore->fec_nac_con }}
                         </div>
                         <div class="form-group">
-                            <strong>Dirrección:</strong>
+                            <strong>Dirección:</strong>
                             {{ $conductore->dir_con }}
                         </div>
                         <div class="form-group">

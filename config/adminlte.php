@@ -372,7 +372,7 @@ return [
                     'can' => 'camiones.index',
                 ],        
                 [
-                    'text' => 'Documentos Camiones',
+                    'text' => 'Documentos camiones',
                     'url'  => 'documentos-camiones',
                     'icon' => 'fa fa-file',
                     'can' => 'documentos-camiones.index',
@@ -392,7 +392,7 @@ return [
                 [
                     'text' => 'Componentes',
                     'url'  => 'componentes',
-                    'icon' => 'fas fa-fw fa-cog',
+                    'icon' => 'fa fa-cogs',
                     'can' => 'componentes.index',
                 ],
                 [
@@ -416,7 +416,7 @@ return [
                 [
                     'text' => 'Servicios',
                     'url'  => 'servicios',
-                    'icon' => 'fa fa-wrench',
+                    'icon' => 'fa fa-cog',
                     'can' => 'servicios.index',
                 ],
                 [

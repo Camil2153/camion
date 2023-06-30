@@ -2,78 +2,78 @@
     <div class="box-body">
         
         <div class="form-group">
-            {{ Form::label('Codigo') }}
-            {{ Form::text('cod_fal', $falla->cod_fal, ['class' => 'form-control' . ($errors->has('cod_fal') ? ' is-invalid' : ''), 'placeholder' => 'Cod Fal']) }}
+            {{ Form::label('Código') }}
+            {{ Form::text('cod_fal', $falla->cod_fal, ['class' => 'form-control' . ($errors->has('cod_fal') ? ' is-invalid' : '')]) }}
             {!! $errors->first('cod_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Componente') }}
-            {{ Form::select('com_fal', $componentes, $falla->com_fal, ['class' => 'form-control' . ($errors->has('com_fal') ? ' is-invalid' : ''), 'placeholder' => 'Com Fal']) }}
+            {{ Form::select('com_fal', $componentes, $falla->com_fal, ['class' => 'form-control' . ($errors->has('com_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar componente']) }}
             {!! $errors->first('com_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Descripcion') }}
-            {{ Form::text('des_fal', $falla->des_fal, ['class' => 'form-control' . ($errors->has('des_fal') ? ' is-invalid' : ''), 'placeholder' => 'Des Fal']) }}
-            {!! $errors->first('des_fal', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::label('Descripción') }}
+            {{ Form::text('desc_fal', $falla->desc_fal, ['class' => 'form-control' . ($errors->has('desc_fal') ? ' is-invalid' : '')]) }}
+            {!! $errors->first('desc_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('fecha') }}
-            {{ Form::date('fec_fal', $falla->fec_fal, ['class' => 'form-control' . ($errors->has('fec_fal') ? ' is-invalid' : ''), 'placeholder' => 'Fec Fal']) }}
+            {{ Form::label('Fecha') }}
+            {{ Form::date('fec_fal', $falla->fec_fal, ['class' => 'form-control' . ($errors->has('fec_fal') ? ' is-invalid' : '')]) }}
             {!! $errors->first('fec_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('kilometraje') }}
-            {{ Form::text('kil_fal', $falla->kil_fal, ['class' => 'form-control' . ($errors->has('kil_fal') ? ' is-invalid' : ''), 'placeholder' => 'Kil Fal']) }}
+            {{ Form::label('Kilometraje') }}
+            {{ Form::text('kil_fal', $falla->kil_fal, ['class' => 'form-control' . ($errors->has('kil_fal') ? ' is-invalid' : '')]) }}
             {!! $errors->first('kil_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Tiempo de Inactividad (Hrs)') }}
-            {{ Form::text('tie_ina_fal', $falla->tie_ina_fal, ['class' => 'form-control' . ($errors->has('tie_ina_fal') ? ' is-invalid' : ''), 'placeholder' => 'Tie Ina Fal']) }}
+            {{ Form::label('Tiempo de Inactividad') }}
+            {{ Form::text('tie_ina_fal', $falla->tie_ina_fal, ['class' => 'form-control' . ($errors->has('tie_ina_fal') ? ' is-invalid' : '')]) }}
             {!! $errors->first('tie_ina_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Gravedad') }}
-            {{ Form::text('gra_fal', $falla->gra_fal, ['class' => 'form-control' . ($errors->has('gra_fal') ? ' is-invalid' : ''), 'placeholder' => 'Gra Fal']) }}
+            {{ Form::select('gra_fal', ['leve' => 'Leve', 'moderada' => 'Moderada', 'grave' => 'Grave'], $falla->gra_fal, ['class' => 'form-control' . ($errors->has('gra_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar gravedad']) }}
             {!! $errors->first('gra_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Estado actual') }}
-            {{ Form::text('est_act_fal', $falla->est_act_fal, ['class' => 'form-control' . ($errors->has('est_act_fal') ? ' is-invalid' : ''), 'placeholder' => 'Est Act Fal']) }}
+            {{ Form::label('Estado Actual') }}
+            {{ Form::select('est_act_fal', ['pendiente' => 'Pendiente de reparación', 'proceso' => 'En proceso de reparación', 'reparada' => 'Reparada'], $falla->est_act_fal, ['class' => 'form-control' . ($errors->has('est_act_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione el estado']) }}
             {!! $errors->first('est_act_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Responsables de deteccion') }}
-            {{ Form::text('res_det_fal', $falla->res_det_fal, ['class' => 'form-control' . ($errors->has('res_det_fal') ? ' is-invalid' : ''), 'placeholder' => 'Res Det Fal']) }}
+            {{ Form::label('Responsable de Detección') }}
+            {{ Form::text('res_det_fal', $falla->res_det_fal, ['class' => 'form-control' . ($errors->has('res_det_fal') ? ' is-invalid' : '')]) }}
             {!! $errors->first('res_det_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Responsable de Reparacion') }}
-            {{ Form::text('res_rep_fal', $falla->res_rep_fal, ['class' => 'form-control' . ($errors->has('res_rep_fal') ? ' is-invalid' : ''), 'placeholder' => 'Res Rep Fal']) }}
+            {{ Form::label('Responsable de Reparación') }}
+            {{ Form::text('res_rep_fal', $falla->res_rep_fal, ['class' => 'form-control' . ($errors->has('res_rep_fal') ? ' is-invalid' : '')]) }}
             {!! $errors->first('res_rep_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Acciones') }}
-            {{ Form::text('acc_fal', $falla->acc_fal, ['class' => 'form-control' . ($errors->has('acc_fal') ? ' is-invalid' : ''), 'placeholder' => 'Acc Fal']) }}
+            {{ Form::text('acc_fal', $falla->acc_fal, ['class' => 'form-control' . ($errors->has('acc_fal') ? ' is-invalid' : '')]) }}
             {!! $errors->first('acc_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Costo') }}
-            {{ Form::text('cos_fal', $falla->cos_fal, ['class' => 'form-control' . ($errors->has('cos_fal') ? ' is-invalid' : ''), 'placeholder' => 'Cos Fal']) }}
+            {{ Form::text('cos_fal', $falla->cos_fal, ['class' => 'form-control' . ($errors->has('cos_fal') ? ' is-invalid' : '')]) }}
             {!! $errors->first('cos_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('camion') }}
-            {{ Form::select('cam_fal', $camiones, $falla->cam_fal, ['class' => 'form-control' . ($errors->has('cam_fal') ? ' is-invalid' : ''), 'placeholder' => 'Cam Fal']) }}
+            {{ Form::label('Camion') }}
+            {{ Form::select('cam_fal', $camiones, $falla->cam_fal, ['class' => 'form-control' . ($errors->has('cam_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion']) }}
             {!! $errors->first('cam_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Talleres') }}
-            {{ Form::select('tal_fal' ,$talleres, $falla->tal_fal, ['class' => 'form-control' . ($errors->has('tal_fal') ? ' is-invalid' : ''), 'placeholder' => 'Tal Fal']) }}
+            {{ Form::label('Taller') }}
+            {{ Form::select('tal_fal', $talleres, $falla->tal_fal, ['class' => 'form-control' . ($errors->has('tal_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar taller']) }}
             {!! $errors->first('tal_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Empresa') }}
-            {{ Form::select('emp_fal', $empresas, $falla->emp_fal, ['class' => 'form-control' . ($errors->has('emp_fal') ? ' is-invalid' : ''), 'placeholder' => 'Emp Fal']) }}
+            {{ Form::select('emp_fal', $empresas, $falla->emp_fal, ['class' => 'form-control' . ($errors->has('emp_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
             {!! $errors->first('emp_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 

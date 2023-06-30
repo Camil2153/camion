@@ -25,7 +25,7 @@
                 <th>Estado</th>
                 <th>Kilometraje</th>
                 <th>Capacidad</th>
-                <th>Contenido</th>
+                <th>Promedio de Combustible</th>
                 <th>Conductor</th>
                 <th>Empresa</th>
                 <th>Acciones</th>

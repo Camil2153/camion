@@ -37,7 +37,7 @@ class FallaController extends Controller
     {
         $falla = new Falla();
         $componentes = Componente::pluck('nom_com', 'num_ser_com');
-        $camiones = Camione::pluck('pla_cam');
+        $camiones = Camione::pluck('pla_cam', 'pla_cam');
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
         return view('falla.create', compact('falla', 'componentes', 'camiones', 'talleres', 'empresas'));
@@ -82,7 +82,7 @@ class FallaController extends Controller
     {
         $falla = Falla::find($cod_fal);
         $componentes = Componente::pluck('nom_com', 'num_ser_com');
-        $camiones = Camione::pluck('pla_cam');
+        $camiones = Camione::pluck('pla_cam', 'pla_cam');
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
         return view('falla.edit', compact('falla', 'componentes', 'camiones', 'talleres', 'empresas'));

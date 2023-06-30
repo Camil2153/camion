@@ -37,7 +37,7 @@
             {!! $errors->first('cap_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Contenido') }}
+            {{ Form::label('Promedio de combustible') }}
             {{ Form::text('cont_cam', $camione->cont_cam, ['class' => 'form-control' . ($errors->has('cont_cam') ? ' is-invalid' : '')]) }}
             {!! $errors->first('cont_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
