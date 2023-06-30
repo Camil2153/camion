@@ -22,6 +22,7 @@ class CategoriasGasto extends Model
 {
     
     protected $primaryKey = 'cod_cat_gas';
+    public $incrementing = false;
 
     static $rules = [
 		'cod_cat_gas' => 'required',

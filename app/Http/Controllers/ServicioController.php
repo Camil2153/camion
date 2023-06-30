@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Servicio;
 use Illuminate\Http\Request;
-use App\Models\Camione;
 use App\Models\TiposServicio;
+use App\Models\Camione;
 use App\Models\Tallere;
 use App\Models\Empresa;
 
@@ -36,11 +36,11 @@ class ServicioController extends Controller
     public function create()
     {
         $servicio = new Servicio();
-        $tiposervicios = TiposServicio::pluck('nom_tip_ser', 'cod_tip_ser');
-        $camiones = Camione::pluck('pla_cam');
+        $tiposServicios = TiposServicio::pluck('nom_tip_ser', 'cod_tip_ser');
+        $camiones = Camione::pluck('pla_cam', 'pla_cam');
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('servicio.create', compact('servicio', 'tiposervicios', 'camiones', 'talleres', 'empresas'));
+        return view('servicio.create', compact('servicio', 'tiposServicios', 'camiones', 'talleres', 'empresas'));
     }
 
     /**
@@ -81,11 +81,11 @@ class ServicioController extends Controller
     public function edit($cod_ser)
     {
         $servicio = Servicio::find($cod_ser);
-        $tiposervicios = TiposServicio::pluck('nom_tip_ser', 'cod_tip_ser');
-        $camiones = Camione::pluck('pla_cam');
+        $tiposServicios = TiposServicio::pluck('nom_tip_ser', 'cod_tip_ser');
+        $camiones = Camione::pluck('pla_cam', 'pla_cam');
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('servicio.edit', compact('servicio', 'tiposervicios', 'camiones', 'talleres', 'empresas'));
+        return view('servicio.edit', compact('servicio', 'tiposServicios', 'camiones', 'talleres', 'empresas'));
     }
 
     /**
@@ -106,7 +106,7 @@ class ServicioController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param string $cod_ser
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */

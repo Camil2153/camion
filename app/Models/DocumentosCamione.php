@@ -25,6 +25,7 @@ class DocumentosCamione extends Model
 {
     
     protected $primaryKey = 'cod_doc_cam';
+    public $incrementing = false;
 
     static $rules = [
 		'cod_doc_cam' => 'required',

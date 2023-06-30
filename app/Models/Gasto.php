@@ -26,6 +26,7 @@ class Gasto extends Model
 {
     
     protected $primaryKey = 'cod_gas';
+    public $incrementing = false;
 
     static $rules = [
 		'cod_gas' => 'required',

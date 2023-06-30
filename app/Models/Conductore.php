@@ -25,6 +25,7 @@ class Conductore extends Model
 {
 
     protected $primaryKey = 'dni_con';
+    public $incrementing = false;
     
     static $rules = [
 		'dni_con' => 'required',

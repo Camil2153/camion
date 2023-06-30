@@ -33,9 +33,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Viaje extends Model
 {
-
-    protected $primaryKey = 'cod_via';
     
+    protected $primaryKey = 'cod_via';
+    public $incrementing = false;
+
     static $rules = [
 		'cod_via' => 'required',
 		'car_via' => 'required',

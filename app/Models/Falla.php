@@ -36,6 +36,7 @@ class Falla extends Model
 {
     
     protected $primaryKey = 'cod_fal';
+    public $incrementing = false;
 
     static $rules = [
 		'cod_fal' => 'required',

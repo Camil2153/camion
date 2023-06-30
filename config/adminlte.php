@@ -396,18 +396,6 @@ return [
                     'can' => 'componentes.index',
                 ],
                 [
-                    'text' => 'Fallas',
-                    'url'  => 'fallas',
-                    'icon' => 'fa fa-times-circle',
-                    'can' => 'fallas.index',
-                ],
-                [
-                    'text' => 'Talleres',
-                    'url'  => 'talleres',
-                    'icon' => 'fa fa-wrench',
-                    'can' => 'talleres.index',
-                ],
-                [
                     'text' => 'Tipos de servicios',
                     'url'  => 'tipos-servicios',
                     'icon' => 'fas fa-fw fa-server',
@@ -418,6 +406,18 @@ return [
                     'url'  => 'servicios',
                     'icon' => 'fa fa-cog',
                     'can' => 'servicios.index',
+                ],
+                [
+                    'text' => 'Talleres',
+                    'url'  => 'talleres',
+                    'icon' => 'fa fa-wrench',
+                    'can' => 'talleres.index',
+                ],
+                [
+                    'text' => 'Fallas',
+                    'url'  => 'fallas',
+                    'icon' => 'fa fa-times-circle',
+                    'can' => 'fallas.index',
                 ],
                 [
                     'text' => 'Categorias de gastos',

@@ -14,11 +14,8 @@
                 @includeif('partials.errors')
 
                 <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Viaje</span>
-                    </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('viajes.update', $viaje->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('viajes.update', $viaje->cod_via) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 
@@ -30,4 +27,12 @@
             </div>
         </div>
     </section>
-@endsection
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop

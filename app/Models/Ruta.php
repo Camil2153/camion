@@ -30,6 +30,7 @@ class Ruta extends Model
 {
 
     protected $primaryKey = 'cod_rut';
+    public $incrementing = false;
     
     static $rules = [
 		'cod_rut' => 'required',

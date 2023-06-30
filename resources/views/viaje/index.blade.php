@@ -7,61 +7,63 @@
 
     <div class="float-right">
                                 <a href="{{ route('viajes.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
-                                {{ __('Nuevo') }}
+                                  {{ __('Nuevo') }}
                                 </a>
-                            </div>
+                              </div>
 @stop
 
 @section('content')
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-										<th>Codigo</th>
-										<th>Carga</th>
-										<th>Peso</th>
-										<th>Estado</th>
-										<th>Fecha Salida</th>
-										<th>Hora Salida</th>
-										<th>Fecha Llegada</th>
-										<th>Hora Llegada</th>
-										<th>Kilometraje</th>
-										<th>Consumo Combustible</th>
-										<th>Camion</th>
-										<th>Cliente</th>
-										<th>Ruta</th>
-										<th>Empresa</th>
+                <th>No</th>
+                
+                <th>Código</th>
+                <th>Carga</th>
+                <th>Peso</th>
+                <th>Estado</th>
+                <th>Fecha de Salida</th>
+                <th>Hora de Salida</th>
+                <th>Fecha de Llegada</th>
+                <th>Hora de Llegada</th>
+                <th>Kilometraje</th>
+                <th>Combustible</th>
+                <th>Camion</th>
+                <th>Cliente</th>
+                <th>Ruta</th>
+                <th>Empresa</th>
+                <th>Acciones</th>
 
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($viajes as $viaje)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            
-											<td>{{ $viaje->cod_via }}</td>
-											<td>{{ $viaje->car_via }}</td>
-											<td>{{ $viaje->pes_via }}</td>
-											<td>{{ $viaje->est_via }}</td>
-											<td>{{ $viaje->fec_sal_via }}</td>
-											<td>{{ $viaje->hor_sal_via }}</td>
-											<td>{{ $viaje->fec_lle_via }}</td>
-											<td>{{ $viaje->hor_lle_via }}</td>
-											<td>{{ $viaje->kil_via }}</td>
-											<td>{{ $viaje->com_via }}</td>
-											<td>{{ $viaje->cam_via }}</td>
-											<td>{{ $viaje->cli_via }}</td>
-											<td>{{ $viaje->rut_via }}</td>
-											<td>{{ $viaje->emp_via }}</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($viajes as $viaje)
+                <tr>
+                    <td>{{ ++$i }}</td>
+                    
+                    <td>{{ $viaje->cod_via }}</td>
+                    <td>{{ $viaje->car_via }}</td>
+                    <td>{{ $viaje->pes_via }}</td>
+                    <td>{{ $viaje->est_via }}</td>
+                    <td>{{ $viaje->fec_sal_via }}</td>
+                    <td>{{ $viaje->hor_sal_via }}</td>
+                    <td>{{ $viaje->fec_lle_via }}</td>
+                    <td>{{ $viaje->hor_lle_via }}</td>
+                    <td>{{ $viaje->kil_via }}</td>
+                    <td>{{ $viaje->com_via }}</td>
+                    <td>{{ $viaje->cam_via }}</td>
+                    <td>{{ $viaje->cliente->nom_cli }}</td>
+                    <td>{{ $viaje->ruta->nom_rut }}</td>
+                    <td>{{ $viaje->empresa->nom_emp }}</td>
 
-                                            <td>
-                                                <form action="{{ route('viajes.destroy',$viaje->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('viajes.show',$viaje->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('viajes.edit',$viaje->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
-                                                    </form>
+                    <td>
+                        <form action="{{ route('viajes.destroy',$viaje->cod_via) }}" method="POST">
+                            <a class="btn btn-sm btn-secundary" href="{{ route('viajes.show',$viaje->cod_via) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>
+                            <a class="btn btn-sm btn-secundary" href="{{ route('viajes.edit',$viaje->cod_via) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-secundary btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('') }}</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

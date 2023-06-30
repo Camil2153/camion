@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('viajes', function (Blueprint $table) {
             $table->string('cod_via', 4)->primary();
             $table->string('car_via', 25);
-            $table->string('pes_via', 10); #corregir
-            $table->string('est_via', 15);
+            $table->integer('pes_via');
+            $table->string('est_via', 20);
             $table->date('fec_sal_via');
             $table->time('hor_sal_via');
             $table->date('fec_lle_via');

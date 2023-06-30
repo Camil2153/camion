@@ -27,6 +27,7 @@ class Tallere extends Model
 {
 
     protected $primaryKey = 'nit_tal';
+    public $incrementing = false;
     
     static $rules = [
 		'nit_tal' => 'required',

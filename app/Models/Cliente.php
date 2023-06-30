@@ -27,6 +27,7 @@ class Cliente extends Model
 {
 
     protected $primaryKey = 'cod_cli';
+    public $incrementing = false;
 
     static $rules = [
 		'cod_cli' => 'required',

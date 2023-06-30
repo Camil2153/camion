@@ -29,6 +29,7 @@ class Camione extends Model
 {
     
     protected $primaryKey = 'pla_cam';
+    public $incrementing = false;
 
     static $rules = [
 		'pla_cam' => 'required',

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('tie_ina_fal', 20);
             $table->string('gra_fal', 20);
             $table->string('est_act_fal', 20); 
-            $table->string('res_det_fal', 20);
-            $table->string('res_rep_fal', 20);
+            $table->string('res_det_fal', 45);
+            $table->string('res_rep_fal', 45);
             $table->string('acc_fal', 100);
             $table->decimal('cos_fal', 10, 2);
             $table->string('cam_fal', 7);

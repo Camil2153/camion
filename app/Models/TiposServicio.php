@@ -24,6 +24,7 @@ class TiposServicio extends Model
 {
     
     protected $primaryKey = 'cod_tip_ser';
+    public $incrementing = false;
 
     static $rules = [
 		'cod_tip_ser' => 'required',

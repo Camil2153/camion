@@ -25,6 +25,7 @@ class DocumentosConductore extends Model
 {
 
     protected $primaryKey = 'num_lic_doc_con';
+    public $incrementing = false;
     
     static $rules = [
 		'num_lic_doc_con' => 'required',

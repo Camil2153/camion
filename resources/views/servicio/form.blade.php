@@ -8,21 +8,21 @@
         </div>
         <div class="form-group">
             {{ Form::label('Tipo de Servicio') }}
-            {{ Form::select('tip_ser_ser', $tiposervicios, $servicio->tip_ser_ser, ['class' => 'form-control' . ($errors->has('tip_ser_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar servicio']) }}
+            {{ Form::select('tip_ser_ser', $tiposServicios, $servicio->tip_ser_ser, ['class' => 'form-control' . ($errors->has('tip_ser_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar tipo de servicio']) }}
             {!! $errors->first('tip_ser_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Camión') }}
+            {{ Form::label('Camion') }}
             {{ Form::select('cam_ser', $camiones, $servicio->cam_ser, ['class' => 'form-control' . ($errors->has('cam_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion']) }}
             {!! $errors->first('cam_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Descripción') }}
-            {{ Form::text('des_tip_ser', $servicio->des_tip_ser, ['class' => 'form-control' . ($errors->has('des_tip_ser') ? ' is-invalid' : '')]) }}
-            {!! $errors->first('des_tip_ser', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::text('desc_ser', $servicio->desc_ser, ['class' => 'form-control' . ($errors->has('desc_ser') ? ' is-invalid' : '')]) }}
+            {!! $errors->first('desc_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Fecha de Servicio') }}
+            {{ Form::label('Fecha') }}
             {{ Form::date('fec_ser', $servicio->fec_ser, ['class' => 'form-control' . ($errors->has('fec_ser') ? ' is-invalid' : '')]) }}
             {!! $errors->first('fec_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
@@ -48,8 +48,8 @@
         </div>
         <div class="form-group">
             {{ Form::label('Empresa') }}
-            {{ Form::select('emp_gas', $empresas, $servicio->emp_gas, ['class' => 'form-control' . ($errors->has('emp_gas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
-            {!! $errors->first('emp_gas', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::select('emp_ser', $empresas, $servicio->emp_ser, ['class' => 'form-control' . ($errors->has('emp_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
+            {!! $errors->first('emp_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
     </div>

@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Viaje;
 use Illuminate\Http\Request;
 use App\Models\Camione;
-use App\Models\Ruta;
 use App\Models\Cliente;
+use App\Models\Ruta;
 use App\Models\Empresa;
 
 /**
@@ -36,7 +36,7 @@ class ViajeController extends Controller
     public function create()
     {
         $viaje = new Viaje();
-        $camiones = Camione::pluck('pla_cam');
+        $camiones = Camione::pluck('pla_cam', 'pla_cam');
         $clientes = Cliente::pluck('nom_cli', 'cod_cli');
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
@@ -62,12 +62,12 @@ class ViajeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string $cod_via
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($cod_via)
+    public function show($id)
     {
-        $viaje = Viaje::find($cod_via);
+        $viaje = Viaje::find($id);
 
         return view('viaje.show', compact('viaje'));
     }
@@ -75,18 +75,17 @@ class ViajeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  string $cod_via
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($cod_via)
+    public function edit($id)
     {
-        $viaje = Viaje::find($cod_via);
-
-        $camiones = Camione::pluck('pla_cam');
+        $viaje = Viaje::find($id);
+        $camiones = Camione::pluck('pla_cam', 'pla_cam');
         $clientes = Cliente::pluck('nom_cli', 'cod_cli');
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('viaje.create', compact('viaje', 'camiones', 'clientes', 'rutas', 'empresas'));
+        return view('viaje.edit', compact('viaje', 'camiones', 'clientes', 'rutas', 'empresas'));
     }
 
     /**
@@ -107,13 +106,13 @@ class ViajeController extends Controller
     }
 
     /**
-     * @param string $cod_via
+     * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($cod_via)
+    public function destroy($id)
     {
-        $viaje = Viaje::find($cod_via)->delete();
+        $viaje = Viaje::find($id)->delete();
 
         return redirect()->route('viajes.index')
             ->with('success', 'Viaje deleted successfully');

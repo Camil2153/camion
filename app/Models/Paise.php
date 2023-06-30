@@ -19,6 +19,7 @@ class Paise extends Model
 {
     
     protected $primaryKey = 'cod_pai';
+    public $incrementing = false;
 
     static $rules = [
 		'cod_pai' => 'required',

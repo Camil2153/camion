@@ -21,6 +21,7 @@ class Ciudade extends Model
 {
 
     protected $primaryKey = 'cod_ciu';
+    public $incrementing = false;
     
     static $rules = [
 		'cod_ciu' => 'required',
