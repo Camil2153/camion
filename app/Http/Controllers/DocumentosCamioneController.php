@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DocumentosCamione;
 use Illuminate\Http\Request;
 use App\Models\Camione;
+use App\Models\Empresa;
 
 /**
  * Class DocumentosCamioneController
@@ -33,8 +34,9 @@ class DocumentosCamioneController extends Controller
     public function create()
     {
         $documentosCamione = new DocumentosCamione();
-        $camiones = Camione::pluck('pla_cam');
-        return view('documentos-camione.create', compact('documentosCamione', 'camiones'));
+        $camiones = Camione::pluck('pla_cam', 'pla_cam');
+        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
+        return view('documentos-camione.create', compact('documentosCamione', 'empresas', 'camiones'));
     }
 
     /**
@@ -56,12 +58,12 @@ class DocumentosCamioneController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string $cod_doc
+     * @param  string $cod_doc_cam
      * @return \Illuminate\Http\Response
      */
-    public function show($cod_doc)
+    public function show($cod_doc_cam)
     {
-        $documentosCamione = DocumentosCamione::find($cod_doc);
+        $documentosCamione = DocumentosCamione::find($cod_doc_cam);
 
         return view('documentos-camione.show', compact('documentosCamione'));
     }
@@ -69,14 +71,15 @@ class DocumentosCamioneController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  string $cod_doc
+     * @param  string $cod_doc_cam
      * @return \Illuminate\Http\Response
      */
-    public function edit($cod_doc)
+    public function edit($cod_doc_cam)
     {
-        $documentosCamione = DocumentosCamione::find($cod_doc);
-        $camiones = Camione::pluck('pla_cam');
-        return view('documentos-camione.edit', compact('documentosCamione','camiones'));
+        $documentosCamione = DocumentosCamione::find($cod_doc_cam);
+        $camiones = Camione::pluck('pla_cam', 'pla_cam');
+        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
+        return view('documentos-camione.edit', compact('documentosCamione', 'empresas', 'camiones'));
     }
 
     /**
@@ -97,13 +100,13 @@ class DocumentosCamioneController extends Controller
     }
 
     /**
-     * @param string $cod_doc
+     * @param string $cod_doc_cam
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($cod_doc)
+    public function destroy($cod_doc_cam)
     {
-        $documentosCamione = DocumentosCamione::find($cod_doc)->delete();
+        $documentosCamione = DocumentosCamione::find($cod_doc_cam)->delete();
 
         return redirect()->route('documentos-camiones.index')
             ->with('success', 'DocumentosCamione deleted successfully');

@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Nuevo Documento</h1>
+    <h1>Nuevo Documento de Camion</h1>
 @stop
 
 @section('content')
@@ -14,9 +14,6 @@
                 @includeif('partials.errors')
 
                 <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Documentos Camione</span>
-                    </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('documentos-camiones.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
@@ -29,4 +26,12 @@
             </div>
         </div>
     </section>
-@endsection
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop

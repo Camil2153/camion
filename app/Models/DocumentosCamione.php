@@ -7,27 +7,32 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class DocumentosCamione
  *
- * @property $cod_doc
- * @property $nom_doc
- * @property $est_doc
- * @property $vig_doc
+ * @property $cod_doc_cam
+ * @property $nom_doc_cam
+ * @property $est_doc_cam
+ * @property $vig_doc_cam
  * @property $cam_doc_cam
+ * @property $emp_doc_cam
+ * @property $created_at
+ * @property $updated_at
  *
  * @property Camione $camione
+ * @property Empresa $empresa
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class DocumentosCamione extends Model
 {
     
-  protected $primaryKey = 'cod_doc';
+    protected $primaryKey = 'cod_doc_cam';
 
     static $rules = [
-		'cod_doc' => 'required',
-		'nom_doc' => 'required',
-		'est_doc' => 'required',
-		'vig_doc' => 'required',
+		'cod_doc_cam' => 'required',
+		'nom_doc_cam' => 'required',
+		'est_doc_cam' => 'required',
+		'vig_doc_cam' => 'required',
 		'cam_doc_cam' => 'required',
+		'emp_doc_cam' => 'required',
     ];
 
     protected $perPage = 20;
@@ -37,7 +42,7 @@ class DocumentosCamione extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_doc','nom_doc','est_doc','vig_doc','cam_doc_cam'];
+    protected $fillable = ['cod_doc_cam','nom_doc_cam','est_doc_cam','vig_doc_cam','cam_doc_cam','emp_doc_cam'];
 
 
     /**
@@ -46,6 +51,14 @@ class DocumentosCamione extends Model
     public function camione()
     {
         return $this->hasOne('App\Models\Camione', 'pla_cam', 'cam_doc_cam');
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function empresa()
+    {
+        return $this->hasOne('App\Models\Empresa', 'nit_emp', 'emp_doc_cam');
     }
     
 
