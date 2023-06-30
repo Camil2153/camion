@@ -12,6 +12,14 @@ use App\Models\Empresa;
  */
 class CategoriasGastoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:categorias-gastos.index')->only('index');
+        $this->middleware('can:categorias-gastos.create')->only('create', 'store');
+        $this->middleware('can:categorias-gastos.show')->only('show');
+        $this->middleware('can:categorias-gastos.edit')->only('edit', 'update');
+        $this->middleware('can:categorias-gastos.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

@@ -14,6 +14,14 @@ use App\Models\Empresa;
  */
 class GastoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:gastos.index')->only('index');
+        $this->middleware('can:gastos.create')->only('create', 'store');
+        $this->middleware('can:gastos.show')->only('show');
+        $this->middleware('can:gastos.edit')->only('edit', 'update');
+        $this->middleware('can:gastos.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

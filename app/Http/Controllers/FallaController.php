@@ -15,6 +15,14 @@ use App\Models\Empresa;
  */
 class FallaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:fallas.index')->only('index');
+        $this->middleware('can:fallas.create')->only('create', 'store');
+        $this->middleware('can:fallas.show')->only('show');
+        $this->middleware('can:fallas.edit')->only('edit', 'update');
+        $this->middleware('can:fallas.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

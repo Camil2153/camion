@@ -12,6 +12,14 @@ use App\Models\Empresa;
  */
 class TiposServicioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:tipos-servicios.index')->only('index');
+        $this->middleware('can:tipos-servicios.create')->only('create', 'store');
+        $this->middleware('can:tipos-servicios.show')->only('show');
+        $this->middleware('can:tipos-servicios.edit')->only('edit', 'update');
+        $this->middleware('can:tipos-servicios.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

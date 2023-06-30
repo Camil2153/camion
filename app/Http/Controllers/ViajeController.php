@@ -15,6 +15,14 @@ use App\Models\Empresa;
  */
 class ViajeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:viajes.index')->only('index');
+        $this->middleware('can:viajes.create')->only('create', 'store');
+        $this->middleware('can:viajes.show')->only('show');
+        $this->middleware('can:viajes.edit')->only('edit', 'update');
+        $this->middleware('can:viajes.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

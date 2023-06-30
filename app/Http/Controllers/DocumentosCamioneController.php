@@ -13,6 +13,14 @@ use App\Models\Empresa;
  */
 class DocumentosCamioneController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:documentos-camiones.index')->only('index');
+        $this->middleware('can:documentos-camiones.create')->only('create', 'store');
+        $this->middleware('can:documentos-camiones.show')->only('show');
+        $this->middleware('can:documentos-camiones.edit')->only('edit', 'update');
+        $this->middleware('can:documentos-camiones.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

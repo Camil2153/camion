@@ -13,6 +13,14 @@ use App\Models\Empresa;
  */
 class ComponenteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:componentes.index')->only('index');
+        $this->middleware('can:componentes.create')->only('create', 'store');
+        $this->middleware('can:componentes.show')->only('show');
+        $this->middleware('can:componentes.edit')->only('edit', 'update');
+        $this->middleware('can:componentes.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

@@ -13,6 +13,14 @@ use App\Models\Empresa;
  */
 class DocumentosConductoreController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:documentos-conductores.index')->only('index');
+        $this->middleware('can:documentos-conductores.create')->only('create', 'store');
+        $this->middleware('can:documentos-conductores.show')->only('show');
+        $this->middleware('can:documentos-conductores.edit')->only('edit', 'update');
+        $this->middleware('can:documentos-conductores.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

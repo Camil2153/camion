@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
  */
 class SistemaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:sistemas.index')->only('index');
+        $this->middleware('can:sistemas.create')->only('create', 'store');
+        $this->middleware('can:sistemas.show')->only('show');
+        $this->middleware('can:sistemas.edit')->only('edit', 'update');
+        $this->middleware('can:sistemas.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

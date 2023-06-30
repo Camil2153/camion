@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
  */
 class PaiseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:paises.index')->only('index');
+        $this->middleware('can:paises.create')->only('create', 'store');
+        $this->middleware('can:paises.show')->only('show');
+        $this->middleware('can:paises.edit')->only('edit', 'update');
+        $this->middleware('can:paises.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

@@ -12,6 +12,14 @@ use App\Models\Paise;
  */
 class EmpresaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:empresas.index')->only('index');
+        $this->middleware('can:empresas.create')->only('create', 'store');
+        $this->middleware('can:empresas.show')->only('show');
+        $this->middleware('can:empresas.edit')->only('edit', 'update');
+        $this->middleware('can:empresas.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

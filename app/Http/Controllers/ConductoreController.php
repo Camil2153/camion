@@ -8,6 +8,14 @@ use App\Models\Empresa;
 
 class ConductoreController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:conductores.index')->only('index');
+        $this->middleware('can:conductores.create')->only('create', 'store');
+        $this->middleware('can:conductores.show')->only('show');
+        $this->middleware('can:conductores.edit')->only('edit', 'update');
+        $this->middleware('can:conductores.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

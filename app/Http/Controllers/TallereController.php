@@ -13,6 +13,14 @@ use App\Models\Empresa;
  */
 class TallereController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:talleres.index')->only('index');
+        $this->middleware('can:talleres.create')->only('create', 'store');
+        $this->middleware('can:talleres.show')->only('show');
+        $this->middleware('can:talleres.edit')->only('edit', 'update');
+        $this->middleware('can:talleres.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

@@ -13,6 +13,14 @@ use App\Models\Empresa;
  */
 class RutaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:rutas.index')->only('index');
+        $this->middleware('can:rutas.create')->only('create', 'store');
+        $this->middleware('can:rutas.show')->only('show');
+        $this->middleware('can:rutas.edit')->only('edit', 'update');
+        $this->middleware('can:rutas.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

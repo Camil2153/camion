@@ -13,6 +13,14 @@ use App\Models\Empresa;
  */
 class AlmaceneController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:almacenes.index')->only('index');
+        $this->middleware('can:almacenes.create')->only('create', 'store');
+        $this->middleware('can:almacenes.show')->only('show');
+        $this->middleware('can:almacenes.edit')->only('edit', 'update');
+        $this->middleware('can:almacenes.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

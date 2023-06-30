@@ -12,6 +12,14 @@ use App\Models\Paise;
  */
 class CiudadeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:ciudades.index')->only('index');
+        $this->middleware('can:ciudades.create')->only('create', 'store');
+        $this->middleware('can:ciudades.show')->only('show');
+        $this->middleware('can:ciudades.edit')->only('edit', 'update');
+        $this->middleware('can:ciudades.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
