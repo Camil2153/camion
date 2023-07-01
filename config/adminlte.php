@@ -408,16 +408,16 @@ return [
                     'can' => 'tipos-servicios.index',
                 ],
                 [
-                    'text' => 'Servicios',
-                    'url'  => 'servicios',
-                    'icon' => 'fa fa-cog',
-                    'can' => 'servicios.index',
-                ],
-                [
                     'text' => 'Talleres',
                     'url'  => 'talleres',
                     'icon' => 'fa fa-wrench',
                     'can' => 'talleres.index',
+                ],
+                [
+                    'text' => 'Servicios',
+                    'url'  => 'servicios',
+                    'icon' => 'fa fa-cog',
+                    'can' => 'servicios.index',
                 ],
                 [
                     'text' => 'Fallas',
