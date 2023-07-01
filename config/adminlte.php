@@ -324,6 +324,12 @@ return [
                     'can' => 'users.index',
                 ],
                 [
+                    'text' => 'Roles',
+                    'url'  => 'roles',
+                    'icon' => 'fa fa-user-secret',
+                    'can' => 'roles.index',
+                ],
+                [
                     'text' => 'Paises',
                     'url'  => 'paises',
                     'icon' => 'fa fa-globe',
