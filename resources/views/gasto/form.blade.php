@@ -22,9 +22,9 @@
             {!! $errors->first('cat_gas', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Ruta') }}
-            {{ Form::select('rut_gas', $rutas, $gasto->rut_gas, ['class' => 'form-control' . ($errors->has('rut_gas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar ruta']) }}
-            {!! $errors->first('rut_gas', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::label('Viaje') }}
+            {{ Form::select('via_gas', $viajes, $gasto->via_gas, ['class' => 'form-control' . ($errors->has('via_gas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar viaje']) }}
+            {!! $errors->first('via_gas', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Empresa') }}

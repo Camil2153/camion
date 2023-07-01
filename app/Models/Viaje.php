@@ -95,6 +95,11 @@ class Viaje extends Model
     {
         return $this->hasOne('App\Models\Ruta', 'cod_rut', 'rut_via');
     }
+
+    public function gastos()
+{
+    return $this->hasMany(Gasto::class, 'via_gas');
+}
     
 
 }

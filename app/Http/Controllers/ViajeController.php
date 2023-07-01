@@ -44,7 +44,7 @@ class ViajeController extends Controller
     public function create()
     {
         $viaje = new Viaje();
-        $camiones = Camione::pluck('pla_cam', 'pla_cam');
+        $camiones = Camione::where('est_cam', 'disponible')->pluck('pla_cam', 'pla_cam');
         $clientes = Cliente::pluck('nom_cli', 'cod_cli');
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
@@ -89,7 +89,7 @@ class ViajeController extends Controller
     public function edit($id)
     {
         $viaje = Viaje::find($id);
-        $camiones = Camione::pluck('pla_cam', 'pla_cam');
+        $camiones = Camione::where('est_cam', 'disponible')->pluck('pla_cam', 'pla_cam');
         $clientes = Cliente::pluck('nom_cli', 'cod_cli');
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');

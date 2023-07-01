@@ -390,16 +390,16 @@ return [
                     'can' => 'rutas.index',
                 ],  
                 [
-                    'text' => 'Almacenes',
-                    'url'  => 'almacenes',
-                    'icon' => 'fa fa-archive',
-                    'can' => 'almacenes.index',
-                ],
-                [
                     'text' => 'Componentes',
                     'url'  => 'componentes',
                     'icon' => 'fa fa-cogs',
                     'can' => 'componentes.index',
+                ],
+                [
+                    'text' => 'Almacenes',
+                    'url'  => 'almacenes',
+                    'icon' => 'fa fa-archive',
+                    'can' => 'almacenes.index',
                 ],
                 [
                     'text' => 'Tipos de servicios',

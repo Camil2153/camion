@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Gasto;
 use Illuminate\Http\Request;
 use App\Models\CategoriasGasto;
-use App\Models\Ruta;
+use App\Models\Viaje;
 use App\Models\Empresa;
 
 /**
@@ -44,9 +44,9 @@ class GastoController extends Controller
     {
         $gasto = new Gasto();
         $categorias = CategoriasGasto::pluck('nom_cat_gas', 'cod_cat_gas');
-        $rutas = Ruta::pluck('nom_rut', 'cod_rut');
+        $viajes = Viaje::pluck('cod_via', 'cod_via');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('gasto.create', compact('gasto', 'categorias', 'rutas', 'empresas'));
+        return view('gasto.create', compact('gasto', 'categorias', 'viajes', 'empresas'));
     }
 
     /**
@@ -68,12 +68,12 @@ class GastoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string $cod_gas
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($cod_gas)
+    public function show($id)
     {
-        $gasto = Gasto::find($cod_gas);
+        $gasto = Gasto::find($id);
 
         return view('gasto.show', compact('gasto'));
     }
@@ -81,16 +81,16 @@ class GastoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  string $cod_gas
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($cod_gas)
+    public function edit($id)
     {
-        $gasto = Gasto::find($cod_gas);
+        $gasto = Gasto::find($id);
         $categorias = CategoriasGasto::pluck('nom_cat_gas', 'cod_cat_gas');
-        $rutas = Ruta::pluck('nom_rut', 'cod_rut');
+        $viajes = Viaje::pluck('cod_via', 'cod_via');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('gasto.edit', compact('gasto', 'categorias', 'rutas', 'empresas'));
+        return view('gasto.edit', compact('gasto', 'categorias', 'viajes', 'empresas'));
     }
 
     /**
@@ -111,13 +111,13 @@ class GastoController extends Controller
     }
 
     /**
-     * @param string $cod_gas
+     * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($cod_gas)
+    public function destroy($id)
     {
-        $gasto = Gasto::find($cod_gas)->delete();
+        $gasto = Gasto::find($id)->delete();
 
         return redirect()->route('gastos.index')
             ->with('success', 'Gasto deleted successfully');

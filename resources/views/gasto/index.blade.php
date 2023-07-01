@@ -22,7 +22,7 @@
                 <th>Monto</th>
                 <th>Fecha</th>
                 <th>Categoria</th>
-                <th>Ruta</th>
+                <th>Viaje</th>
                 <th>Empresa</th>
                 <th>Acciones</th>
 
@@ -37,7 +37,7 @@
                     <td>{{ $gasto->mon_gas }}</td>
                     <td>{{ $gasto->fec_gas }}</td>
                     <td>{{ $gasto->categoriasGasto->nom_cat_gas }}</td>
-                    <td>{{ $gasto->ruta->nom_rut }}</td>
+                    <td>{{ $gasto->via_gas }}</td>
                     <td>{{ $gasto->empresa->nom_emp }}</td>
 
                     <td>
