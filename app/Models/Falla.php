@@ -39,11 +39,7 @@ class Falla extends Model
     public $incrementing = false;
 
     static $rules = [
-<<<<<<< HEAD
 		'cod_fal' => 'required|unique:fallas',
-=======
-		'cod_fal' => 'required',
->>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
 		'desc_fal' => 'required',
 		'fec_fal' => 'required',
 		'kil_fal' => 'required',

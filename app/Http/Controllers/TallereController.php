@@ -66,12 +66,12 @@ class TallereController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  string $nit_tal
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($nit_tal)
     {
-        $tallere = Tallere::find($id);
+        $tallere = Tallere::find($nit_tal);
 
         return view('tallere.show', compact('tallere'));
     }
@@ -79,12 +79,12 @@ class TallereController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  string $nit_tal
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($nit_tal)
     {
-        $tallere = Tallere::find($id);
+        $tallere = Tallere::find($nit_tal);
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
         return view('tallere.edit', compact('tallere', 'rutas', 'empresas'));
@@ -117,13 +117,13 @@ class TallereController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param string $nit_tal
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($nit_tal)
     {
-        $tallere = Tallere::find($id)->delete();
+        $tallere = Tallere::find($nit_tal)->delete();
 
         return redirect()->route('talleres.index')
             ->with('success', 'Tallere deleted successfully');

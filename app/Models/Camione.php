@@ -30,23 +30,19 @@ class Camione extends Model
     
     protected $primaryKey = 'pla_cam';
     public $incrementing = false;
-<<<<<<< HEAD
 
-static $rules = [
-    'pla_cam' => ['required','unique:camiones', 'regex:/^[A-Z]{3}\d{3}$/'],
-    'mar_cam' => 'required',
-    'mod_cam' => 'required',
-    'tip_cam' => 'required',
-    'est_cam' => 'required',
-    'kil_cam' => 'required',
-    'cap_cam' => 'required',
-    'cont_cam' => 'required',
-    'con_cam' => 'required',
-    'emp_cam' => 'required',
-];
-=======
->>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
-
+    static $rules = [
+        'pla_cam' => ['required','unique:camiones', 'regex:/^[A-Z]{3}\d{3}$/'],
+        'mar_cam' => 'required',
+        'mod_cam' => 'required',
+        'tip_cam' => 'required',
+        'est_cam' => 'required',
+        'kil_cam' => 'required',
+        'cap_cam' => 'required',
+        'cont_cam' => 'required',
+        'con_cam' => 'required',
+        'emp_cam' => 'required',
+    ];
 
     protected $perPage = 20;
 

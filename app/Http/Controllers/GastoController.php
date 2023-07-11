@@ -68,12 +68,12 @@ class GastoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  string $cod_gas
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($cod_gas)
     {
-        $gasto = Gasto::find($id);
+        $gasto = Gasto::find($cod_gas);
 
         return view('gasto.show', compact('gasto'));
     }
@@ -81,12 +81,12 @@ class GastoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  string $cod_gas
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($cod_gas)
     {
-        $gasto = Gasto::find($id);
+        $gasto = Gasto::find($cod_gas);
         $categorias = CategoriasGasto::pluck('nom_cat_gas', 'cod_cat_gas');
         $viajes = Viaje::pluck('cod_via', 'cod_via');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
@@ -113,7 +113,6 @@ public function update(Request $request, gasto $gasto)
         ]);
     }
 
-<<<<<<< HEAD
     // Actualizar los atributos del modelo gasto
     $gasto->update($request->all());
 
@@ -121,16 +120,13 @@ public function update(Request $request, gasto $gasto)
 }
 
     /**katherin <3
-=======
-    /**
->>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
-     * @param int $id
+     * @param string $cod_gas
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($cod_gas)
     {
-        $gasto = Gasto::find($id)->delete();
+        $gasto = Gasto::find($cod_gas)->delete();
 
         return redirect()->route('gastos.index')
             ->with('success', 'Gasto deleted successfully');

@@ -38,11 +38,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Promedio de combustible') }}
-<<<<<<< HEAD
             {{ Form::number('cont_cam', $camione->cont_cam, ['class' => 'form-control' . ($errors->has('cont_cam') ? ' is-invalid' : ''), 'min' => 0, 'step' => 'any','placeholder' => '']) }}
-=======
-            {{ Form::text('cont_cam', $camione->cont_cam, ['class' => 'form-control' . ($errors->has('cont_cam') ? ' is-invalid' : '')]) }}
->>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
             {!! $errors->first('cont_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
