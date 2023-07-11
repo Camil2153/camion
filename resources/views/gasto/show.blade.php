@@ -36,8 +36,8 @@
                             {{ $gasto->categoriasGasto->nom_cat_gas }}
                         </div>
                         <div class="form-group">
-                            <strong>Ruta:</strong>
-                            {{ $gasto->ruta->nom_rut }}
+                            <strong>Viaje:</strong>
+                            {{ $gasto->via_gas }}
                         </div>
                         <div class="form-group">
                             <strong>Empresa:</strong>

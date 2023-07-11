@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\Componente;
 use Illuminate\Http\Request;
 use App\Models\Sistema;
@@ -13,6 +13,14 @@ use App\Models\Empresa;
  */
 class ComponenteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:componentes.index')->only('index');
+        $this->middleware('can:componentes.create')->only('create', 'store');
+        $this->middleware('can:componentes.show')->only('show');
+        $this->middleware('can:componentes.edit')->only('edit', 'update');
+        $this->middleware('can:componentes.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -89,14 +97,23 @@ class ComponenteController extends Controller
      * @param  Componente $componente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Componente $componente)
+    public function update(Request $request, componente $componente)
     {
-        request()->validate(Componente::$rules);
-
+        // Validar los campos del formulario, excepto 'num_ser_com'
+        $request->validate(Arr::except(componente::$rules, 'num_ser_com'));
+    
+        // Verificar si el valor de 'num_ser_com' ha cambiado
+        if ($request->input('num_ser_com') !== $componente->num_ser_com) {
+            // Validar 'num_ser_com' como único en la tabla 'componentes'
+            $request->validate([
+                'num_ser_com' => 'required|unique:componentes,num_ser_com',
+            ]);
+        }
+    
+        // Actualizar los atributos del modelo componente
         $componente->update($request->all());
-
-        return redirect()->route('componentes.index')
-            ->with('success', 'Componente updated successfully');
+    
+        return redirect()->route('componentes.index')->with('success', 'componente updated successfully');
     }
 
     /**

@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('Placa') }}
-            {{ Form::text('pla_cam', $camione->pla_cam, ['class' => 'form-control' . ($errors->has('pla_cam') ? ' is-invalid' : '')]) }}
+            {{ Form::text('pla_cam', $camione->pla_cam, ['class' => 'form-control' . ($errors->has('pla_cam') ? ' is-invalid' : ''), 'placeholder' => 'AAA111']) }}
             {!! $errors->first('pla_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Modelo') }}
-            {{ Form::text('mod_cam', $camione->mod_cam, ['class' => 'form-control' . ($errors->has('mod_cam') ? ' is-invalid' : '')]) }}
+            {{ Form::selectRange('mod_cam', date('Y') - 70, date('Y') + 1, $camione->mod_cam, ['class' => 'form-control' . ($errors->has('mod_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione un año']) }}
             {!! $errors->first('mod_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -28,17 +28,17 @@
         </div>
         <div class="form-group">
             {{ Form::label('Kilometraje') }}
-            {{ Form::text('kil_cam', $camione->kil_cam, ['class' => 'form-control' . ($errors->has('kil_cam') ? ' is-invalid' : '')]) }}
+            {{ Form::number('kil_cam', $camione->kil_cam, ['class' => 'form-control' . ($errors->has('kil_cam') ? ' is-invalid' : ''), 'step' => 1, 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
             {!! $errors->first('kil_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Capacidad') }}
-            {{ Form::text('cap_cam', $camione->cap_cam, ['class' => 'form-control' . ($errors->has('cap_cam') ? ' is-invalid' : '')]) }}
+            {{ Form::label('Capacidad (Toneladas)') }}
+            {{ Form::number('cap_cam', $camione->cap_cam, ['class' => 'form-control' . ($errors->has('cap_cam') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
             {!! $errors->first('cap_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Contenido') }}
-            {{ Form::text('cont_cam', $camione->cont_cam, ['class' => 'form-control' . ($errors->has('cont_cam') ? ' is-invalid' : '')]) }}
+            {{ Form::label('Promedio de combustible') }}
+            {{ Form::number('cont_cam', $camione->cont_cam, ['class' => 'form-control' . ($errors->has('cont_cam') ? ' is-invalid' : ''), 'min' => 0, 'step' => 'any','placeholder' => '']) }}
             {!! $errors->first('cont_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

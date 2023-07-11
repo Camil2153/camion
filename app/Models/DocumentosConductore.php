@@ -25,9 +25,10 @@ class DocumentosConductore extends Model
 {
 
     protected $primaryKey = 'num_lic_doc_con';
+    public $incrementing = false;
     
     static $rules = [
-		'num_lic_doc_con' => 'required',
+		'num_lic_doc_con' => 'required|unique:documentos_conductores',
 		'fec_ven_lic_doc_con' => 'required',
 		'cat_lic_doc_con' => 'required',
 		'eps_doc_con' => 'required',

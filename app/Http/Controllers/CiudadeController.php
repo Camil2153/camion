@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\Ciudade;
 use Illuminate\Http\Request;
 use App\Models\Paise;
@@ -12,6 +12,14 @@ use App\Models\Paise;
  */
 class CiudadeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:ciudades.index')->only('index');
+        $this->middleware('can:ciudades.create')->only('create', 'store');
+        $this->middleware('can:ciudades.show')->only('show');
+        $this->middleware('can:ciudades.edit')->only('edit', 'update');
+        $this->middleware('can:ciudades.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -86,14 +94,23 @@ class CiudadeController extends Controller
      * @param  Ciudade $ciudade
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ciudade $ciudade)
+    public function update(Request $request, ciudade $ciudade)
     {
-        request()->validate(Ciudade::$rules);
-
+        // Validar los campos del formulario, excepto 'cod_ciu'
+        $request->validate(Arr::except(ciudade::$rules, 'cod_ciu'));
+    
+        // Verificar si el valor de 'cod_ciu' ha cambiado
+        if ($request->input('cod_ciu') !== $ciudade->cod_ciu) {
+            // Validar 'cod_ciu' como único en la tabla 'ciudades'
+            $request->validate([
+                'cod_ciu' => 'required|unique:ciudades,cod_ciu',
+            ]);
+        }
+    
+        // Actualizar los atributos del modelo ciudade
         $ciudade->update($request->all());
-
-        return redirect()->route('ciudades.index')
-            ->with('success', 'Ciudade updated successfully');
+    
+        return redirect()->route('ciudades.index')->with('success', 'ciudade updated successfully');
     }
 
     /**

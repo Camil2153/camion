@@ -26,9 +26,10 @@ class Componente extends Model
 {
 
     protected $primaryKey = 'num_ser_com';
+    public $incrementing = false;
     
     static $rules = [
-		'num_ser_com' => 'required',
+		'num_ser_com' => 'required|unique:componentes',
 		'nom_com' => 'required',
 		'mar_com' => 'required',
 		'desc_com' => 'required',

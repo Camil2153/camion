@@ -29,9 +29,10 @@ class Almacene extends Model
 {
 
     protected $primaryKey = 'cod_alm';
+    public $incrementing = false;
     
     static $rules = [
-		'cod_alm' => 'required',
+		'cod_alm' => 'required|unique:almacenes',
 		'com_alm' => 'required',
 		'cat_alm' => 'required',
 		'can_alm' => 'required',

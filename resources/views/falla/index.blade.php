@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Lista de Fallas</h1>
+    <h1>Lista de fallas</h1>
 
     <div class="float-right">
                                 <a href="{{ route('fallas.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
@@ -16,55 +16,54 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-      
-										<th>Codigo</th>
-										<th>Componente</th>
-										<th>Descripcion</th>
-										<th>Fecha</th>
-										<th>Kilometraje</th>
-										<th>Tiempo inactividad (hrs)</th>
-										<th>Gravedad</th>
-										<th>Estado actual</th>
-										<th>Responsable deteccion</th>
-										<th>Responsable reparacion</th>
-										<th>Acciones</th>
-										<th>Costo</th>
-										<th>Camion</th>
-										<th>Taller</th>
-										<th>Empresa</th>
 
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($fallas as $falla)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            
-											<td>{{ $falla->cod_fal }}</td>
-											<td>{{ $falla->com_fal }}</td>
-											<td>{{ $falla->des_fal }}</td>
-											<td>{{ $falla->fec_fal }}</td>
-											<td>{{ $falla->kil_fal }}</td>
-											<td>{{ $falla->tie_ina_fal }}</td>
-											<td>{{ $falla->gra_fal }}</td>
-											<td>{{ $falla->est_act_fal }}</td>
-											<td>{{ $falla->res_det_fal }}</td>
-											<td>{{ $falla->res_rep_fal }}</td>
-											<td>{{ $falla->acc_fal }}</td>
-											<td>{{ $falla->cos_fal }}</td>
-											<td>{{ $falla->cam_fal }}</td>
-											<td>{{ $falla->tal_fal }}</td>
-											<td>{{ $falla->emp_fal }}</td>
+                <th>Código</th>
+                <th>Componente</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Kilometraje</th>
+                <th>Tiempo de Inactividad</th>
+                <th>Gravedad</th>
+                <th>Estado Actual</th>
+                <th>Responsable de Detección</th>
+                <th>Responsable de Reparación</th>
+                <th>Acciones</th>
+                <th>Costo</th>
+                <th>Camion</th>
+                <th>Taller</th>
+                <th>Empresa</th>
+                <th>Acciones</th>
 
-                                            <td>
-                                                <form action="{{ route('fallas.destroy',$falla->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('fallas.show',$falla->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('fallas.edit',$falla->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
-                                                    </form>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($fallas as $falla)
+                <tr>
+
+                    <td>{{ $falla->cod_fal }}</td>
+                    <td>{{ $falla->com_fal }}</td>
+                    <td>{{ $falla->desc_fal }}</td>
+                    <td>{{ $falla->fec_fal }}</td>
+                    <td>{{ $falla->kil_fal }}</td>
+                    <td>{{ $falla->tie_ina_fal }}</td>
+                    <td>{{ $falla->gra_fal }}</td>
+                    <td>{{ $falla->est_act_fal }}</td>
+                    <td>{{ $falla->res_det_fal }}</td>
+                    <td>{{ $falla->res_rep_fal }}</td>
+                    <td>{{ $falla->acc_fal }}</td>
+                    <td>{{ $falla->cos_fal }}</td>
+                    <td>{{ $falla->cam_fal }}</td>
+                    <td>{{ $falla->tallere->nom_tal }}</td>
+                    <td>{{ $falla->empresa->nom_emp }}</td>
+
+                    <td>
+                        <form action="{{ route('fallas.destroy',$falla->cod_fal) }}" method="POST">
+                            <a class="btn btn-sm btn-secundary" href="{{ route('fallas.show',$falla->cod_fal) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>
+                            <a class="btn btn-sm btn-secundary" href="{{ route('fallas.edit',$falla->cod_fal) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-secundary btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('') }}</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
@@ -104,4 +103,3 @@
         });
     </script>
 @stop
-

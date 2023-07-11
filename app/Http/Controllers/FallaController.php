@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\Falla;
 use Illuminate\Http\Request;
 use App\Models\Componente;
@@ -15,6 +15,14 @@ use App\Models\Empresa;
  */
 class FallaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:fallas.index')->only('index');
+        $this->middleware('can:fallas.create')->only('create', 'store');
+        $this->middleware('can:fallas.show')->only('show');
+        $this->middleware('can:fallas.edit')->only('edit', 'update');
+        $this->middleware('can:fallas.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -37,7 +45,7 @@ class FallaController extends Controller
     {
         $falla = new Falla();
         $componentes = Componente::pluck('nom_com', 'num_ser_com');
-        $camiones = Camione::pluck('pla_cam');
+        $camiones = Camione::pluck('pla_cam', 'pla_cam');
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
         return view('falla.create', compact('falla', 'componentes', 'camiones', 'talleres', 'empresas'));
@@ -82,7 +90,7 @@ class FallaController extends Controller
     {
         $falla = Falla::find($cod_fal);
         $componentes = Componente::pluck('nom_com', 'num_ser_com');
-        $camiones = Camione::pluck('pla_cam');
+        $camiones = Camione::pluck('pla_cam', 'pla_cam');
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
         return view('falla.edit', compact('falla', 'componentes', 'camiones', 'talleres', 'empresas'));
@@ -95,14 +103,23 @@ class FallaController extends Controller
      * @param  Falla $falla
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Falla $falla)
+    public function update(Request $request, falla $falla)
     {
-        request()->validate(Falla::$rules);
-
+        // Validar los campos del formulario, excepto 'cod_fal'
+        $request->validate(Arr::except(falla::$rules, 'cod_fal'));
+    
+        // Verificar si el valor de 'cod_fal' ha cambiado
+        if ($request->input('cod_fal') !== $falla->cod_fal) {
+            // Validar 'cod_fal' como único en la tabla 'fallas'
+            $request->validate([
+                'cod_fal' => 'required|unique:fallas,cod_fal',
+            ]);
+        }
+    
+        // Actualizar los atributos del modelo falla
         $falla->update($request->all());
-
-        return redirect()->route('fallas.index')
-            ->with('success', 'Falla updated successfully');
+    
+        return redirect()->route('fallas.index')->with('success', 'falla updated successfully');
     }
 
     /**

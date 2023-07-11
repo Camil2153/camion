@@ -16,8 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-                <th>No</th>
-                
+
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Pais</th>
@@ -28,8 +27,7 @@
         <tbody>
             @foreach ($ciudades as $ciudade)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    
+
                     <td>{{ $ciudade->cod_ciu }}</td>
                     <td>{{ $ciudade->nom_ciu }}</td>
                     <td>{{ $ciudade->paise->nom_pai }}</td>

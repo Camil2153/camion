@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Editar Documento</h1>
+    <h1>Editar Documento de Camion</h1>
 @stop
 
 @section('content')
@@ -14,11 +14,8 @@
                 @includeif('partials.errors')
 
                 <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Documentos Camione</span>
-                    </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('documentos-camiones.update', $documentosCamione->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('documentos-camiones.update', $documentosCamione->cod_doc_cam) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 
@@ -30,4 +27,12 @@
             </div>
         </div>
     </section>
-@endsection
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop

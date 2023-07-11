@@ -12,62 +12,59 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Servicio</span>
-                        </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('servicios.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-secundary border border-secondary btn-sm" href="{{ route('servicios.index') }}"> {{ __('Volver') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Cod Ser:</strong>
+                            <strong>Código:</strong>
                             {{ $servicio->cod_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Tip Ser Ser:</strong>
-                            {{ $servicio->tip_ser_ser }}
+                            <strong>Tipo de Servicio:</strong>
+                            {{ $servicio->tiposServicio->nom_tip_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Cam Ser:</strong>
+                            <strong>Camion:</strong>
                             {{ $servicio->cam_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Des Tip Ser:</strong>
-                            {{ $servicio->des_tip_ser }}
+                            <strong>Descripción:</strong>
+                            {{ $servicio->desc_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Fec Ser:</strong>
+                            <strong>Fecha:</strong>
                             {{ $servicio->fec_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Kil Ser:</strong>
+                            <strong>Kilometraje:</strong>
                             {{ $servicio->kil_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Cos Ser:</strong>
+                            <strong>Costo:</strong>
                             {{ $servicio->cos_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Res Ser:</strong>
+                            <strong>Responsable:</strong>
                             {{ $servicio->res_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Tal Ser:</strong>
-                            {{ $servicio->tal_ser }}
+                            <strong>Taller:</strong>
+                            {{ $servicio->tallere->nom_tal }}
                         </div>
                         <div class="form-group">
-                            <strong>Emp Ser:</strong>
-                            {{ $servicio->emp_ser }}
+                            <strong>Empresa:</strong>
+                            {{ $servicio->empresa->nom_emp }}
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
-        </section>
+    </section>
 @stop
 
 @section('css')

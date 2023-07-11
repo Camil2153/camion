@@ -37,7 +37,11 @@
                         </div>
                         <div class="form-group">
                             <strong>Estado:</strong>
-                            {{ $camione->est_cam }}
+                            <span class="estado-camion {{ str_replace(' ', '-', $camione->est_cam) }}">
+                                <div class="estado-camion-box">
+                                    {{ $camione->est_cam }}
+                                </div>
+                            </span>
                         </div>
                         <div class="form-group">
                             <strong>Kilometraje:</strong>
@@ -48,7 +52,7 @@
                             {{ $camione->cap_cam }}
                         </div>
                         <div class="form-group">
-                            <strong>Contenido:</strong>
+                            <strong>Promedio de combustible:</strong>
                             {{ $camione->cont_cam }}
                         </div>
                         <div class="form-group">
@@ -59,7 +63,7 @@
                             <strong>Empresa:</strong>
                             {{ $camione->empresa->nom_emp }}
                         </div>
-
+                        
                     </div>
                 </div>
             </div>
@@ -69,6 +73,25 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .estado-camion.disponible {
+            background-color: green;
+            color: white;
+        }
+        .estado-camion.en-mantenimiento {
+            background-color: yellow;
+            color: black;
+        }
+        .estado-camion.fuera-de-servicio {
+            background-color: red;
+            color: white;
+        }
+        .estado-camion-box {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+    </style>
 @stop
 
 @section('js')

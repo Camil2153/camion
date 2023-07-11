@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('Código') }}
-            {{ Form::text('cod_tip_ser', $tiposServicio->cod_tip_ser, ['class' => 'form-control' . ($errors->has('cod_tip_ser') ? ' is-invalid' : '')]) }}
+            {{ Form::text('cod_tip_ser', $tiposServicio->cod_tip_ser, ['class' => 'form-control' . ($errors->has('cod_tip_ser') ? ' is-invalid' : ''), 'pattern' => '[0-9]{4}', 'maxlength' => '4', 'placeholder' => '1111']) }}
             {!! $errors->first('cod_tip_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

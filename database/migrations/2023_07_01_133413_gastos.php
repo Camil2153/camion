@@ -18,17 +18,17 @@ return new class extends Migration
             $table->string('cat_gas', 4); // Primera columna de clave foránea
 
             // Definición de la relación con la tabla de ciudades para la primera columna
-            $table->foreign('cat_gas')->references('cod_cat_gas')->on('categorias_gastos');
+            $table->foreign('cat_gas')->references('cod_cat_gas')->on('categorias_gastos');           
 
-            $table->string('rut_gas', 4); // Segunda columna de clave foránea
+            $table->string('via_gas', 4); // Segunda columna de clave foránea
 
-            // Definición de la relación con la tabla de ciudades para la segunda columna
-            $table->foreign('rut_gas')->references('cod_rut')->on('rutas');            
+            // Definición de la relación con la tabla de empresas para la segunda columna
+            $table->foreign('via_gas')->references('cod_via')->on('viajes'); 
 
             $table->string('emp_gas', 15); // Tercera columna de clave foránea
 
             // Definición de la relación con la tabla de empresas para la tercera columna
-            $table->foreign('emp_gas')->references('nit_emp')->on('empresas'); 
+            $table->foreign('emp_gas')->references('nit_emp')->on('empresas');
 
             $table->timestamps();
         }); 

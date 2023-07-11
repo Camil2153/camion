@@ -11,14 +11,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property $mon_gas
  * @property $fec_gas
  * @property $cat_gas
- * @property $rut_gas
+ * @property $via_gas
  * @property $emp_gas
  * @property $created_at
  * @property $updated_at
  *
  * @property CategoriasGasto $categoriasGasto
  * @property Empresa $empresa
- * @property Ruta $ruta
+ * @property Viaje $viaje
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -26,13 +26,14 @@ class Gasto extends Model
 {
     
     protected $primaryKey = 'cod_gas';
+    public $incrementing = false;
 
     static $rules = [
-		'cod_gas' => 'required',
+		'cod_gas' => 'required|unique:gastos',
 		'mon_gas' => 'required',
 		'fec_gas' => 'required',
 		'cat_gas' => 'required',
-		'rut_gas' => 'required',
+		'via_gas' => 'required',
 		'emp_gas' => 'required',
     ];
 
@@ -43,7 +44,7 @@ class Gasto extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_gas','mon_gas','fec_gas','cat_gas','rut_gas','emp_gas'];
+    protected $fillable = ['cod_gas','mon_gas','fec_gas','cat_gas','via_gas','emp_gas'];
 
 
     /**
@@ -65,9 +66,9 @@ class Gasto extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function ruta()
+    public function viaje()
     {
-        return $this->hasOne('App\Models\Ruta', 'cod_rut', 'rut_gas');
+        return $this->hasOne('App\Models\Viaje', 'cod_via', 'via_gas');
     }
     
 

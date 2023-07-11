@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('Código') }}
-            {{ Form::text('cod_ciu', $ciudade->cod_ciu, ['class' => 'form-control' . ($errors->has('cod_ciu') ? ' is-invalid' : '')]) }}
+            {{ Form::text('cod_ciu', $ciudade->cod_ciu, ['class' => 'form-control' . ($errors->has('cod_ciu') ? ' is-invalid' : ''), 'maxlength' => '3', 'pattern' => '[0-9]{1,3}', 'placeholder' => '111']) }}
             {!! $errors->first('cod_ciu', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\Paise;
 use Illuminate\Http\Request;
 
@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
  */
 class PaiseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:paises.index')->only('index');
+        $this->middleware('can:paises.create')->only('create', 'store');
+        $this->middleware('can:paises.show')->only('show');
+        $this->middleware('can:paises.edit')->only('edit', 'update');
+        $this->middleware('can:paises.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -84,14 +92,23 @@ class PaiseController extends Controller
      * @param  Paise $paise
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Paise $paise)
+    public function update(Request $request, paise $paise)
     {
-        request()->validate(Paise::$rules);
-
+        // Validar los campos del formulario, excepto 'cod_pai'
+        $request->validate(Arr::except(paise::$rules, 'cod_pai'));
+    
+        // Verificar si el valor de 'cod_pai' ha cambiado
+        if ($request->input('cod_pai') !== $paise->cod_pai) {
+            // Validar 'cod_pai' como único en la tabla 'paises'
+            $request->validate([
+                'cod_pai' => 'required|unique:paises,cod_pai',
+            ]);
+        }
+    
+        // Actualizar los atributos del modelo paise
         $paise->update($request->all());
-
-        return redirect()->route('paises.index')
-            ->with('success', 'Paise updated successfully');
+    
+        return redirect()->route('paises.index')->with('success', 'paise updated successfully');
     }
 
     /**

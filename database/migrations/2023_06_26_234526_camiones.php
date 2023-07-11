@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('tip_cam', 20);
             $table->string('est_cam', 20);
             $table->integer('kil_cam');
-            $table->integer('cap_cam');
-            $table->integer('cont_cam');
+            $table->float('cap_cam');
+            $table->float('cont_cam');
             $table->string('con_cam', 20); // Corregido: usar tipo de dato string
         
             // Definición de la relación con la tabla de paises para la columna pai_emp

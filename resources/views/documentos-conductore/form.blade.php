@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('Número de Licencia') }}
-            {{ Form::text('num_lic_doc_con', $documentosConductore->num_lic_doc_con, ['class' => 'form-control' . ($errors->has('num_lic_doc_con') ? ' is-invalid' : '')]) }}
+            {{ Form::text('num_lic_doc_con', $documentosConductore->num_lic_doc_con, ['class' => 'form-control' . ($errors->has('num_lic_doc_con') ? ' is-invalid' : ''), 'pattern' => '[0-9]{10}', 'maxlength' => '10', 'placeholder' => 'inserte numero de licencia sin puntos ni comas']) }}
             {!! $errors->first('num_lic_doc_con', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

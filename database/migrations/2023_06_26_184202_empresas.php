@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('empresas', function (Blueprint $table) {
-            $table->string('nit_emp', 15)->primary();
+            $table->string('nit_emp', 10)->primary();
             $table->string('nom_emp', 45);
             $table->string('dir_emp', 45);
             $table->string('pai_emp', 2); // Corregido: usar tipo de dato string

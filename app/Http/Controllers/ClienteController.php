@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use App\Models\Ciudade;
@@ -13,6 +13,14 @@ use App\Models\Empresa;
  */
 class ClienteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:clientes.index')->only('index');
+        $this->middleware('can:clientes.create')->only('create', 'store');
+        $this->middleware('can:clientes.show')->only('show');
+        $this->middleware('can:clientes.edit')->only('edit', 'update');
+        $this->middleware('can:clientes.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -89,16 +97,24 @@ class ClienteController extends Controller
      * @param  Cliente $cliente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request, cliente $cliente)
     {
-        request()->validate(Cliente::$rules);
-
+        // Validar los campos del formulario, excepto 'cod_cli'
+        $request->validate(Arr::except(cliente::$rules, 'cod_cli'));
+    
+        // Verificar si el valor de 'cod_cli' ha cambiado
+        if ($request->input('cod_cli') !== $cliente->cod_cli) {
+            // Validar 'cod_cli' como único en la tabla 'clientes'
+            $request->validate([
+                'cod_cli' => 'required|unique:clientes,cod_cli',
+            ]);
+        }
+    
+        // Actualizar los atributos del modelo cliente
         $cliente->update($request->all());
-
-        return redirect()->route('clientes.index')
-            ->with('success', 'Cliente updated successfully');
+    
+        return redirect()->route('clientes.index')->with('success', 'cliente updated successfully');
     }
-
     /**
      * @param string $cod_cli
      * @return \Illuminate\Http\RedirectResponse

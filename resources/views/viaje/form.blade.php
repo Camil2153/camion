@@ -2,73 +2,73 @@
     <div class="box-body">
         
         <div class="form-group">
-            {{ Form::label('Codigo') }}
-            {{ Form::text('cod_via', $viaje->cod_via, ['class' => 'form-control' . ($errors->has('cod_via') ? ' is-invalid' : ''), 'placeholder' => 'Cod Via']) }}
+            {{ Form::label('Código') }}
+            {{ Form::text('cod_via', $viaje->cod_via, ['class' => 'form-control' . ($errors->has('cod_via') ? ' is-invalid' : ''), 'maxlength' => '4', 'pattern' => '[0-9]{4}', 'placeholder' => '1111']) }}
             {!! $errors->first('cod_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Carga') }}
-            {{ Form::text('car_via', $viaje->car_via, ['class' => 'form-control' . ($errors->has('car_via') ? ' is-invalid' : ''), 'placeholder' => 'Car Via']) }}
+            {{ Form::text('car_via', $viaje->car_via, ['class' => 'form-control' . ($errors->has('car_via') ? ' is-invalid' : '')]) }}
             {!! $errors->first('car_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Peso') }}
-            {{ Form::text('pes_via', $viaje->pes_via, ['class' => 'form-control' . ($errors->has('pes_via') ? ' is-invalid' : ''), 'placeholder' => 'Pes Via']) }}
+            {{ Form::label('Peso (T)') }}
+            {{ Form::number('pes_via', $viaje->pes_via, ['class' => 'form-control' . ($errors->has('pes_via') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
             {!! $errors->first('pes_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Estado') }}
-            {{ Form::select('est_cam', ['disponible' => 'Programado', 'En progreso' => 'Completado', 'Cancelado'], $viaje->est_cam, ['class' => 'form-control' . ($errors->has('est_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
-            {!! $errors->first('est_cam', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::select('est_via', ['programado' => 'Programado', 'en progreso' => 'En progreso', 'completado' => 'Completado', 'cancelado' => 'Cancelado'], $viaje->est_via, ['class' => 'form-control' . ($errors->has('est_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
+            {!! $errors->first('est_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Fecha de salida') }}
-            {{ Form::text('fec_sal_via', $viaje->fec_sal_via, ['class' => 'form-control' . ($errors->has('fec_sal_via') ? ' is-invalid' : ''), 'placeholder' => 'Fec Sal Via']) }}
+            {{ Form::date('fec_sal_via', $viaje->fec_sal_via, ['class' => 'form-control' . ($errors->has('fec_sal_via') ? ' is-invalid' : '')]) }}
             {!! $errors->first('fec_sal_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Hora de salida') }}
-            {{ Form::text('hor_sal_via', $viaje->hor_sal_via, ['class' => 'form-control' . ($errors->has('hor_sal_via') ? ' is-invalid' : ''), 'placeholder' => 'Hor Sal Via']) }}
+            {{ Form::label('Hora de Salida') }}
+            {{ Form::time('hor_sal_via', $viaje->hor_sal_via, ['class' => 'form-control' . ($errors->has('hor_sal_via') ? ' is-invalid' : '')]) }}
             {!! $errors->first('hor_sal_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Fecha de llegada') }}
-            {{ Form::text('fec_lle_via', $viaje->fec_lle_via, ['class' => 'form-control' . ($errors->has('fec_lle_via') ? ' is-invalid' : ''), 'placeholder' => 'Fec Lle Via']) }}
+            {{ Form::label('Fecha de Llegada') }}
+            {{ Form::date('fec_lle_via', $viaje->fec_lle_via, ['class' => 'form-control' . ($errors->has('fec_lle_via') ? ' is-invalid' : '')]) }}
             {!! $errors->first('fec_lle_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Hora de llegada') }}
-            {{ Form::text('hor_lle_via', $viaje->hor_lle_via, ['class' => 'form-control' . ($errors->has('hor_lle_via') ? ' is-invalid' : ''), 'placeholder' => 'Hor Lle Via']) }}
+            {{ Form::label('Hora de Llegada') }}
+            {{ Form::time('hor_lle_via', $viaje->hor_lle_via, ['class' => 'form-control' . ($errors->has('hor_lle_via') ? ' is-invalid' : '')]) }}
             {!! $errors->first('hor_lle_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Kilometraje') }}
-            {{ Form::text('kil_via', $viaje->kil_via, ['class' => 'form-control' . ($errors->has('kil_via') ? ' is-invalid' : ''), 'placeholder' => 'Kil Via']) }}
+            {{ Form::number('kil_via', $viaje->kil_via, ['class' => 'form-control' . ($errors->has('kil_via') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
             {!! $errors->first('kil_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Consumo de combustible') }}
-            {{ Form::text('com_via', $viaje->com_via, ['class' => 'form-control' . ($errors->has('com_via') ? ' is-invalid' : ''), 'placeholder' => 'Com Via']) }}
+            {{ Form::label('Combustible (Galones)') }}
+            {{ Form::text('com_via', $viaje->com_via, ['class' => 'form-control' . ($errors->has('com_via') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
             {!! $errors->first('com_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Camion asignado') }}
-            {{ Form::select('cam_via', $camiones, $viaje->cam_via, ['class' => 'form-control' . ($errors->has('cam_via') ? ' is-invalid' : ''), 'placeholder' => 'Cam Via']) }}
+            {{ Form::label('Camion') }}
+            {{ Form::select('cam_via', $camiones, $viaje->cam_via, ['class' => 'form-control' . ($errors->has('cam_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion']) }}
             {!! $errors->first('cam_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Cliente') }}
-            {{ Form::select('cli_via', $clientes, $viaje->cli_via, ['class' => 'form-control' . ($errors->has('cli_via') ? ' is-invalid' : ''), 'placeholder' => 'Cli Via']) }}
+            {{ Form::select('cli_via', $clientes, $viaje->cli_via, ['class' => 'form-control' . ($errors->has('cli_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar cliente']) }}
             {!! $errors->first('cli_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Ruta') }}
-            {{ Form::select('rut_via', $rutas, $viaje->rut_via, ['class' => 'form-control' . ($errors->has('rut_via') ? ' is-invalid' : ''), 'placeholder' => 'Rut Via']) }}
+            {{ Form::select('rut_via', $rutas, $viaje->rut_via, ['class' => 'form-control' . ($errors->has('rut_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar ruta']) }}
             {!! $errors->first('rut_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Empresa') }}
-            {{ Form::select('emp_via', $empresas, $viaje->emp_via, ['class' => 'form-control' . ($errors->has('emp_via') ? ' is-invalid' : ''), 'placeholder' => 'Emp Via']) }}
+            {{ Form::select('emp_via', $empresas, $viaje->emp_via, ['class' => 'form-control' . ($errors->has('emp_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
             {!! $errors->first('emp_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 

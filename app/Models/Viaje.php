@@ -33,11 +33,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Viaje extends Model
 {
-
-    protected $primaryKey = 'cod_via';
     
+    protected $primaryKey = 'cod_via';
+    public $incrementing = false;
+
     static $rules = [
-		'cod_via' => 'required',
+		'cod_via' => 'required|unique:viajes,cod_via',
 		'car_via' => 'required',
 		'pes_via' => 'required',
 		'est_via' => 'required',
@@ -94,6 +95,11 @@ class Viaje extends Model
     {
         return $this->hasOne('App\Models\Ruta', 'cod_rut', 'rut_via');
     }
+
+    public function gastos()
+{
+    return $this->hasMany(Gasto::class, 'via_gas');
+}
     
 
 }

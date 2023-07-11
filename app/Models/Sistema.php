@@ -19,9 +19,10 @@ class Sistema extends Model
 {
 
     protected $primaryKey = 'cod_sis';
+    public $incrementing = false;
     
     static $rules = [
-		'cod_sis' => 'required',
+		'cod_sis' => 'required|unique:sistemas',
 		'nom_sis' => 'required',
     ];
 

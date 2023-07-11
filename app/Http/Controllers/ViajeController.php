@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\Viaje;
 use Illuminate\Http\Request;
 use App\Models\Camione;
-use App\Models\Ruta;
 use App\Models\Cliente;
+use App\Models\Ruta;
 use App\Models\Empresa;
 
 /**
@@ -15,6 +15,14 @@ use App\Models\Empresa;
  */
 class ViajeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:viajes.index')->only('index');
+        $this->middleware('can:viajes.create')->only('create', 'store');
+        $this->middleware('can:viajes.show')->only('show');
+        $this->middleware('can:viajes.edit')->only('edit', 'update');
+        $this->middleware('can:viajes.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +44,7 @@ class ViajeController extends Controller
     public function create()
     {
         $viaje = new Viaje();
-        $camiones = Camione::pluck('pla_cam');
+        $camiones = Camione::where('est_cam', 'disponible')->pluck('pla_cam', 'pla_cam');
         $clientes = Cliente::pluck('nom_cli', 'cod_cli');
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
@@ -81,30 +89,43 @@ class ViajeController extends Controller
     public function edit($cod_via)
     {
         $viaje = Viaje::find($cod_via);
-
-        $camiones = Camione::pluck('pla_cam');
+        $camiones = Camione::where('est_cam', 'disponible')->pluck('pla_cam', 'pla_cam');
         $clientes = Cliente::pluck('nom_cli', 'cod_cli');
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('viaje.create', compact('viaje', 'camiones', 'clientes', 'rutas', 'empresas'));
+        return view('viaje.edit', compact('viaje', 'camiones', 'clientes', 'rutas', 'empresas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Viaje $viaje
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Viaje $viaje)
-    {
-        request()->validate(Viaje::$rules);
+    
+/**
+ * Update the specified resource in storage.
+ *
+ * @param  \Illuminate\Http\Request $request
+ * @param  Viaje $viaje
+ * @return \Illuminate\Http\Response
+ */
+public function update(Request $request, Viaje $viaje)
+{
+    // Validar los campos del formulario, excepto 'cod_via'
+    $request->validate(Arr::except(Viaje::$rules, 'cod_via'));
 
-        $viaje->update($request->all());
-
-        return redirect()->route('viajes.index')
-            ->with('success', 'Viaje updated successfully');
+    // Verificar si el valor de 'cod_via' ha cambiado
+    if ($request->input('cod_via') !== $viaje->cod_via) {
+        // Validar 'cod_via' como único en la tabla 'viajes'
+        $request->validate([
+            'cod_via' => 'required|unique:viajes,cod_via',
+        ]);
     }
+
+    // Actualizar los atributos del modelo Viaje
+    $viaje->update($request->all());
+
+    return redirect()->route('viajes.index')->with('success', 'Viaje updated successfully');
+}
+
+
+
+
 
     /**
      * @param string $cod_via

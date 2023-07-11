@@ -16,8 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-                <th>No</th>
-                
+
                 <th>Código</th>
                 <th>Componente</th>
                 <th>Categoria</th>
@@ -35,8 +34,7 @@
         <tbody>
             @foreach ($almacenes as $almacene)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    
+
                     <td>{{ $almacene->cod_alm }}</td>
                     <td>{{ $almacene->componente->nom_com }}</td>
                     <td>{{ $almacene->cat_alm }}</td>

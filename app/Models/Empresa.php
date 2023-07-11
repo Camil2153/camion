@@ -22,9 +22,10 @@ class Empresa extends Model
 {
 
     protected $primaryKey = 'nit_emp';
+    public $incrementing = false;
 
     static $rules = [
-		'nit_emp' => 'required',
+		'nit_emp' => 'required|unique:empresas',
 		'nom_emp' => 'required',
 		'dir_emp' => 'required',
 		'pai_emp' => 'required',

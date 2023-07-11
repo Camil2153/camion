@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\DocumentosConductore;
 use Illuminate\Http\Request;
 use App\Models\Conductore;
@@ -13,6 +13,14 @@ use App\Models\Empresa;
  */
 class DocumentosConductoreController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:documentos-conductores.index')->only('index');
+        $this->middleware('can:documentos-conductores.create')->only('create', 'store');
+        $this->middleware('can:documentos-conductores.show')->only('show');
+        $this->middleware('can:documentos-conductores.edit')->only('edit', 'update');
+        $this->middleware('can:documentos-conductores.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -89,15 +97,24 @@ class DocumentosConductoreController extends Controller
      * @param  DocumentosConductore $documentosConductore
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DocumentosConductore $documentosConductore)
-    {
-        request()->validate(DocumentosConductore::$rules);
+public function update(Request $request, documentosConductore $documentosConductore)
+{
+    // Validar los campos del formulario, excepto 'num_lic_doc_con'
+    $request->validate(Arr::except(documentosConductore::$rules, 'num_lic_doc_con'));
 
-        $documentosConductore->update($request->all());
-
-        return redirect()->route('documentos-conductores.index')
-            ->with('success', 'DocumentosConductore updated successfully');
+    // Verificar si el valor de 'num_lic_doc_con' ha cambiado
+    if ($request->input('num_lic_doc_con') !== $documentosConductore->num_lic_doc_con) {
+        // Validar 'num_lic_doc_con' como único en la tabla 'documentosConductores'
+        $request->validate([
+            'num_lic_doc_con' => 'required|unique:documentosConductores,num_lic_doc_con',
+        ]);
     }
+
+    // Actualizar los atributos del modelo documentosConductore
+    $documentosConductore->update($request->all());
+
+    return redirect()->route('documentos-conductores.index')->with('success', 'documentosConductore updated successfully');
+}
 
     /**
      * @param string $num_lic_doc_con

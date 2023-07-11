@@ -16,8 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-                <th>No</th>
-                
+ 
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Acciones</th>
@@ -27,8 +26,7 @@
         <tbody>
             @foreach ($sistemas as $sistema)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    
+               
                     <td>{{ $sistema->cod_sis }}</td>
                     <td>{{ $sistema->nom_sis }}</td>
 

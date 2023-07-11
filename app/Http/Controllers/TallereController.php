@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\Tallere;
 use Illuminate\Http\Request;
 use App\Models\Ruta;
@@ -13,6 +13,14 @@ use App\Models\Empresa;
  */
 class TallereController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:talleres.index')->only('index');
+        $this->middleware('can:talleres.create')->only('create', 'store');
+        $this->middleware('can:talleres.show')->only('show');
+        $this->middleware('can:talleres.edit')->only('edit', 'update');
+        $this->middleware('can:talleres.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -89,14 +97,23 @@ class TallereController extends Controller
      * @param  Tallere $tallere
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tallere $tallere)
+    public function update(Request $request, tallere $tallere)
     {
-        request()->validate(Tallere::$rules);
-
+        // Validar los campos del formulario, excepto 'nit_tal'
+        $request->validate(Arr::except(tallere::$rules, 'nit_tal'));
+    
+        // Verificar si el valor de 'nit_tal' ha cambiado
+        if ($request->input('nit_tal') !== $tallere->nit_tal) {
+            // Validar 'nit_tal' como único en la tabla 'talleres'
+            $request->validate([
+                'nit_tal' => 'required|unique:talleres,nit_tal',
+            ]);
+        }
+    
+        // Actualizar los atributos del modelo tallere
         $tallere->update($request->all());
-
-        return redirect()->route('talleres.index')
-            ->with('success', 'Tallere updated successfully');
+    
+        return redirect()->route('talleres.index')->with('success', 'tallere updated successfully');
     }
 
     /**

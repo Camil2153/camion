@@ -1,0 +1,29 @@
+@extends('adminlte::page')
+
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Nuevo Rol</h1>
+@stop
+
+@section('content')
+        <div class="card">
+            <div class="card-body">
+                {!! Form::open(['route' => 'roles.store']) !!}
+
+                @include('role.partials.form')
+
+                {!! Form::submit('Guardar', ['class' => 'btn btn-secundary border border-secondary btn-sm']) !!}
+                <a href="{{ route('roles.index') }}" class="btn btn-secundary border border-secondary btn-sm">Volver</a>
+                {!! Form::close() !!}
+            </div>      
+        </div>
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop

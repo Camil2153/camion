@@ -1,11 +1,11 @@
 <div class="box box-info padding-1">
     <div class="box-body">
         
-        <div class="form-group">
-            {{ Form::label('NIT') }}
-            {{ Form::text('nit_emp', $empresa->nit_emp, ['class' => 'form-control' . ($errors->has('nit_emp') ? ' is-invalid' : '')]) }}
-            {!! $errors->first('nit_emp', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
+    <div class="form-group">
+    {{ Form::label('NIT') }}
+    {{ Form::text('nit_emp', $empresa->nit_emp, ['class' => 'form-control' . ($errors->has('nit_emp') ? ' is-invalid' : ''), 'pattern' => '[0-9]{9}', 'maxlength' => '9', 'placeholder' => 'Ingrese el NIT sin guiones ni puntos']) }}
+    {!! $errors->first('nit_emp', '<div class="invalid-feedback">:message</div>') !!}
+</div>
         <div class="form-group">
             {{ Form::label('Nombre') }}
             {{ Form::text('nom_emp', $empresa->nom_emp, ['class' => 'form-control' . ($errors->has('nom_emp') ? ' is-invalid' : '')]) }}

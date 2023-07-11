@@ -16,8 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-                <th>No</th>
-                
+            
                 <th>Número de serie</th>
                 <th>Nombre</th>
                 <th>Marca</th>
@@ -32,8 +31,7 @@
         <tbody>
             @foreach ($componentes as $componente)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    
+                  
                     <td>{{ $componente->num_ser_com }}</td>
                     <td>{{ $componente->nom_com }}</td>
                     <td>{{ $componente->mar_com }}</td>

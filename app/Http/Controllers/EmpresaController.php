@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\Empresa;
 use Illuminate\Http\Request;
 use App\Models\Paise;
@@ -12,6 +12,14 @@ use App\Models\Paise;
  */
 class EmpresaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:empresas.index')->only('index');
+        $this->middleware('can:empresas.create')->only('create', 'store');
+        $this->middleware('can:empresas.show')->only('show');
+        $this->middleware('can:empresas.edit')->only('edit', 'update');
+        $this->middleware('can:empresas.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -86,14 +94,23 @@ class EmpresaController extends Controller
      * @param  Empresa $empresa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empresa $empresa)
+    public function update(Request $request, empresa $empresa)
     {
-        request()->validate(Empresa::$rules);
-
+        // Validar los campos del formulario, excepto 'nit_emp'
+        $request->validate(Arr::except(empresa::$rules, 'nit_emp'));
+    
+        // Verificar si el valor de 'nit_emp' ha cambiado
+        if ($request->input('nit_emp') !== $empresa->nit_emp) {
+            // Validar 'nit_emp' como único en la tabla 'empresas'
+            $request->validate([
+                'nit_emp' => 'required|unique:empresas,nit_emp',
+            ]);
+        }
+    
+        // Actualizar los atributos del modelo empresa
         $empresa->update($request->all());
-
-        return redirect()->route('empresas.index')
-            ->with('success', 'Empresa updated successfully');
+    
+        return redirect()->route('empresas.index')->with('success', 'empresa updated successfully');
     }
 
     /**

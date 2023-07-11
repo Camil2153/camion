@@ -12,75 +12,72 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Falla</span>
-                        </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('fallas.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-secundary border border-secondary btn-sm" href="{{ route('fallas.index') }}"> {{ __('Volver') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Cod Fal:</strong>
+                            <strong>Código:</strong>
                             {{ $falla->cod_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Com Fal:</strong>
+                            <strong>Componente:</strong>
                             {{ $falla->com_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Des Fal:</strong>
-                            {{ $falla->des_fal }}
+                            <strong>Descripción:</strong>
+                            {{ $falla->desc_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Fec Fal:</strong>
+                            <strong>Fecha:</strong>
                             {{ $falla->fec_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Kil Fal:</strong>
+                            <strong>Kilometraje:</strong>
                             {{ $falla->kil_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Tie Ina Fal:</strong>
+                            <strong>Tiempo de Inactividad:</strong>
                             {{ $falla->tie_ina_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Gra Fal:</strong>
+                            <strong>Gravedad:</strong>
                             {{ $falla->gra_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Est Act Fal:</strong>
+                            <strong>Estado Actual:</strong>
                             {{ $falla->est_act_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Res Det Fal:</strong>
+                            <strong>Responsable de Detección:</strong>
                             {{ $falla->res_det_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Res Rep Fal:</strong>
+                            <strong>Responsable de Reparación:</strong>
                             {{ $falla->res_rep_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Acc Fal:</strong>
+                            <strong>Acciones:</strong>
                             {{ $falla->acc_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Cos Fal:</strong>
+                            <strong>Costo:</strong>
                             {{ $falla->cos_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Cam Fal:</strong>
+                            <strong>Camion:</strong>
                             {{ $falla->cam_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Tal Fal:</strong>
-                            {{ $falla->tal_fal }}
+                            <strong>Taller:</strong>
+                            {{ $falla->tallere->nom_tal }}
                         </div>
                         <div class="form-group">
-                            <strong>Emp Fal:</strong>
-                            {{ $falla->emp_fal }}
+                            <strong>Empresa:</strong>
+                            {{ $falla->empresa->nom_emp }}
                         </div>
 
                     </div>
@@ -88,4 +85,12 @@
             </div>
         </div>
     </section>
-@endsection
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop

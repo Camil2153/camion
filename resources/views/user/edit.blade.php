@@ -29,7 +29,8 @@
                         </label>
                     </div>
                 @endforeach
-                {!! Form::submit('Asignar rol', ['class' => 'btn btn-secondary border border-secondary btn-sm']) !!}
+                {!! Form::submit('Asignar rol', ['class' => 'btn btn-secundary border border-secondary btn-sm']) !!}
+                <a href="{{ route('users.index') }}" class="btn btn-secundary border border-secondary btn-sm">Volver</a>
             {!! Form::close() !!}
         </div>
     </div>

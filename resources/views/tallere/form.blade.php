@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('NIT') }}
-            {{ Form::text('nit_tal', $tallere->nit_tal, ['class' => 'form-control' . ($errors->has('nit_tal') ? ' is-invalid' : '')]) }}
+            {{ Form::text('nit_tal', $tallere->nit_tal, ['class' => 'form-control' . ($errors->has('nit_tal') ? ' is-invalid' : ''), 'pattern' => '[0-9]{9}', 'maxlength' => '9', 'placeholder' => 'Ingrese el NIT sin guiones ni puntos']) }}
             {!! $errors->first('nit_tal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -28,7 +28,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Número de Contacto') }}
-            {{ Form::text('num_con_tal', $tallere->num_con_tal, ['class' => 'form-control' . ($errors->has('num_con_tal') ? ' is-invalid' : '')]) }}
+            {{ Form::text('num_con_tal', $tallere->num_con_tal, ['class' => 'form-control' . ($errors->has('num_con_tal') ? ' is-invalid' : ''), 'pattern' => '[0-9]{10}', 'maxlength' => '10']) }}
             {!! $errors->first('num_con_tal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

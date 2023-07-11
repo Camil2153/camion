@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\Sistema;
 use Illuminate\Http\Request;
 
@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
  */
 class SistemaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:sistemas.index')->only('index');
+        $this->middleware('can:sistemas.create')->only('create', 'store');
+        $this->middleware('can:sistemas.show')->only('show');
+        $this->middleware('can:sistemas.edit')->only('edit', 'update');
+        $this->middleware('can:sistemas.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -84,14 +92,23 @@ class SistemaController extends Controller
      * @param  Sistema $sistema
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sistema $sistema)
+    public function update(Request $request, sistema $sistema)
     {
-        request()->validate(Sistema::$rules);
-
+        // Validar los campos del formulario, excepto 'cod_sis'
+        $request->validate(Arr::except(sistema::$rules, 'cod_sis'));
+    
+        // Verificar si el valor de 'cod_sis' ha cambiado
+        if ($request->input('cod_sis') !== $sistema->cod_sis) {
+            // Validar 'cod_sis' como único en la tabla 'sistemas'
+            $request->validate([
+                'cod_sis' => 'required|unique:sistemas,cod_sis',
+            ]);
+        }
+    
+        // Actualizar los atributos del modelo sistema
         $sistema->update($request->all());
-
-        return redirect()->route('sistemas.index')
-            ->with('success', 'Sistema updated successfully');
+    
+        return redirect()->route('sistemas.index')->with('success', 'sistema updated successfully');
     }
 
     /**

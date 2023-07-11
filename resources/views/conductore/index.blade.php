@@ -16,8 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-                <th>No</th>
-                
+  
                 <th>DNI</th>
                 <th>Nombre</th>
                 <th>Fecha de nacimiento</th>
@@ -32,8 +31,7 @@
         <tbody>
             @foreach ($conductores as $conductore)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    
+              
                     <td>{{ $conductore->dni_con }}</td>
                     <td>{{ $conductore->nom_con }}</td>
                     <td>{{ $conductore->fec_nac_con }}</td>

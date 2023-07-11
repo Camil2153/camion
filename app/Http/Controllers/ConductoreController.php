@@ -1,13 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\Conductore;
 use Illuminate\Http\Request;
 use App\Models\Empresa;
 
 class ConductoreController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:conductores.index')->only('index');
+        $this->middleware('can:conductores.create')->only('create', 'store');
+        $this->middleware('can:conductores.show')->only('show');
+        $this->middleware('can:conductores.edit')->only('edit', 'update');
+        $this->middleware('can:conductores.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -93,22 +101,24 @@ class ConductoreController extends Controller
      * @param  string $dni_con
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $dni_con)
+    public function update(Request $request, conductore $conductore)
     {
-        request()->validate(Conductore::$rules);
-
-        $conductore = Conductore::where('dni_con', $dni_con)->first();
-
-        if ($conductore) {
-            $conductore->update($request->all());
-            return redirect()->route('conductores.index')
-                ->with('success', 'Conductor actualizado exitosamente');
+        // Validar los campos del formulario, excepto 'dni_con'
+        $request->validate(Arr::except(conductore::$rules, 'dni_con'));
+    
+        // Verificar si el valor de 'dni_con' ha cambiado
+        if ($request->input('dni_con') !== $conductore->dni_con) {
+            // Validar 'dni_con' como único en la tabla 'conductores'
+            $request->validate([
+                'dni_con' => 'required|unique:conductores,dni_con',
+            ]);
         }
-
-        return redirect()->route('conductores.index')
-            ->with('error', 'No se encontró el conductor');
+    
+        // Actualizar los atributos del modelo conductore
+        $conductore->update($request->all());
+    
+        return redirect()->route('conductores.index')->with('success', 'conductore updated successfully');
     }
-
     /**
      * Remove the specified resource from storage.
      *

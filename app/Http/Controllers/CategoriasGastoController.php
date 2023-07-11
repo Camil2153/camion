@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\CategoriasGasto;
 use Illuminate\Http\Request;
 use App\Models\Empresa;
@@ -12,6 +12,14 @@ use App\Models\Empresa;
  */
 class CategoriasGastoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:categorias-gastos.index')->only('index');
+        $this->middleware('can:categorias-gastos.create')->only('create', 'store');
+        $this->middleware('can:categorias-gastos.show')->only('show');
+        $this->middleware('can:categorias-gastos.edit')->only('edit', 'update');
+        $this->middleware('can:categorias-gastos.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -86,14 +94,23 @@ class CategoriasGastoController extends Controller
      * @param  CategoriasGasto $categoriasGasto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CategoriasGasto $categoriasGasto)
+    public function update(Request $request, categoriasGasto $categoriasGasto)
     {
-        request()->validate(CategoriasGasto::$rules);
-
+        // Validar los campos del formulario, excepto 'cod_cat_gas'
+        $request->validate(Arr::except(categoriasGasto::$rules, 'cod_cat_gas'));
+    
+        // Verificar si el valor de 'cod_cat_gas' ha cambiado
+        if ($request->input('cod_cat_gas') !== $categoriasGasto->cod_cat_gas) {
+            // Validar 'cod_cat_gas' como único en la tabla 'categoriasGastos'
+            $request->validate([
+                'cod_cat_gas' => 'required|unique:categoriasGastos,cod_cat_gas',
+            ]);
+        }
+    
+        // Actualizar los atributos del modelo categoriasGasto
         $categoriasGasto->update($request->all());
-
-        return redirect()->route('categorias-gastos.index')
-            ->with('success', 'CategoriasGasto updated successfully');
+    
+        return redirect()->route('categorias-gastos.index')->with('success', 'categoriasGasto updated successfully');
     }
 
     /**

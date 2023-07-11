@@ -16,8 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-                <th>No</th>
-                
+
                 <th>Placa</th>
                 <th>Marca</th>
                 <th>Modelo</th>
@@ -25,7 +24,7 @@
                 <th>Estado</th>
                 <th>Kilometraje</th>
                 <th>Capacidad</th>
-                <th>Contenido</th>
+                <th>Promedio de Combustible</th>
                 <th>Conductor</th>
                 <th>Empresa</th>
                 <th>Acciones</th>
@@ -35,13 +34,22 @@
         <tbody>
             @foreach ($camiones as $camione)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    
+
                     <td>{{ $camione->pla_cam }}</td>
                     <td>{{ $camione->mar_cam }}</td>
                     <td>{{ $camione->mod_cam }}</td>
                     <td>{{ $camione->tip_cam }}</td>
-                    <td>{{ $camione->est_cam }}</td>
+                    <td>
+            @if ($camione->est_cam == 'disponible')
+                <span class="badge badge-success">{{ $camione->est_cam }}</span>
+            @elseif ($camione->est_cam == 'fuera de servicio')
+                <span class="badge badge-danger">{{ $camione->est_cam }}</span>
+            @elseif ($camione->est_cam == 'en mantenimiento')
+                <span class="badge badge-warning">{{ $camione->est_cam }}</span>
+            @else
+                {{ $camione->est_cam }}
+            @endif
+        </td>
                     <td>{{ $camione->kil_cam }}</td>
                     <td>{{ $camione->cap_cam }}</td>
                     <td>{{ $camione->cont_cam }}</td>

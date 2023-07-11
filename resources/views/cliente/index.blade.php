@@ -16,8 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-                <th>No</th>
-                
+
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Nombre Comercial</th>
@@ -33,8 +32,7 @@
         <tbody>
             @foreach ($clientes as $cliente)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    
+
                     <td>{{ $cliente->cod_cli }}</td>
                     <td>{{ $cliente->nom_cli }}</td>
                     <td>{{ $cliente->nom_com_cli }}</td>

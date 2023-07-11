@@ -16,8 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-                <th>No</th>
-                
+
                 <th>NIT</th>
                 <th>Nombre</th>
                 <th>Dirección</th>
@@ -29,8 +28,7 @@
         <tbody>
             @foreach ($empresas as $empresa)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    
+
                     <td>{{ $empresa->nit_emp }}</td>
                     <td>{{ $empresa->nom_emp }}</td>
                     <td>{{ $empresa->dir_emp }}</td>

@@ -16,8 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-                <th>No</th>
-                
+ 
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
@@ -31,8 +30,7 @@
         <tbody>
             @foreach ($tiposServicios as $tiposServicio)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    
+
                     <td>{{ $tiposServicio->cod_tip_ser }}</td>
                     <td>{{ $tiposServicio->nom_tip_ser }}</td>
                     <td>{{ $tiposServicio->desc_tip_ser }}</td>

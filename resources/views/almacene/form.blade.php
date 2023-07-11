@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('Código') }}
-            {{ Form::text('cod_alm', $almacene->cod_alm, ['class' => 'form-control' . ($errors->has('cod_alm') ? ' is-invalid' : '')]) }}
+            {{ Form::text('cod_alm', $almacene->cod_alm, ['class' => 'form-control' . ($errors->has('cod_alm') ? ' is-invalid' : ''), 'maxlength' => '4', 'pattern' => '[0-9]{4}', 'placeholder' => '1111']) }}
             {!! $errors->first('cod_alm', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -18,7 +18,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Cantidad') }}
-            {{ Form::text('can_alm', $almacene->can_alm, ['class' => 'form-control' . ($errors->has('can_alm') ? ' is-invalid' : '')]) }}
+            {{ Form::number('can_alm', $almacene->can_alm, ['class' => 'form-control' . ($errors->has('can_alm') ? ' is-invalid' : ''), 'min' => '0']) }}
             {!! $errors->first('can_alm', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

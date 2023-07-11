@@ -22,10 +22,10 @@
             {!! $errors->first('desc_com', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Costo') }}
-            {{ Form::text('cos_com', $componente->cos_com, ['class' => 'form-control' . ($errors->has('cos_com') ? ' is-invalid' : '')]) }}
-            {!! $errors->first('cos_com', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
+    {{ Form::label('Costo') }}
+    {{ Form::number('cos_com', $componente->cos_com, ['class' => 'form-control' . ($errors->has('cos_com') ? ' is-invalid' : ''), 'step' => '0.01', 'min' => '0']) }}
+    {!! $errors->first('cos_com', '<div class="invalid-feedback">:message</div>') !!}
+</div>
         <div class="form-group">
             {{ Form::label('Sistema') }}
             {{ Form::select('sis_com', $sistemas, $componente->sis_com, ['class' => 'form-control' . ($errors->has('sis_com') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar sistema']) }}

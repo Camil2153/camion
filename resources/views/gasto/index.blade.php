@@ -16,13 +16,12 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-                <th>No</th>
-                
+
                 <th>Código</th>
                 <th>Monto</th>
                 <th>Fecha</th>
                 <th>Categoria</th>
-                <th>Ruta</th>
+                <th>Viaje</th>
                 <th>Empresa</th>
                 <th>Acciones</th>
 
@@ -31,13 +30,12 @@
         <tbody>
             @foreach ($gastos as $gasto)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    
+  
                     <td>{{ $gasto->cod_gas }}</td>
                     <td>{{ $gasto->mon_gas }}</td>
                     <td>{{ $gasto->fec_gas }}</td>
                     <td>{{ $gasto->categoriasGasto->nom_cat_gas }}</td>
-                    <td>{{ $gasto->ruta->nom_rut }}</td>
+                    <td>{{ $gasto->via_gas }}</td>
                     <td>{{ $gasto->empresa->nom_emp }}</td>
 
                     <td>

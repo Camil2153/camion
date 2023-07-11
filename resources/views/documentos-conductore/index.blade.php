@@ -16,8 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-                <th>No</th>
-                
+             
                 <th>Número de Licencia</th>
                 <th>Fecha de Vencimiento de Licencia</th>
                 <th>Categoria de Licencia</th>
@@ -31,8 +30,7 @@
         <tbody>
             @foreach ($documentosConductores as $documentosConductore)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    
+             
                     <td>{{ $documentosConductore->num_lic_doc_con }}</td>
                     <td>{{ $documentosConductore->fec_ven_lic_doc_con }}</td>
                     <td>{{ $documentosConductore->cat_lic_doc_con }}</td>

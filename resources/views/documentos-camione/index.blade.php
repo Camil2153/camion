@@ -16,34 +16,36 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-										<th>Codigo</th>
-										<th>Nombre</th>
-										<th>Estado</th>
-										<th>Vigencia</th>
-										<th>Camion</th>
 
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($documentosCamiones as $documentosCamione)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            
-											<td>{{ $documentosCamione->cod_doc }}</td>
-											<td>{{ $documentosCamione->nom_doc }}</td>
-											<td>{{ $documentosCamione->est_doc }}</td>
-											<td>{{ $documentosCamione->vig_doc }}</td>
-											<td>{{ $documentosCamione->cam_doc_cam }}</td>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Vigencia de Documento</th>
+                <th>Camion</th>
+                <th>Empresa</th>
+                <th>Acciones</th>
 
-                                            <td>
-                                                <form action="{{ route('documentos-camiones.destroy',$documentosCamione->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('documentos-camiones.show',$documentosCamione->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('documentos-camiones.edit',$documentosCamione->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
-                                                    </form>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($documentosCamiones as $documentosCamione)
+                <tr>
+          
+                    <td>{{ $documentosCamione->cod_doc_cam }}</td>
+                    <td>{{ $documentosCamione->nom_doc_cam }}</td>
+                    <td>{{ $documentosCamione->est_doc_cam }}</td>
+                    <td>{{ $documentosCamione->vig_doc_cam }}</td>
+                    <td>{{ $documentosCamione->cam_doc_cam }}</td>
+                    <td>{{ $documentosCamione->empresa->nom_emp }}</td>
+
+                    <td>
+                        <form action="{{ route('documentos-camiones.destroy',$documentosCamione->cod_doc_cam) }}" method="POST">
+                            <a class="btn btn-sm btn-secundary" href="{{ route('documentos-camiones.show',$documentosCamione->cod_doc_cam) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>
+                            <a class="btn btn-sm btn-secundary" href="{{ route('documentos-camiones.edit',$documentosCamione->cod_doc_cam) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-secundary btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('') }}</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

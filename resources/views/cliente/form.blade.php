@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('Código') }}
-            {{ Form::text('cod_cli', $cliente->cod_cli, ['class' => 'form-control' . ($errors->has('cod_cli') ? ' is-invalid' : '')]) }}
+            {{ Form::text('cod_cli', $cliente->cod_cli, ['class' => 'form-control' . ($errors->has('cod_cli') ? ' is-invalid' : ''),'maxlength' => '6', 'pattern' => '[0-9]{6}', 'placeholder' => '111111']) }}
             {!! $errors->first('cod_cli', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -28,7 +28,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('RFC') }}
-            {{ Form::text('rfc_cli', $cliente->rfc_cli, ['class' => 'form-control' . ($errors->has('rfc_cli') ? ' is-invalid' : '')]) }}
+            {{ Form::text('rfc_cli', $cliente->rfc_cli, ['class' => 'form-control' . ($errors->has('rfc_cli') ? ' is-invalid' : ''),'maxlength' => '13']) }}
             {!! $errors->first('rfc_cli', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

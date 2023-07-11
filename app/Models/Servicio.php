@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $cod_ser
  * @property $tip_ser_ser
  * @property $cam_ser
- * @property $des_tip_ser
+ * @property $desc_ser
  * @property $fec_ser
  * @property $kil_ser
  * @property $cos_ser
@@ -29,14 +29,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Servicio extends Model
 {
-
-    protected $primaryKey = 'cod_ser';
     
+    protected $primaryKey = 'cod_ser';
+    public $incrementing = false;
+
     static $rules = [
-		'cod_ser' => 'required',
+		'cod_ser' => 'required|unique:servicios',
 		'tip_ser_ser' => 'required',
 		'cam_ser' => 'required',
-		'des_tip_ser' => 'required',
+		'desc_ser' => 'required',
 		'fec_ser' => 'required',
 		'kil_ser' => 'required',
 		'cos_ser' => 'required',
@@ -52,7 +53,7 @@ class Servicio extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_ser','tip_ser_ser','cam_ser','des_tip_ser','fec_ser','kil_ser','cos_ser','res_ser','tal_ser','emp_ser'];
+    protected $fillable = ['cod_ser','tip_ser_ser','cam_ser','desc_ser','fec_ser','kil_ser','cos_ser','res_ser','tal_ser','emp_ser'];
 
 
     /**

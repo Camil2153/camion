@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Nueva Falla</h1>
+    <h1>Editar Falla</h1>
 @stop
 
 @section('content')
@@ -14,11 +14,8 @@
                 @includeif('partials.errors')
 
                 <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Falla</span>
-                    </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('fallas.update', $falla->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('fallas.update', $falla->cod_fal) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 
@@ -30,4 +27,12 @@
             </div>
         </div>
     </section>
-@endsection
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop

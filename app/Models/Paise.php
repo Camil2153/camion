@@ -19,11 +19,12 @@ class Paise extends Model
 {
     
     protected $primaryKey = 'cod_pai';
+    public $incrementing = false;
 
     static $rules = [
-		'cod_pai' => 'required',
-		'nom_pai' => 'required',
-    ];
+      'cod_pai' => 'required|unique:paises|max:3|regex:/^[0-9]{1,3}$/',
+      'nom_pai' => 'required|unique:paises',
+  ];
 
     protected $perPage = 20;
 

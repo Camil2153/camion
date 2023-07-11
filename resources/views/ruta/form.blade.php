@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('Código') }}
-            {{ Form::text('cod_rut', $ruta->cod_rut, ['class' => 'form-control' . ($errors->has('cod_rut') ? ' is-invalid' : '')]) }}
+            {{ Form::text('cod_rut', $ruta->cod_rut, ['class' => 'form-control' . ($errors->has('cod_rut') ? ' is-invalid' : ''), 'maxlength' => '4', 'pattern' => '[0-9]{4}', 'placeholder' => '1111']) }}
             {!! $errors->first('cod_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -22,8 +22,8 @@
             {!! $errors->first('des_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Distancia') }}
-            {{ Form::text('dis_rut', $ruta->dis_rut, ['class' => 'form-control' . ($errors->has('dis_rut') ? ' is-invalid' : '')]) }}
+            {{ Form::label('Distancia (km)') }}
+            {{ Form::number('dis_rut', $ruta->dis_rut, ['class' => 'form-control' . ($errors->has('dis_rut') ? ' is-invalid' : '')]) }}
             {!! $errors->first('dis_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

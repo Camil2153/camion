@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\Camione;
 use Illuminate\Http\Request;
 use App\Models\Conductore;
@@ -13,6 +13,14 @@ use App\Models\Empresa;
  */
 class CamioneController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:camiones.index')->only('index');
+        $this->middleware('can:camiones.create')->only('create', 'store');
+        $this->middleware('can:camiones.show')->only('show');
+        $this->middleware('can:camiones.edit')->only('edit', 'update');
+        $this->middleware('can:camiones.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -53,6 +61,7 @@ class CamioneController extends Controller
 
         return redirect()->route('camiones.index')
             ->with('success', 'Camione created successfully.');
+            
     }
 
     /**
@@ -89,14 +98,23 @@ class CamioneController extends Controller
      * @param  Camione $camione
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Camione $camione)
+    public function update(Request $request, camione $camione)
     {
-        request()->validate(Camione::$rules);
-
+        // Validar los campos del formulario, excepto 'pla_cam'
+        $request->validate(Arr::except(camione::$rules, 'pla_cam'));
+    
+        // Verificar si el valor de 'pla_cam' ha cambiado
+        if ($request->input('pla_cam') !== $camione->pla_cam) {
+            // Validar 'pla_cam' como único en la tabla 'camiones'
+            $request->validate([
+                'pla_cam' => 'required|unique:camiones,pla_cam',
+            ]);
+        }
+    
+        // Actualizar los atributos del modelo camione
         $camione->update($request->all());
-
-        return redirect()->route('camiones.index')
-            ->with('success', 'Camione updated successfully');
+    
+        return redirect()->route('camiones.index')->with('success', 'camione updated successfully');
     }
 
     /**

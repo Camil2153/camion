@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\Ruta;
 use Illuminate\Http\Request;
 use App\Models\Ciudade;
@@ -13,6 +13,14 @@ use App\Models\Empresa;
  */
 class RutaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:rutas.index')->only('index');
+        $this->middleware('can:rutas.create')->only('create', 'store');
+        $this->middleware('can:rutas.show')->only('show');
+        $this->middleware('can:rutas.edit')->only('edit', 'update');
+        $this->middleware('can:rutas.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -89,14 +97,23 @@ class RutaController extends Controller
      * @param  Ruta $ruta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ruta $ruta)
+    public function update(Request $request, ruta $ruta)
     {
-        request()->validate(Ruta::$rules);
-
+        // Validar los campos del formulario, excepto 'cod_rut'
+        $request->validate(Arr::except(ruta::$rules, 'cod_rut'));
+    
+        // Verificar si el valor de 'cod_rut' ha cambiado
+        if ($request->input('cod_rut') !== $ruta->cod_rut) {
+            // Validar 'cod_rut' como único en la tabla 'rutas'
+            $request->validate([
+                'cod_rut' => 'required|unique:rutas,cod_rut',
+            ]);
+        }
+    
+        // Actualizar los atributos del modelo ruta
         $ruta->update($request->all());
-
-        return redirect()->route('rutas.index')
-            ->with('success', 'Ruta updated successfully');
+    
+        return redirect()->route('rutas.index')->with('success', 'ruta updated successfully');
     }
 
     /**

@@ -2,29 +2,34 @@
     <div class="box-body">
         
         <div class="form-group">
-            {{ Form::label('Codigo') }}
-            {{ Form::text('cod_doc', $documentosCamione->cod_doc, ['class' => 'form-control' . ($errors->has('cod_doc') ? ' is-invalid' : ''), 'placeholder' => 'Cod Doc']) }}
-            {!! $errors->first('cod_doc', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::label('Código') }}
+            {{ Form::text('cod_doc_cam', $documentosCamione->cod_doc_cam, ['class' => 'form-control' . ($errors->has('cod_doc_cam') ? ' is-invalid' : ''), 'maxlength' => '4', 'pattern' => '[0-9]{4}', 'placeholder' => '1111']) }}
+            {!! $errors->first('cod_doc_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('nom_doc') }}
-            {{ Form::text('nombre', $documentosCamione->nom_doc, ['class' => 'form-control' . ($errors->has('nom_doc') ? ' is-invalid' : ''), 'placeholder' => 'Nom Doc']) }}
-            {!! $errors->first('nom_doc', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::label('Nombre') }}
+            {{ Form::text('nom_doc_cam', $documentosCamione->nom_doc_cam, ['class' => 'form-control' . ($errors->has('nom_doc_cam') ? ' is-invalid' : '')]) }}
+            {!! $errors->first('nom_doc_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Estado') }}
-            {{ Form::text('est_doc', $documentosCamione->est_doc, ['class' => 'form-control' . ($errors->has('est_doc') ? ' is-invalid' : ''), 'placeholder' => 'Est Doc']) }}
-            {!! $errors->first('est_doc', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::select('est_doc_cam', ['Válido' => 'Válido', 'Vencido' => 'Vencido', 'No actualizado' => 'No actualizado'], $documentosCamione->est_doc_cam, ['class' => 'form-control' . ($errors->has('est_doc_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
+            {!! $errors->first('est_doc_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Vigencia') }}
-            {{ Form::text('vig_doc', $documentosCamione->vig_doc, ['class' => 'form-control' . ($errors->has('vig_doc') ? ' is-invalid' : ''), 'placeholder' => 'Vig Doc']) }}
-            {!! $errors->first('vig_doc', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::label('Vigencia del Documento') }}
+            {{ Form::date('vig_doc_cam', $documentosCamione->vig_doc_cam, ['class' => 'form-control' . ($errors->has('vig_doc_cam') ? ' is-invalid' : '')]) }}
+            {!! $errors->first('vig_doc_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Camion') }}
-            {{ Form::select('cam_doc_cam', $camiones, $documentosCamione->cam_doc_cam, ['class' => 'form-control' . ($errors->has('cam_doc_cam') ? ' is-invalid' : ''), 'placeholder' => 'Cam Doc Cam']) }}
+            {{ Form::select('cam_doc_cam', $camiones, $documentosCamione->cam_doc_cam, ['class' => 'form-control' . ($errors->has('cam_doc_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion']) }}
             {!! $errors->first('cam_doc_cam', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('Empresa') }}
+            {{ Form::select('emp_doc_cam', $empresas, $documentosCamione->emp_doc_cam, ['class' => 'form-control' . ($errors->has('emp_doc_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
+            {!! $errors->first('emp_doc_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
     </div>

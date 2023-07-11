@@ -16,8 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
-                <th>No</th>
-                
+
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
@@ -29,8 +28,7 @@
         <tbody>
             @foreach ($categoriasGastos as $categoriasGasto)
                 <tr>
-                    <td>{{ ++$i }}</td>
-                    
+
                     <td>{{ $categoriasGasto->cod_cat_gas }}</td>
                     <td>{{ $categoriasGasto->nom_cat_gas }}</td>
                     <td>{{ $categoriasGasto->desc_cat_gas }}</td>

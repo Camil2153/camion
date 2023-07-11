@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Arr;
 use App\Models\TiposServicio;
 use Illuminate\Http\Request;
 use App\Models\Empresa;
@@ -12,6 +12,14 @@ use App\Models\Empresa;
  */
 class TiposServicioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:tipos-servicios.index')->only('index');
+        $this->middleware('can:tipos-servicios.create')->only('create', 'store');
+        $this->middleware('can:tipos-servicios.show')->only('show');
+        $this->middleware('can:tipos-servicios.edit')->only('edit', 'update');
+        $this->middleware('can:tipos-servicios.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -56,12 +64,12 @@ class TiposServicioController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  string $cod_tip_ser
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($cod_tip_ser)
     {
-        $tiposServicio = TiposServicio::find($id);
+        $tiposServicio = TiposServicio::find($cod_tip_ser);
 
         return view('tipos-servicio.show', compact('tiposServicio'));
     }
@@ -69,12 +77,12 @@ class TiposServicioController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  string $cod_tip_ser
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($cod_tip_ser)
     {
-        $tiposServicio = TiposServicio::find($id);
+        $tiposServicio = TiposServicio::find($cod_tip_ser);
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
         return view('tipos-servicio.edit', compact('tiposServicio', 'empresas'));
     }
@@ -86,24 +94,33 @@ class TiposServicioController extends Controller
      * @param  TiposServicio $tiposServicio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TiposServicio $tiposServicio)
-    {
-        request()->validate(TiposServicio::$rules);
+public function update(Request $request, TiposServicio $tiposServicio)
+{
+    // Validar los campos del formulario, excepto 'cod_tip_ser'
+    $request->validate(Arr::except(TiposServicio::$rules, 'cod_tip_ser'));
 
-        $tiposServicio->update($request->all());
-
-        return redirect()->route('tipos-servicios.index')
-            ->with('success', 'TiposServicio updated successfully');
+    // Verificar si el valor de 'cod_tip_ser' ha cambiado
+    if ($request->input('cod_tip_ser') !== $tiposServicio->cod_tip_ser) {
+        // Validar 'cod_tip_ser' como único en la tabla 'tiposServicios'
+        $request->validate([
+            'cod_tip_ser' => 'required|unique:tiposServicios,cod_tip_ser',
+        ]);
     }
 
+    // Actualizar los atributos del modelo TiposServicio
+    $tiposServicio->update($request->all());
+
+    return redirect()->route('tipos-servicios.index')->with('success', 'TiposServicio updated successfully');
+}
+
     /**
-     * @param int $id
+     * @param string $cod_tip_ser
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($cod_tip_ser)
     {
-        $tiposServicio = TiposServicio::find($id)->delete();
+        $tiposServicio = TiposServicio::find($cod_tip_ser)->delete();
 
         return redirect()->route('tipos-servicios.index')
             ->with('success', 'TiposServicio deleted successfully');

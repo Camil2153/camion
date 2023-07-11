@@ -21,10 +21,11 @@ class Ciudade extends Model
 {
 
     protected $primaryKey = 'cod_ciu';
+    public $incrementing = false;
     
     static $rules = [
-		'cod_ciu' => 'required',
-		'nom_ciu' => 'required',
+		'cod_ciu' => 'required|unique:ciudades|max:3|regex:/^[0-9]{1,3}$/',
+		'nom_ciu' => 'required|unique:ciudades',
 		'pai_ciu' => 'required',
     ];
 

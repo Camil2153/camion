@@ -3,46 +3,52 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Lista de paises</h1>
+    <h1>Lista de roles</h1>
 
     <div class="float-right">
-                                <a href="{{ route('paises.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('roles.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
                                   {{ __('Nuevo') }}
                                 </a>
                               </div>
 @stop
 
 @section('content')
+
+    @if (session('info'))
+        <div class="alert alert-success">
+            {{session('info')}}
+        </div>
+    @endif
+
     <table id="example" class="table table-striped table-bordered" style="width:100%">
-        <thead class="thead">
+    <thead class="thead">
+        <tr>
+            
+            <th>Id</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($roles as $role)
             <tr>
+                
+                <td>{{ $role->id }}</td>
+                <td>{{ $role->name }}</td>
 
-                <th>Código</th>
-                <th>Nombre</th>
-                <th>Acciones</th>
-
+                <td>
+                    <form action="{{ route('roles.destroy',$role->id) }}" method="POST">
+                        <a class="btn btn-sm btn-secundary" href="{{ route('roles.edit',$role->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-secundary btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('') }}</button>
+                    </form>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach ($paises as $paise)
-                <tr>
-
-                    <td>{{ $paise->cod_pai }}</td>
-                    <td>{{ $paise->nom_pai }}</td>
-
-                    <td>
-                        <form action="{{ route('paises.destroy',$paise->cod_pai) }}" method="POST">
-                            <a class="btn btn-sm btn-secundary" href="{{ route('paises.show',$paise->cod_pai) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>
-                            <a class="btn btn-sm btn-secundary" href="{{ route('paises.edit',$paise->cod_pai) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-secundary btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('') }}</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+        @endforeach
+    </tbody>
+</table>
 @stop
 
 @section('css')

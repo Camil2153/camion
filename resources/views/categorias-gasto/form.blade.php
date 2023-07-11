@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('Código') }}
-            {{ Form::text('cod_cat_gas', $categoriasGasto->cod_cat_gas, ['class' => 'form-control' . ($errors->has('cod_cat_gas') ? ' is-invalid' : '')]) }}
+            {{ Form::text('cod_cat_gas', $categoriasGasto->cod_cat_gas, ['class' => 'form-control' . ($errors->has('cod_cat_gas') ? ' is-invalid' : ''), 'maxlength' => '4', 'pattern' => '[0-9]{4}', 'placeholder' => '1111']) }}
             {!! $errors->first('cod_cat_gas', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

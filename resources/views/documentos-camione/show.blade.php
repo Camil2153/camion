@@ -1,8 +1,10 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
-@section('template_title')
-    {{ $documentosCamione->name ?? "{{ __('Show') Documentos Camione" }}
-@endsection
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Ver Documento de Conductor</h1>
+@stop
 
 @section('content')
     <section class="content container-fluid">
@@ -10,35 +12,36 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Documentos Camione</span>
-                        </div>
-                        <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('documentos-camiones.index') }}"> {{ __('Back') }}</a>
+                    <div class="float-right">
+                            <a class="btn btn-secundary border border-secondary btn-sm" href="{{ route('documentos-camiones.index') }}"> {{ __('Volver') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Cod Doc:</strong>
-                            {{ $documentosCamione->cod_doc }}
+                            <strong>Código:</strong>
+                            {{ $documentosCamione->cod_doc_cam }}
                         </div>
                         <div class="form-group">
-                            <strong>Nom Doc:</strong>
-                            {{ $documentosCamione->nom_doc }}
+                            <strong>Nombre:</strong>
+                            {{ $documentosCamione->nom_doc_cam }}
                         </div>
                         <div class="form-group">
-                            <strong>Est Doc:</strong>
-                            {{ $documentosCamione->est_doc }}
+                            <strong>Estado:</strong>
+                            {{ $documentosCamione->est_doc_cam }}
                         </div>
                         <div class="form-group">
-                            <strong>Vig Doc:</strong>
-                            {{ $documentosCamione->vig_doc }}
+                            <strong>Vigencia de Documento:</strong>
+                            {{ $documentosCamione->vig_doc_cam }}
                         </div>
                         <div class="form-group">
-                            <strong>Cam Doc Cam:</strong>
+                            <strong>Camion:</strong>
                             {{ $documentosCamione->cam_doc_cam }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Empresa:</strong>
+                            {{ $documentosCamione->empresa->nom_emp }}
                         </div>
 
                     </div>
@@ -46,4 +49,12 @@
             </div>
         </div>
     </section>
-@endsection
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop
