@@ -3,7 +3,11 @@
         
         <div class="form-group">
             {{ Form::label('Código') }}
+<<<<<<< HEAD
             {{ Form::text('cod_ser', $servicio->cod_ser, ['class' => 'form-control' . ($errors->has('cod_ser') ? ' is-invalid' : ''), 'pattern' => '[0-9]{4}', 'maxlength' => '4', 'placeholder' => '1111']) }}
+=======
+            {{ Form::text('cod_ser', $servicio->cod_ser, ['class' => 'form-control' . ($errors->has('cod_ser') ? ' is-invalid' : '')]) }}
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
             {!! $errors->first('cod_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -33,7 +37,11 @@
         </div>
         <div class="form-group">
             {{ Form::label('Costo') }}
+<<<<<<< HEAD
             {{ Form::number('cos_ser', $servicio->cos_ser, ['class' => 'form-control' . ($errors->has('cos_ser') ? ' is-invalid' : ''), 'step' => '0.01', 'min' => '0']) }}
+=======
+            {{ Form::text('cos_ser', $servicio->cos_ser, ['class' => 'form-control' . ($errors->has('cos_ser') ? ' is-invalid' : '')]) }}
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
             {!! $errors->first('cos_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

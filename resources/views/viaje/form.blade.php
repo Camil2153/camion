@@ -3,7 +3,11 @@
         
         <div class="form-group">
             {{ Form::label('Código') }}
+<<<<<<< HEAD
             {{ Form::text('cod_via', $viaje->cod_via, ['class' => 'form-control' . ($errors->has('cod_via') ? ' is-invalid' : ''), 'maxlength' => '4', 'pattern' => '[0-9]{4}', 'placeholder' => '1111']) }}
+=======
+            {{ Form::text('cod_via', $viaje->cod_via, ['class' => 'form-control' . ($errors->has('cod_via') ? ' is-invalid' : '')]) }}
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
             {!! $errors->first('cod_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -12,8 +16,13 @@
             {!! $errors->first('car_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
+<<<<<<< HEAD
             {{ Form::label('Peso (T)') }}
             {{ Form::number('pes_via', $viaje->pes_via, ['class' => 'form-control' . ($errors->has('pes_via') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
+=======
+            {{ Form::label('Peso') }}
+            {{ Form::text('pes_via', $viaje->pes_via, ['class' => 'form-control' . ($errors->has('pes_via') ? ' is-invalid' : '')]) }}
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
             {!! $errors->first('pes_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -43,12 +52,21 @@
         </div>
         <div class="form-group">
             {{ Form::label('Kilometraje') }}
+<<<<<<< HEAD
             {{ Form::number('kil_via', $viaje->kil_via, ['class' => 'form-control' . ($errors->has('kil_via') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
             {!! $errors->first('kil_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Combustible (Galones)') }}
             {{ Form::text('com_via', $viaje->com_via, ['class' => 'form-control' . ($errors->has('com_via') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
+=======
+            {{ Form::text('kil_via', $viaje->kil_via, ['class' => 'form-control' . ($errors->has('kil_via') ? ' is-invalid' : '')]) }}
+            {!! $errors->first('kil_via', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('Combustible') }}
+            {{ Form::text('com_via', $viaje->com_via, ['class' => 'form-control' . ($errors->has('com_via') ? ' is-invalid' : '')]) }}
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
             {!! $errors->first('com_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

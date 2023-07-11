@@ -16,6 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
+<<<<<<< HEAD
 
                 <th>Código</th>
                 <th>Tipo de Servicio</th>
@@ -46,6 +47,40 @@
                     <td>{{ $servicio->tallere->nom_tal }}</td>
                     <td>{{ $servicio->empresa->nom_emp }}</td>
 
+=======
+                <th>No</th>
+                
+                <th>Código</th>
+                <th>Tipo de Servicio</th>
+                <th>Camion</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Kilometraje</th>
+                <th>Costo</th>
+                <th>Responsable</th>
+                <th>Taller</th>
+                <th>Empresa</th>
+                <th>Acciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($servicios as $servicio)
+                <tr>
+                    <td>{{ ++$i }}</td>
+                    
+                    <td>{{ $servicio->cod_ser }}</td>
+                    <td>{{ $servicio->tiposServicio->nom_tip_ser }}</td>
+                    <td>{{ $servicio->cam_ser }}</td>
+                    <td>{{ $servicio->desc_ser }}</td>
+                    <td>{{ $servicio->fec_ser }}</td>
+                    <td>{{ $servicio->kil_ser }}</td>
+                    <td>{{ $servicio->cos_ser }}</td>
+                    <td>{{ $servicio->res_ser }}</td>
+                    <td>{{ $servicio->tallere->nom_tal }}</td>
+                    <td>{{ $servicio->empresa->nom_emp }}</td>
+
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
                     <td>
                         <form action="{{ route('servicios.destroy',$servicio->cod_ser) }}" method="POST">
                             <a class="btn btn-sm btn-secundary" href="{{ route('servicios.show',$servicio->cod_ser) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>

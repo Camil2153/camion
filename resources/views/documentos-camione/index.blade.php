@@ -16,6 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
+<<<<<<< HEAD
 
                 <th>Código</th>
                 <th>Nombre</th>
@@ -38,6 +39,32 @@
                     <td>{{ $documentosCamione->cam_doc_cam }}</td>
                     <td>{{ $documentosCamione->empresa->nom_emp }}</td>
 
+=======
+                <th>No</th>
+                
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Vigencia de Documento</th>
+                <th>Camion</th>
+                <th>Empresa</th>
+                <th>Acciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($documentosCamiones as $documentosCamione)
+                <tr>
+                    <td>{{ ++$i }}</td>
+                    
+                    <td>{{ $documentosCamione->cod_doc_cam }}</td>
+                    <td>{{ $documentosCamione->nom_doc_cam }}</td>
+                    <td>{{ $documentosCamione->est_doc_cam }}</td>
+                    <td>{{ $documentosCamione->vig_doc_cam }}</td>
+                    <td>{{ $documentosCamione->cam_doc_cam }}</td>
+                    <td>{{ $documentosCamione->empresa->nom_emp }}</td>
+
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
                     <td>
                         <form action="{{ route('documentos-camiones.destroy',$documentosCamione->cod_doc_cam) }}" method="POST">
                             <a class="btn btn-sm btn-secundary" href="{{ route('documentos-camiones.show',$documentosCamione->cod_doc_cam) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>

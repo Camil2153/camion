@@ -28,7 +28,11 @@ class DocumentosCamione extends Model
     public $incrementing = false;
 
     static $rules = [
+<<<<<<< HEAD
 		'cod_doc_cam' => 'required|unique:documentos_camiones',
+=======
+		'cod_doc_cam' => 'required',
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
 		'nom_doc_cam' => 'required',
 		'est_doc_cam' => 'required',
 		'vig_doc_cam' => 'required',

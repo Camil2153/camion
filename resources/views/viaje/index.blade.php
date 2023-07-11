@@ -16,6 +16,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead">
             <tr>
+<<<<<<< HEAD
 
                 <th>Código</th>
                 <th>Carga</th>
@@ -66,6 +67,48 @@
                     <td>{{ $viaje->ruta->nom_rut }}</td>
                     <td>{{ $viaje->empresa->nom_emp }}</td>
 
+=======
+                <th>No</th>
+                
+                <th>Código</th>
+                <th>Carga</th>
+                <th>Peso</th>
+                <th>Estado</th>
+                <th>Fecha de Salida</th>
+                <th>Hora de Salida</th>
+                <th>Fecha de Llegada</th>
+                <th>Hora de Llegada</th>
+                <th>Kilometraje</th>
+                <th>Combustible</th>
+                <th>Camion</th>
+                <th>Cliente</th>
+                <th>Ruta</th>
+                <th>Empresa</th>
+                <th>Acciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($viajes as $viaje)
+                <tr>
+                    <td>{{ ++$i }}</td>
+                    
+                    <td>{{ $viaje->cod_via }}</td>
+                    <td>{{ $viaje->car_via }}</td>
+                    <td>{{ $viaje->pes_via }}</td>
+                    <td>{{ $viaje->est_via }}</td>
+                    <td>{{ $viaje->fec_sal_via }}</td>
+                    <td>{{ $viaje->hor_sal_via }}</td>
+                    <td>{{ $viaje->fec_lle_via }}</td>
+                    <td>{{ $viaje->hor_lle_via }}</td>
+                    <td>{{ $viaje->kil_via }}</td>
+                    <td>{{ $viaje->com_via }}</td>
+                    <td>{{ $viaje->cam_via }}</td>
+                    <td>{{ $viaje->cliente->nom_cli }}</td>
+                    <td>{{ $viaje->ruta->nom_rut }}</td>
+                    <td>{{ $viaje->empresa->nom_emp }}</td>
+
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
                     <td>
                         <form action="{{ route('viajes.destroy',$viaje->cod_via) }}" method="POST">
                             <a class="btn btn-sm btn-secundary" href="{{ route('viajes.show',$viaje->cod_via) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>

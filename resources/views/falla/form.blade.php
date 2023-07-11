@@ -3,7 +3,11 @@
         
         <div class="form-group">
             {{ Form::label('Código') }}
+<<<<<<< HEAD
             {{ Form::text('cod_fal', $falla->cod_fal, ['class' => 'form-control' . ($errors->has('cod_fal') ? ' is-invalid' : ''), 'maxlength' => '4', 'pattern' => '[0-9]{4}', 'placeholder' => '1111']) }}
+=======
+            {{ Form::text('cod_fal', $falla->cod_fal, ['class' => 'form-control' . ($errors->has('cod_fal') ? ' is-invalid' : '')]) }}
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
             {!! $errors->first('cod_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -23,7 +27,11 @@
         </div>
         <div class="form-group">
             {{ Form::label('Kilometraje') }}
+<<<<<<< HEAD
             {{ Form::number('kil_fal', $falla->kil_fal, ['class' => 'form-control' . ($errors->has('kil_fal') ? ' is-invalid' : ''), 'step' => 1, 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
+=======
+            {{ Form::text('kil_fal', $falla->kil_fal, ['class' => 'form-control' . ($errors->has('kil_fal') ? ' is-invalid' : '')]) }}
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
             {!! $errors->first('kil_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

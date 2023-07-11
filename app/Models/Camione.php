@@ -30,6 +30,7 @@ class Camione extends Model
     
     protected $primaryKey = 'pla_cam';
     public $incrementing = false;
+<<<<<<< HEAD
 
 static $rules = [
     'pla_cam' => ['required','unique:camiones', 'regex:/^[A-Z]{3}\d{3}$/'],
@@ -43,6 +44,8 @@ static $rules = [
     'con_cam' => 'required',
     'emp_cam' => 'required',
 ];
+=======
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
 
 
     protected $perPage = 20;

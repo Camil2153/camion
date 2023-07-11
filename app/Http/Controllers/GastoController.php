@@ -113,6 +113,7 @@ public function update(Request $request, gasto $gasto)
         ]);
     }
 
+<<<<<<< HEAD
     // Actualizar los atributos del modelo gasto
     $gasto->update($request->all());
 
@@ -120,6 +121,9 @@ public function update(Request $request, gasto $gasto)
 }
 
     /**katherin <3
+=======
+    /**
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception

@@ -70,12 +70,12 @@ class ViajeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string $cod_via
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($cod_via)
+    public function show($id)
     {
-        $viaje = Viaje::find($cod_via);
+        $viaje = Viaje::find($id);
 
         return view('viaje.show', compact('viaje'));
     }
@@ -83,12 +83,16 @@ class ViajeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  string $cod_via
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($cod_via)
+    public function edit($id)
     {
+<<<<<<< HEAD
         $viaje = Viaje::find($cod_via);
+=======
+        $viaje = Viaje::find($id);
+>>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
         $camiones = Camione::where('est_cam', 'disponible')->pluck('pla_cam', 'pla_cam');
         $clientes = Cliente::pluck('nom_cli', 'cod_cli');
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
@@ -128,13 +132,13 @@ public function update(Request $request, Viaje $viaje)
 
 
     /**
-     * @param string $cod_via
+     * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($cod_via)
+    public function destroy($id)
     {
-        $viaje = Viaje::find($cod_via)->delete();
+        $viaje = Viaje::find($id)->delete();
 
         return redirect()->route('viajes.index')
             ->with('success', 'Viaje deleted successfully');
