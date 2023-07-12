@@ -147,7 +147,7 @@ class ViajeController extends Controller
                         $posiblesSistemas[] = 'Sistema de mantenimiento';
                     }
     
-                    if ($complejidadRuta === 'Alta' && $distanciaRuta > 500) {
+                    if ($complejidadRuta === 'Difícil' && $distanciaRuta > 500) {
                         $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas debido a la complejidad y distancia de la ruta.';
                         $posiblesSistemas[] = 'Sistema de suspensión';
                     }
