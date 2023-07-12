@@ -29,6 +29,7 @@
                 <th>Responsable de Reparación</th>
                 <th>Acciones</th>
                 <th>Costo</th>
+                <th>Sistema</th>
                 <th>Camion</th>
                 <th>Taller</th>
                 <th>Empresa</th>
@@ -52,6 +53,7 @@
                     <td>{{ $falla->res_rep_fal }}</td>
                     <td>{{ $falla->acc_fal }}</td>
                     <td>{{ $falla->cos_fal }}</td>
+                    <td>{{ $falla->sistema->nom_sis }}</td>
                     <td>{{ $falla->cam_fal }}</td>
                     <td>{{ $falla->tallere->nom_tal }}</td>
                     <td>{{ $falla->empresa->nom_emp }}</td>

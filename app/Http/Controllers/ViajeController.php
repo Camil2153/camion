@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Arr;
 use App\Models\Viaje;
 use Illuminate\Http\Request;
@@ -8,6 +9,10 @@ use App\Models\Camione;
 use App\Models\Cliente;
 use App\Models\Ruta;
 use App\Models\Empresa;
+use App\Models\Falla;
+use App\Models\Sistema;
+use Carbon\Carbon;
+use App\Models\Servicio;
 
 /**
  * Class ViajeController
@@ -23,6 +28,7 @@ class ViajeController extends Controller
         $this->middleware('can:viajes.edit')->only('edit', 'update');
         $this->middleware('can:viajes.destroy')->only('destroy');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -44,14 +50,14 @@ class ViajeController extends Controller
     public function create()
     {
         $viaje = new Viaje();
-        
+
         $camionesDisponibles = Camione::where('est_cam', 'disponible')->get();
-        
+
         $camiones = $camionesDisponibles->pluck('pla_cam', 'pla_cam');
         $clientes = Cliente::pluck('nom_cli', 'cod_cli');
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        
+
         return view('viaje.create', compact('viaje', 'camiones', 'clientes', 'rutas', 'empresas', 'camionesDisponibles'));
     }
 
@@ -94,10 +100,75 @@ class ViajeController extends Controller
      */
     public function show($cod_via)
     {
+        // Obtener el viaje específico utilizando su ID
         $viaje = Viaje::find($cod_via);
-
-        return view('viaje.show', compact('viaje'));
-    }
+    
+        // Obtener los datos necesarios para la predicción
+        $kilometrajeRegistrado = $viaje->kil_via;
+        $consumoCombustible = $viaje->com_via;
+        $camione = $viaje->camione;
+        $servicioAplicado = $camione->servicio()->first();
+        $fechaUltMantenimiento = $camione->ult_mantenimiento; // Obtener la fecha de último mantenimiento del camión
+        $complejidadRuta = $viaje->ruta->com_rut;
+        $distanciaRuta = $viaje->ruta->dis_rut;
+    
+        // Verificar si el servicio aplicado existe y se encontró un servicio para el camión
+        if ($servicioAplicado) {
+            // Obtener el tipo de servicio
+            $tipoServicio = $servicioAplicado->tiposServicio;
+    
+            if ($tipoServicio) {
+                // Obtener la fecha más reciente de servicio para el camión
+                $fechaUltServicio = Servicio::where('cam_ser', $camione->pla_cam)
+                    ->orderByDesc('fec_ser')
+                    ->value('fec_ser');
+    
+                if ($fechaUltServicio) {
+                    $fechaProxMantenimiento = Carbon::parse($fechaUltServicio)->addDays($tipoServicio->int_tie_tip_ser);
+    
+                    // Definir las reglas de negocio para la predicción de fallas
+                    $posiblesFallas = [];
+                    $posiblesSistemas = [];
+    
+                    if ($kilometrajeRegistrado > $tipoServicio->int_kil_tip_ser) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas debido al exceso de kilometraje registrado.';
+                        $posiblesSistemas[] = 'Sistema de motor';
+                    }
+    
+                    if ($consumoCombustible > 20) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas debido a un alto consumo de combustible.';
+                        $posiblesSistemas[] = 'Sistema de combustible';
+                    }
+    
+                    if ($fechaProxMantenimiento->diffInDays(now()) <= 7) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas debido a que el próximo servicio de mantenimiento está próximo.';
+                        $posiblesSistemas[] = 'Sistema de mantenimiento';
+                    }
+    
+                    if ($complejidadRuta === 'Alta' && $distanciaRuta > 500) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas debido a la complejidad y distancia de la ruta.';
+                        $posiblesSistemas[] = 'Sistema de suspensión';
+                    }
+    
+                    // Obtener las fallas registradas previamente asociadas al camión
+                    $fallasRegistradas = Falla::where('cam_fal', $camione->pla_cam)->get();
+    
+                    foreach ($fallasRegistradas as $fallaRegistrada) {
+                        $posiblesFallas[] = 'Se encontró una falla registrada previamente: ' . $fallaRegistrada->desc_fal;
+                        $posiblesSistemas[] = $fallaRegistrada->sistema->nom_sis;
+                    }
+    
+                    // Pasar los posibles fallos y sistemas a la vista correspondiente
+                    return view('viaje.show', compact('viaje', 'posiblesFallas', 'posiblesSistemas'));
+                }
+            }
+        }
+    
+        // El servicio aplicado no fue encontrado o no se encontró ningún servicio para el camión
+        // Manejar el caso en consecuencia
+        $mensaje = 'No se encontró información de servicio para el camión. Verifica los registros.';
+        return view('viaje.show', compact('viaje', 'mensaje'));
+    }    
 
     /**
      * Show the form for editing the specified resource.
@@ -112,9 +183,10 @@ class ViajeController extends Controller
         $clientes = Cliente::pluck('nom_cli', 'cod_cli');
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
+
         return view('viaje.edit', compact('viaje', 'camiones', 'clientes', 'rutas', 'empresas'));
     }
-  
+
     /**
      * Update the specified resource in storage.
      *
@@ -165,6 +237,7 @@ class ViajeController extends Controller
         $viaje = Viaje::find($cod_via)->delete();
 
         return redirect()->route('viajes.index')
-            ->with('success', 'Viaje deleted successfully');
+            ->with('success', 'Viaje eliminado exitosamente');
     }
+
 }

@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('conductores', function (Blueprint $table) {
-            $table->string('dni_con', 20)->primary();
-            $table->string('nom_con', 45);
-            $table->date('fec_nac_con');
-            $table->string('dir_con', 35);
-            $table->string('num_tel_con', 10);
-            $table->string('cor_ele_con', 45);
-            $table->string('emp_con', 15); // Corregido: usar tipo de dato string
+            $table->string('dni_con', 20)->primary(); // dni conductor
+            $table->string('nom_con', 45); // nombre conductor
+            $table->date('fec_nac_con'); // fecha nacimiento conductor
+            $table->string('dir_con', 35); // direccion conductor
+            $table->string('num_tel_con', 10); // numero telefono conductor
+            $table->string('cor_ele_con', 45); // correo electronico conductor
+            $table->string('emp_con', 15); // empresa conductor
         
             // Definición de la relación con la tabla de paises para la columna pai_emp
             $table->foreign('emp_con')->references('nit_emp')->on('empresas');

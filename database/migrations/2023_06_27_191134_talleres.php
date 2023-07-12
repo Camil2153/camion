@@ -12,18 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('talleres', function (Blueprint $table) {
-            $table->string('nit_tal', 15)->primary();
-            $table->string('nom_tal', 45);
-            $table->string('dir_tal', 35);
-            $table->string('ser_tal', 45);
-            $table->string('hor_tal', 45);
-            $table->string('num_con_tal', 10);
-            $table->string('rut_tal', 4); // Segunda columna de clave foránea
+            $table->string('nit_tal', 15)->primary(); // nit taller
+            $table->string('nom_tal', 45); // nombre taller
+            $table->string('dir_tal', 35); // direccion taller
+            $table->string('ser_tal', 45); // servicio taller
+            $table->string('hor_tal', 45); // horario de atencion taller
+            $table->string('num_con_tal', 10); // numero de contacto taller
+            $table->string('rut_tal', 4); // ruta taller
 
             // Definición de la relación con la tabla de ciudades para la segunda columna
             $table->foreign('rut_tal')->references('cod_rut')->on('rutas');            
 
-            $table->string('emp_tal', 15); // Tercera columna de clave foránea
+            $table->string('emp_tal', 15); // empresa del taller
 
             // Definición de la relación con la tabla de empresas para la tercera columna
             $table->foreign('emp_tal')->references('nit_emp')->on('empresas'); 

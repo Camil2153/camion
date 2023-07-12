@@ -70,5 +70,9 @@ class Camione extends Model
         return $this->hasOne('App\Models\Empresa', 'nit_emp', 'emp_cam');
     }
     
+    public function servicio()
+    {
+        return $this->hasMany(Servicio::class, 'cam_ser', 'pla_cam');
+    }
 
 }

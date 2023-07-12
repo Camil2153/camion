@@ -97,9 +97,8 @@ class Viaje extends Model
     }
 
     public function gastos()
-{
-    return $this->hasMany(Gasto::class, 'via_gas');
-}
+    {
+        return $this->hasMany(Gasto::class, 'via_gas');
+    }
     
-
 }

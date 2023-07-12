@@ -65,6 +65,11 @@
            {!! $errors->first('cos_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
+            {{ Form::label('Sistema') }}
+            {{ Form::select('sis_fal', $sistemas, $falla->sis_fal, ['class' => 'form-control' . ($errors->has('sis_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar sistema']) }}
+            {!! $errors->first('sis_fal', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
             {{ Form::label('Camion') }}
             {{ Form::select('cam_fal', $camiones, $falla->cam_fal, ['class' => 'form-control' . ($errors->has('cam_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion']) }}
             {!! $errors->first('cam_fal', '<div class="invalid-feedback">:message</div>') !!}

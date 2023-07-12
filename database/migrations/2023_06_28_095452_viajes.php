@@ -12,20 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('viajes', function (Blueprint $table) {
-            $table->string('cod_via', 4)->primary();
-            $table->string('car_via', 25);
-            $table->integer('pes_via');
-            $table->string('est_via', 20);
-            $table->date('fec_sal_via');
-            $table->time('hor_sal_via');
-            $table->date('fec_lle_via');
-            $table->time('hor_lle_via');
-            $table->integer('kil_via');
-            $table->integer('com_via');
-            $table->string('cam_via', 7);
-            $table->string('cli_via', 6); 
-            $table->string('rut_via', 4);
-            $table->string('emp_via', 15); 
+            $table->string('cod_via', 4)->primary(); // codigo viaje
+            $table->string('car_via', 25); // carga viaje
+            $table->integer('pes_via'); // peso de la carga viaje
+            $table->string('est_via', 20); // estado viaje
+            $table->date('fec_sal_via'); // fecha de salida viaje
+            $table->time('hor_sal_via'); // hora de salida viaje
+            $table->date('fec_lle_via'); // fecha de llegada viaje
+            $table->time('hor_lle_via'); // hora de llegada viaje
+            $table->integer('kil_via'); // kilometraje total recorrido durante el viaje
+            $table->integer('com_via'); // consumo de combustible registrado durante el viaje
+            $table->string('cam_via', 7); // camion viaje
+            $table->string('cli_via', 6); // cliente viaje
+            $table->string('rut_via', 4); // ruta viaje
+            $table->string('emp_via', 15); // empresa viaje
 
             $table->foreign('cam_via')->references('pla_cam')->on('camiones');    
             $table->foreign('cli_via')->references('cod_cli')->on('clientes');  

@@ -17,7 +17,7 @@
             {!! $errors->first('desc_tip_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Intervalo de Tiempo') }}
+            {{ Form::label('Intervalo de Tiempo (días)') }}
             {{ Form::text('int_tie_tip_ser', $tiposServicio->int_tie_tip_ser, ['class' => 'form-control' . ($errors->has('int_tie_tip_ser') ? ' is-invalid' : '')]) }}
             {!! $errors->first('int_tie_tip_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>

@@ -139,42 +139,69 @@
     </section>
 
     <div class="col-md-12">
-    <div class="card">
-        <div class="card-header">
-            <details>
-                <summary>Informacion del Camion</summary>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <strong>Placa del Camion:</strong>
-                                {{ $viaje->camione->pla_cam }}
+        <div class="card">
+            <div class="card-header">
+                <details>
+                    <summary>Informacion del Camion</summary>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Placa del Camion:</strong>
+                                    {{ $viaje->camione->pla_cam }}
+                                </div>
+                                <div class="form-group">
+                                    <strong>Marca:</strong>
+                                    {{ $viaje->camione->mar_cam }}
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <strong>Marca:</strong>
-                                {{ $viaje->camione->mar_cam }}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Modelo:</strong>
+                                    {{ $viaje->camione->mod_cam }}
+                                </div>
+                                <div class="form-group">
+                                    <strong>Tipo:</strong>
+                                    {{ $viaje->camione->tip_cam }}
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <strong>Modelo:</strong>
-                                {{ $viaje->camione->mod_cam }}
-                            </div>
-                            <div class="form-group">
-                                <strong>Tipo:</strong>
-                                {{ $viaje->camione->tip_cam }}
-                            </div>
-                        </div>
+                        <!-- Agrega aquí los demás campos del camión que deseas mostrar -->
                     </div>
-                    <!-- Agrega aquí los demás campos del camión que deseas mostrar -->
-                </div>
-            </details>
+                </details>
+            </div>
         </div>
     </div>
-</div>
 
-
-    </section>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <details>
+                    <summary>Predecir fallas</summary>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="container">
+                                @if(isset($posiblesFallas) && count($posiblesFallas) > 0)
+                                    <p>Posibles fallas:</p>
+                                    <ul>
+                                        @foreach($posiblesFallas as $key => $falla)
+                                            <li>{{ $falla }} - {{ $posiblesSistemas[$key] }}</li>
+                                        @endforeach
+                                    </ul>
+                                @elseif(isset($mensaje))
+                                    <p>{{ $mensaje }}</p>
+                                @else
+                                    <p>No se encontraron posibles fallas.</p>
+                                @endif
+                            </div>
+                        </div>
+                        <!-- Agrega aquí los demás campos del camión que deseas mostrar -->
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+ 
 @stop
 
 @section('css')

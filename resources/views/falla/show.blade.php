@@ -68,6 +68,10 @@
                             {{ $falla->cos_fal }}
                         </div>
                         <div class="form-group">
+                            <strong>Sistema:</strong>
+                            {{ $falla->sistema->nom_sis }}
+                        </div>
+                        <div class="form-group">
                             <strong>Camion:</strong>
                             {{ $falla->cam_fal }}
                         </div>

@@ -12,19 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('camiones', function (Blueprint $table) {
-            $table->string('pla_cam', 7)->primary();
-            $table->string('mar_cam', 15);
-            $table->string('mod_cam', 4);
-            $table->string('tip_cam', 20);
-            $table->string('est_cam', 20);
-            $table->integer('kil_cam');
-            $table->float('cap_cam');
-            $table->float('cont_cam');
-            $table->string('con_cam', 20); // Corregido: usar tipo de dato string
+            $table->string('pla_cam', 7)->primary(); // placa camion
+            $table->string('mar_cam', 15); // marca camion
+            $table->string('mod_cam', 4); // modelo camion
+            $table->string('tip_cam', 20); // tipo camion
+            $table->string('est_cam', 20); // estado camion
+            $table->integer('kil_cam'); // kilometraje actual del camion
+            $table->float('cap_cam'); // capacidad en toneladas del camion
+            $table->float('cont_cam'); // promedio de consumo de combustible en litros por kilometro 
+            $table->string('con_cam', 20); // conductor camion
         
             // Definición de la relación con la tabla de paises para la columna pai_emp
             $table->foreign('con_cam')->references('dni_con')->on('conductores');
-            $table->string('emp_cam', 15); // Corregido: usar tipo de dato string
+            $table->string('emp_cam', 15); // empresa camion
         
             // Definición de la relación con la tabla de paises para la columna pai_emp
             $table->foreign('emp_cam')->references('nit_emp')->on('empresas');

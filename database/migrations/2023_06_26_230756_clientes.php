@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->string('cod_cli', 6)->primary();
-            $table->string('nom_cli', 25);
-            $table->string('nom_com_cli', 25);
-            $table->string('col_cli', 35);
-            $table->string('dir_cli', 35);
-            $table->string('rfc_cli', 15);
-            $table->string('ciu_cli', 3); // Corregido: usar tipo de dato string
+            $table->string('cod_cli', 6)->primary(); // codigo cliente
+            $table->string('nom_cli', 25); // nombre cliente
+            $table->string('nom_com_cli', 25); // nombre comercial cliente
+            $table->string('col_cli', 35); // colonia cliente
+            $table->string('dir_cli', 35); // direccion cliente
+            $table->string('rfc_cli', 15); // rfc cliente
+            $table->string('ciu_cli', 3); // ciudad cliente
         
             // Definición de la relación con la tabla de paises para la columna pai_emp
             $table->foreign('ciu_cli')->references('cod_ciu')->on('ciudades');
-            $table->string('emp_cli', 15); // Corregido: usar tipo de dato string
+            $table->string('emp_cli', 15); // empresa cliente
         
             // Definición de la relación con la tabla de paises para la columna pai_emp
             $table->foreign('emp_cli')->references('nit_emp')->on('empresas');

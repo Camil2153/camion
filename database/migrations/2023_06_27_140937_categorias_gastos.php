@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categorias_gastos', function (Blueprint $table) {
-            $table->string('cod_cat_gas', 4)->primary();
-            $table->string('nom_cat_gas', 25);
-            $table->string('desc_cat_gas', 100);
-            $table->string('emp_cat_gas', 15); // Corregido: usar tipo de dato string
+            $table->string('cod_cat_gas', 4)->primary(); // codigo categoria gasto
+            $table->string('nom_cat_gas', 25); // nombre categoria gasto
+            $table->string('desc_cat_gas', 100); // descripcion categoria gasto
+            $table->string('emp_cat_gas', 15); // empresa categoria gasto
         
             // Definición de la relación con la tabla de paises para la columna pai_emp
             $table->foreign('emp_cat_gas')->references('nit_emp')->on('empresas');

@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('auditoria', function (Blueprint $table) {
-            $table->string('cod_aud', 5)->primary();
-            $table->string('ced_usu', 20);
-            $table->date('fec_ing');
-            $table->time('hor_ing');
-            $table->string('acc_aud', 20); 
-            $table->string('tab_aud', 20);
+            $table->string('cod_aud', 5)->primary(); // codigo auditoria
+            $table->string('ced_usu', 20); // cedula de usuario
+            $table->date('fec_ing'); // fecha de ingreso
+            $table->time('hor_ing'); // hora de ingreso
+            $table->string('acc_aud', 20); // accion realizada 
+            $table->string('tab_aud', 20); // tabla gestionada
         });
     }
 

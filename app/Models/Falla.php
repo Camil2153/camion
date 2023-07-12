@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $res_rep_fal
  * @property $acc_fal
  * @property $cos_fal
+ * @property $sis_fal
  * @property $cam_fal
  * @property $tal_fal
  * @property $emp_fal
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Camione $camione
  * @property Componente $componente
+ * @property Sistema $sistema
  * @property Empresa $empresa
  * @property Tallere $tallere
  * @package App
@@ -50,6 +52,7 @@ class Falla extends Model
 		'res_rep_fal' => 'required',
 		'acc_fal' => 'required',
 		'cos_fal' => 'required',
+        'sis_fal' => 'required',
 		'cam_fal' => 'required',
 		'tal_fal' => 'required',
 		'emp_fal' => 'required',
@@ -62,7 +65,7 @@ class Falla extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_fal','com_fal','desc_fal','fec_fal','kil_fal','tie_ina_fal','gra_fal','est_act_fal','res_det_fal','res_rep_fal','acc_fal','cos_fal','cam_fal','tal_fal','emp_fal'];
+    protected $fillable = ['cod_fal','com_fal','desc_fal','fec_fal','kil_fal','tie_ina_fal','gra_fal','est_act_fal','res_det_fal','res_rep_fal','acc_fal','cos_fal','sis_fal','cam_fal','tal_fal','emp_fal'];
 
 
     /**
@@ -79,6 +82,14 @@ class Falla extends Model
     public function componente()
     {
         return $this->hasOne('App\Models\Componente', 'num_ser_com', 'com_fal');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function sistema()
+    {
+        return $this->hasOne('App\Models\Sistema', 'cod_sis', 'sis_fal');
     }
     
     /**
@@ -97,5 +108,4 @@ class Falla extends Model
         return $this->hasOne('App\Models\Tallere', 'nit_tal', 'tal_fal');
     }
     
-
 }

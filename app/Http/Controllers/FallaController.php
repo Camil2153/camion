@@ -5,6 +5,7 @@ use Illuminate\Support\Arr;
 use App\Models\Falla;
 use Illuminate\Http\Request;
 use App\Models\Componente;
+use App\Models\Sistema;
 use App\Models\Camione;
 use App\Models\Tallere;
 use App\Models\Empresa;
@@ -45,10 +46,11 @@ class FallaController extends Controller
     {
         $falla = new Falla();
         $componentes = Componente::pluck('nom_com', 'num_ser_com');
+        $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('falla.create', compact('falla', 'componentes', 'camiones', 'talleres', 'empresas'));
+        return view('falla.create', compact('falla', 'componentes', 'sistemas', 'camiones', 'talleres', 'empresas'));
     }
 
     /**
@@ -90,10 +92,11 @@ class FallaController extends Controller
     {
         $falla = Falla::find($cod_fal);
         $componentes = Componente::pluck('nom_com', 'num_ser_com');
+        $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('falla.edit', compact('falla', 'componentes', 'camiones', 'talleres', 'empresas'));
+        return view('falla.edit', compact('falla', 'componentes', 'sistemas', 'camiones', 'talleres', 'empresas'));
     }
 
     /**

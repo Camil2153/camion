@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ciudades', function (Blueprint $table) {
-            $table->string('cod_ciu', 3)->primary();
-            $table->string('nom_ciu', 45);
-            $table->string('pai_ciu', 2); // Corregido: usar tipo de dato string
+            $table->string('cod_ciu', 3)->primary(); // codigo ciudad
+            $table->string('nom_ciu', 45); // nombre ciudad
+            $table->string('pai_ciu', 2); // pais ciudad
         
             // Definición de la relación con la tabla de paises para la columna pai_emp
             $table->foreign('pai_ciu')->references('cod_pai')->on('paises');

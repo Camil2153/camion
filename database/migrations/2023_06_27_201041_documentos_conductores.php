@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('documentos_conductores', function (Blueprint $table) {
-            $table->string('num_lic_doc_con', 20)->primary();
-            $table->date('fec_ven_lic_doc_con');
-            $table->string('cat_lic_doc_con', 30);
-            $table->string('eps_doc_con', 20);
-            $table->string('con_doc_con', 20); // Corregido: usar tipo de dato string
+            $table->string('num_lic_doc_con', 20)->primary(); // numero de licencia documento conductor
+            $table->date('fec_ven_lic_doc_con'); // fecha de vencimiento documento conductor
+            $table->string('cat_lic_doc_con', 30); // categoria documento conductor
+            $table->string('eps_doc_con', 20); // eps documento conductor
+            $table->string('con_doc_con', 20); // conductor documento conductor
         
             // Definición de la relación con la tabla de paises para la columna pai_emp
             $table->foreign('con_doc_con')->references('dni_con')->on('conductores');
-            $table->string('emp_doc_con', 15); // Corregido: usar tipo de dato string
+            $table->string('emp_doc_con', 15); // empresa documento conductor
         
             // Definición de la relación con la tabla de paises para la columna pai_emp
             $table->foreign('emp_doc_con')->references('nit_emp')->on('empresas');

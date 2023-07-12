@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('documentos_camiones', function (Blueprint $table) {
-            $table->string('cod_doc_cam', 4)->primary();
-            $table->string('nom_doc_cam', 45);
-            $table->string('est_doc_cam', 20);
-            $table->date('vig_doc_cam');
-            $table->string('cam_doc_cam', 7); 
+            $table->string('cod_doc_cam', 4)->primary(); // codigo documento camion
+            $table->string('nom_doc_cam', 45); // nombre documento camion
+            $table->string('est_doc_cam', 20); // estado documento camion
+            $table->date('vig_doc_cam'); // vigencia documento camion
+            $table->string('cam_doc_cam', 7); // camion documento camion
 
             $table->foreign('cam_doc_cam')->references('pla_cam')->on('camiones');
-            $table->string('emp_doc_cam', 15); // Corregido: usar tipo de dato string
+            $table->string('emp_doc_cam', 15); // empresa documento camion
         
             // Definición de la relación con la tabla de paises para la columna pai_emp
             $table->foreign('emp_doc_cam')->references('nit_emp')->on('empresas');
