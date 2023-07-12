@@ -28,7 +28,10 @@
         </div>
         <div class="form-group">
             {{ Form::label('Kilometraje') }}
-            {{ Form::number('kil_cam', $camione->kil_cam, ['class' => 'form-control' . ($errors->has('kil_cam') ? ' is-invalid' : ''), 'step' => 1, 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
+            <?php
+                $kil_cam_formatted = number_format($camione->kil_cam, 0, ',', '.');
+            ?>
+            {{ Form::text('kil_cam', $camione->kil_cam, ['id' => 'kil_cam', 'class' => 'form-control' . ($errors->has('kil_cam') ? ' is-invalid' : ''), 'pattern' => '[0-9]+(\.[0-9]+)?', 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
             {!! $errors->first('kil_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -37,12 +40,8 @@
             {!! $errors->first('cap_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Promedio de combustible') }}
-<<<<<<< HEAD
+            {{ Form::label('Promedio de combustible (Litro por Kilometro)') }}
             {{ Form::number('cont_cam', $camione->cont_cam, ['class' => 'form-control' . ($errors->has('cont_cam') ? ' is-invalid' : ''), 'min' => 0, 'step' => 'any','placeholder' => '']) }}
-=======
-            {{ Form::text('cont_cam', $camione->cont_cam, ['class' => 'form-control' . ($errors->has('cont_cam') ? ' is-invalid' : '')]) }}
->>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
             {!! $errors->first('cont_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -61,3 +60,34 @@
         <a href="  {{ route('camiones.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
     </div>
 </div>
+
+<script>
+    // Obtener el campo de input del kilometraje
+    var kilCamInput = document.getElementById('kil_cam');
+
+    // Escuchar el evento de entrada en el campo de input
+    kilCamInput.addEventListener('input', function(event) {
+        // Obtener el valor sin separadores de miles
+        var rawValue = event.target.value.replace(/\./g, '');
+
+        // Formatear el valor con separadores de miles
+        var formattedValue = addThousandSeparators(rawValue);
+
+        // Mostrar el valor formateado en el campo de input
+        event.target.value = formattedValue;
+    });
+
+    // Función para agregar separadores de miles
+    function addThousandSeparators(value) {
+        var parts = value.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return parts.join(".");
+    }
+
+    // Escuchar el evento de envío del formulario
+    kilCamInput.closest('form').addEventListener('submit', function(event) {
+        // Eliminar los separadores de miles antes de enviar el formulario
+        var rawValue = kilCamInput.value.replace(/\./g, '');
+        kilCamInput.value = rawValue;
+    });
+</script>

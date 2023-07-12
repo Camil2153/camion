@@ -50,7 +50,7 @@
                 {{ $camione->est_cam }}
             @endif
         </td>
-                    <td>{{ $camione->kil_cam }}</td>
+                    <td>{{ number_format($camione->kil_cam, 0, '.', '.') }}</td>
                     <td>{{ $camione->cap_cam }}</td>
                     <td>{{ $camione->cont_cam }}</td>
                     <td>{{ $camione->conductore->nom_con }}</td>

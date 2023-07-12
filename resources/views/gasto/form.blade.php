@@ -8,8 +8,11 @@
         </div>
         <div class="form-group">
             {{ Form::label('Monto') }}
-            {{ Form::text('mon_gas', $gasto->mon_gas, ['class' => 'form-control' . ($errors->has('mon_gas') ? ' is-invalid' : ''), 'step' => 1, 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
-            {!! $errors->first('mon_gas', '<div class="invalid-feedback">:message</div>') !!}
+             <?php
+              $mon_gas_formatted = number_format($gasto->mon_gas, 2, ',', '.');
+             ?>
+           {{ Form::text('mon_gas', $mon_gas_formatted, ['id' => 'mon_gas', 'class' => 'form-control' . ($errors->has('mon_gas') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
+           {!! $errors->first('mon_gas', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Fecha') }}
@@ -38,3 +41,40 @@
         <a href="  {{ route('gastos.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
     </div>
 </div>
+
+<script>
+    // Obtener el campo de input del costo
+    var cosComInput = document.getElementById('mon_gas');
+
+    // Escuchar el evento de entrada en el campo de input
+    cosComInput.addEventListener('input', function(event) {
+        // Obtener el valor sin separadores de miles
+        var rawValue = event.target.value.replace(/\./g, '');
+
+        // Formatear el valor con separadores de miles y decimales
+        var formattedValue = addThousandSeparators(rawValue, 2);
+
+        // Mostrar el valor formateado en el campo de input
+        event.target.value = formattedValue;
+    });
+
+    // Función para agregar separadores de miles y decimales
+    function addThousandSeparators(value, decimalPlaces) {
+        var parts = value.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        var formattedValue = parts.join(".");
+        
+        if (decimalPlaces && parts.length > 1) {
+            formattedValue += '.' + parts[1].slice(0, decimalPlaces);
+        }
+
+        return formattedValue;
+    }
+
+    // Escuchar el evento de envío del formulario
+    cosComInput.closest('form').addEventListener('submit', function(event) {
+        // Eliminar los separadores de miles antes de enviar el formulario
+        var rawValue = cosComInput.value.replace(/\./g, '');
+        cosComInput.value = rawValue;
+    });
+</script>

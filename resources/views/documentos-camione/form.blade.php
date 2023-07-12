@@ -3,11 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('Código') }}
-<<<<<<< HEAD
             {{ Form::text('cod_doc_cam', $documentosCamione->cod_doc_cam, ['class' => 'form-control' . ($errors->has('cod_doc_cam') ? ' is-invalid' : ''), 'maxlength' => '4', 'pattern' => '[0-9]{4}', 'placeholder' => '1111']) }}
-=======
-            {{ Form::text('cod_doc_cam', $documentosCamione->cod_doc_cam, ['class' => 'form-control' . ($errors->has('cod_doc_cam') ? ' is-invalid' : '')]) }}
->>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
             {!! $errors->first('cod_doc_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

@@ -39,7 +39,7 @@
                     <td>{{ $ruta->nom_rut }}</td>
                     <td>{{ $ruta->origenCiudad->nom_ciu }}</td>
                     <td>{{ $ruta->destinoCiudad->nom_ciu }}</td>
-                    <td>{{ $ruta->dis_rut }}</td>
+                    <td>{{ number_format($ruta->dis_rut, 0, '.', '.') }}</td>
                     <td>{{ $ruta->dur_rut }}</td>
                     <td>{{ $ruta->res_rut }}</td>
                     <td>{{ $ruta->com_rut }}</td>

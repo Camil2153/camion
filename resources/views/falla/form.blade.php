@@ -3,11 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('Código') }}
-<<<<<<< HEAD
             {{ Form::text('cod_fal', $falla->cod_fal, ['class' => 'form-control' . ($errors->has('cod_fal') ? ' is-invalid' : ''), 'maxlength' => '4', 'pattern' => '[0-9]{4}', 'placeholder' => '1111']) }}
-=======
-            {{ Form::text('cod_fal', $falla->cod_fal, ['class' => 'form-control' . ($errors->has('cod_fal') ? ' is-invalid' : '')]) }}
->>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
             {!! $errors->first('cod_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -27,11 +23,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Kilometraje') }}
-<<<<<<< HEAD
             {{ Form::number('kil_fal', $falla->kil_fal, ['class' => 'form-control' . ($errors->has('kil_fal') ? ' is-invalid' : ''), 'step' => 1, 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
-=======
-            {{ Form::text('kil_fal', $falla->kil_fal, ['class' => 'form-control' . ($errors->has('kil_fal') ? ' is-invalid' : '')]) }}
->>>>>>> 20a3738512bd45630406ad9c2cae8c3df14848d5
             {!! $errors->first('kil_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -66,8 +58,11 @@
         </div>
         <div class="form-group">
             {{ Form::label('Costo') }}
-            {{ Form::text('cos_fal', $falla->cos_fal, ['class' => 'form-control' . ($errors->has('cos_fal') ? ' is-invalid' : '')]) }}
-            {!! $errors->first('cos_fal', '<div class="invalid-feedback">:message</div>') !!}
+             <?php
+              $cos_fal_formatted = number_format($falla->cos_fal, 2, ',', '.');
+             ?>
+           {{ Form::text('cos_fal', $cos_fal_formatted, ['id' => 'cos_fal', 'class' => 'form-control' . ($errors->has('cos_fal') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
+           {!! $errors->first('cos_fal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Camion') }}
@@ -91,3 +86,41 @@
         <a href="  {{ route('fallas.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
     </div>
 </div>
+
+
+<script>
+    // Obtener el campo de input del costo
+    var cosComInput = document.getElementById('cos_fal');
+
+    // Escuchar el evento de entrada en el campo de input
+    cosComInput.addEventListener('input', function(event) {
+        // Obtener el valor sin separadores de miles
+        var rawValue = event.target.value.replace(/\./g, '');
+
+        // Formatear el valor con separadores de miles y decimales
+        var formattedValue = addThousandSeparators(rawValue, 2);
+
+        // Mostrar el valor formateado en el campo de input
+        event.target.value = formattedValue;
+    });
+
+    // Función para agregar separadores de miles y decimales
+    function addThousandSeparators(value, decimalPlaces) {
+        var parts = value.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        var formattedValue = parts.join(".");
+        
+        if (decimalPlaces && parts.length > 1) {
+            formattedValue += '.' + parts[1].slice(0, decimalPlaces);
+        }
+
+        return formattedValue;
+    }
+
+    // Escuchar el evento de envío del formulario
+    cosComInput.closest('form').addEventListener('submit', function(event) {
+        // Eliminar los separadores de miles antes de enviar el formulario
+        var rawValue = cosComInput.value.replace(/\./g, '');
+        cosComInput.value = rawValue;
+    });
+</script>

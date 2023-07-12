@@ -22,10 +22,13 @@
             {!! $errors->first('des_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Distancia (km)') }}
-            {{ Form::number('dis_rut', $ruta->dis_rut, ['class' => 'form-control' . ($errors->has('dis_rut') ? ' is-invalid' : '')]) }}
-            {!! $errors->first('dis_rut', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
+    {{ Form::label('Distancia (km)') }}
+    <?php
+        $dis_rut_formatted = number_format($ruta->dis_rut, 0, ',', '.');
+    ?>
+    {{ Form::text('dis_rut', $dis_rut_formatted, ['id' => 'dis_rut', 'class' => 'form-control' . ($errors->has('dis_rut') ? ' is-invalid' : ''), 'placeholder' => '']) }}
+    {!! $errors->first('dis_rut', '<div class="invalid-feedback">:message</div>') !!}
+</div>
         <div class="form-group">
             {{ Form::label('Duración') }}
             {{ Form::text('dur_rut', $ruta->dur_rut, ['class' => 'form-control' . ($errors->has('dur_rut') ? ' is-invalid' : '')]) }}
@@ -57,3 +60,35 @@
         <a href="  {{ route('rutas.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
     </div>
 </div>
+
+
+<script>
+    // Obtener el campo de input de la distancia
+    var disRutInput = document.getElementById('dis_rut');
+
+    // Escuchar el evento de entrada en el campo de input
+    disRutInput.addEventListener('input', function(event) {
+        // Obtener el valor sin separadores de miles
+        var rawValue = event.target.value.replace(/\./g, '');
+
+        // Formatear el valor con separadores de miles
+        var formattedValue = addThousandSeparators(rawValue);
+
+        // Mostrar el valor formateado en el campo de input
+        event.target.value = formattedValue;
+    });
+
+    // Función para agregar separadores de miles
+    function addThousandSeparators(value) {
+        var parts = value.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return parts.join(".");
+    }
+
+    // Escuchar el evento de envío del formulario
+    disRutInput.closest('form').addEventListener('submit', function(event) {
+        // Eliminar los separadores de miles antes de enviar el formulario
+        var rawValue = disRutInput.value.replace(/\./g, '');
+        disRutInput.value = rawValue;
+    });
+</script>
