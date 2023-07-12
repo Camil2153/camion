@@ -181,18 +181,27 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="container">
-                                @if(isset($posiblesFallas) && count($posiblesFallas) > 0)
-                                    <p>Posibles fallas:</p>
-                                    <ul>
-                                        @foreach($posiblesFallas as $key => $falla)
-                                            <li>{{ $falla }} - {{ $posiblesSistemas[$key] }}</li>
-                                        @endforeach
-                                    </ul>
-                                @elseif(isset($mensaje))
-                                    <p>{{ $mensaje }}</p>
-                                @else
-                                    <p>No se encontraron posibles fallas.</p>
-                                @endif
+                            @if (isset($posiblesAlertas) && count($posiblesAlertas) > 0)
+                                <p>Alertas:</p>
+                                <ul>
+                                    @foreach ($posiblesAlertas as $alerta)
+                                        <li>{{ $alerta }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+
+                            @if(isset($posiblesFallas) && count($posiblesFallas) > 0)
+                                <p>Posibles fallas:</p>
+                                <ul>
+                                    @foreach($posiblesFallas as $key => $falla)
+                                        <li>{{ $falla }} - {{ $posiblesSistemas[$key] }}</li>
+                                    @endforeach
+                                </ul>
+                            @elseif(isset($mensaje))
+                                <p>{{ $mensaje }}</p>
+                            @else
+                                <p>No se encontraron posibles fallas.</p>
+                            @endif
                             </div>
                         </div>
                         <!-- Agrega aquí los demás campos del camión que deseas mostrar -->

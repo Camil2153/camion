@@ -13,6 +13,8 @@ use App\Models\Falla;
 use App\Models\Sistema;
 use Carbon\Carbon;
 use App\Models\Servicio;
+use App\Models\DocumentosCamione;
+use App\Models\DocumentosConductore;
 
 /**
  * Class ViajeController
@@ -158,8 +160,34 @@ class ViajeController extends Controller
                         $posiblesSistemas[] = $fallaRegistrada->sistema->nom_sis;
                     }
     
+                    $posiblesAlertas = [];
+
+                    // Verificar la fecha de vencimiento de los documentos del camión
+                    $documentoCamion = DocumentosCamione::where('cam_doc_cam', $camione->pla_cam)->first();
+                
+                    if ($documentoCamion && $documentoCamion->vig_doc_cam !== null) {
+                        $fechaVencimientoDocumentoCamion = Carbon::parse($documentoCamion->vig_doc_cam);
+                        $diasRestantes = $fechaVencimientoDocumentoCamion->diffInDays(now());
+                
+                        if ($diasRestantes <= 30) {
+                            $posiblesAlertas[] = 'El documento ' . $documentoCamion->nom_doc_cam . ' está próximo a vencerse. Quedan ' . $diasRestantes . ' días.';
+                        }
+                    }
+                
+                    // Verificar la fecha de vencimiento de la licencia del conductor
+                    $documentoConductor = DocumentosConductore::where('con_doc_con', $camione->con_cam)->first();
+                
+                    if ($documentoConductor && $documentoConductor->fec_ven_lic_doc_con !== null) {
+                        $fechaVencimientoLicenciaConductor = Carbon::parse($documentoConductor->fec_ven_lic_doc_con);
+                        $diasRestantesLicencia = now()->diffInDays($fechaVencimientoLicenciaConductor);
+                
+                        if ($diasRestantesLicencia <= 30) {
+                            $posiblesAlertas[] = 'La licencia del conductor está próxima a vencerse. Quedan ' . $diasRestantesLicencia . ' días.';
+                        }
+                    }
+    
                     // Pasar los posibles fallos y sistemas a la vista correspondiente
-                    return view('viaje.show', compact('viaje', 'posiblesFallas', 'posiblesSistemas'));
+                    return view('viaje.show', compact('viaje', 'posiblesFallas', 'posiblesSistemas', 'posiblesAlertas'));
                 }
             }
         }
@@ -168,7 +196,7 @@ class ViajeController extends Controller
         // Manejar el caso en consecuencia
         $mensaje = 'No se encontró información de servicio para el camión. Verifica los registros.';
         return view('viaje.show', compact('viaje', 'mensaje'));
-    }    
+    }        
 
     /**
      * Show the form for editing the specified resource.
