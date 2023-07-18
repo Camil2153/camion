@@ -44,7 +44,12 @@ class CamioneController extends Controller
         $camione = new Camione();
         $conductores = Conductore::pluck('nom_con', 'dni_con');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('camione.create', compact('camione', 'empresas', 'conductores'));
+        $conductoresDisponibles = Conductore::whereNotIn('dni_con', function ($query) {
+            $query->select('con_cam')
+                  ->from('camiones');
+        })->pluck('nom_con', 'dni_con')->toArray();
+
+        return view('camione.create', compact('camione', 'empresas', 'conductoresDisponibles'));
     }
 
     /**
@@ -88,7 +93,12 @@ class CamioneController extends Controller
         $camione = Camione::find($pla_cam);
         $conductores = Conductore::pluck('nom_con', 'dni_con');
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('camione.edit', compact('camione', 'empresas', 'conductores'));
+        $conductoresDisponibles = Conductore::whereNotIn('dni_con', function ($query) {
+            $query->select('con_cam')
+                  ->from('camiones');
+        })->pluck('nom_con', 'dni_con')->toArray();
+
+        return view('camione.edit', compact('camione', 'empresas', 'conductoresDisponibles'));
     }
 
     /**

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Ver Viaje')
 
 @section('content_header')
     <h1>Ver Viaje</h1>
@@ -12,8 +12,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                    <div class="float-left">
-                            <span class="card-title"> Orden de Trabajo para el vehiculo <strong>{{ $viaje->cam_via }}</strong> Orden numero: <strong><span style="color: red;">{{ $viaje->cod_via }}</span></strong></span>
+                        <div class="float-left">
+                            <span class="card-title">Orden de Trabajo para el vehiculo <strong>{{ $viaje->cam_via }}</strong> Orden número: <strong><span style="color: red;">{{ $viaje->cod_via }}</span></strong></span>
                         </div>
                         <div class="float-right">
                             <a class="btn btn-secundary border border-secondary btn-sm" href="{{ route('viajes.index') }}"> {{ __('Volver') }}</a>
@@ -23,7 +23,6 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                         
                                 <div class="form-group">
                                     <strong>Fecha de Salida:</strong>
                                     {{ $viaje->fec_sal_via }}, {{ $viaje->hor_sal_via }}
@@ -32,7 +31,6 @@
                                     <strong>Fecha de Llegada:</strong>
                                     {{ $viaje->fec_lle_via }}, {{ $viaje->hor_lle_via }}
                                 </div>
-                               
                                 <div class="form-group">
                                     <strong>Cliente:</strong>
                                     {{ $viaje->cliente->nom_cli }}
@@ -47,28 +45,27 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                            <div class="form-group">
-    <strong>Estado:</strong>
-    @php
-        $estadoClass = '';
-        switch($viaje->est_via) {
-            case 'programado':
-                $estadoClass = 'text-primary';
-                break;
-            case 'en progreso':
-                $estadoClass = 'text-warning';
-                break;
-            case 'completado':
-                $estadoClass = 'text-success';
-                break;
-            case 'cancelado':
-                $estadoClass = 'text-danger';
-                break;
-        }
-    @endphp
-    <span class="{{ $estadoClass }}"><strong>{{ $viaje->est_via }}</strong></span>
-</div>
-
+                                <div class="form-group">
+                                    <strong>Estado:</strong>
+                                    @php
+                                        $estadoClass = '';
+                                        switch($viaje->est_via) {
+                                            case 'programado':
+                                                $estadoClass = 'text-primary';
+                                                break;
+                                            case 'en progreso':
+                                                $estadoClass = 'text-warning';
+                                                break;
+                                            case 'completado':
+                                                $estadoClass = 'text-success';
+                                                break;
+                                            case 'cancelado':
+                                                $estadoClass = 'text-danger';
+                                                break;
+                                        }
+                                    @endphp
+                                    <span class="{{ $estadoClass }}"><strong>{{ $viaje->est_via }}</strong></span>
+                                </div>
                                 <div class="form-group">
                                     <strong>Carga:</strong>
                                     {{ $viaje->car_via }}
@@ -77,7 +74,6 @@
                                     <strong>Peso:</strong>
                                     {{ $viaje->pes_via }}
                                 </div>
-                              
                                 <div class="form-group">
                                     <strong>Kilometraje:</strong>
                                     {{ $viaje->kil_via }}
@@ -101,79 +97,82 @@
                             <summary>Gastos</summary>
                             <div class="card-body">
                                 <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Fecha</th>
-                                    <th>Categoría</th>
-                                    <th>Monto</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $totalMonto = 0;
-                                @endphp
-                                @if ($viaje && $viaje->gastos)
-                                    @foreach ($viaje->gastos as $gasto)
+                                    <thead>
                                         <tr>
-                                            <td>{{ $gasto->cod_gas }}</td>
-                                            <td>{{ $gasto->fec_gas }}</td>
-                                            <td>{{ $gasto->categoriasGasto->nom_cat_gas }}</td>
-                                            <td>{{ $gasto->mon_gas }}</td>
+                                            <th>Código</th>
+                                            <th>Fecha</th>
+                                            <th>Categoría</th>
+                                            <th>Monto</th>
                                         </tr>
+                                    </thead>
+                                    <tbody>
                                         @php
-                                            $totalMonto += $gasto->mon_gas;
+                                            $totalMonto = 0;
                                         @endphp
-                                    @endforeach
-                                    <tr>
-                                        <td colspan="3"><strong>Total</strong></td>
-                                        <td>{{ number_format($totalMonto, 2, '.', ',') }}</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
+                                        @if ($viaje && $viaje->gastos)
+                                            @foreach ($viaje->gastos as $gasto)
+                                                <tr>
+                                                    <td>{{ $gasto->cod_gas }}</td>
+                                                    <td>{{ $gasto->fec_gas }}</td>
+                                                    <td>{{ $gasto->categoriasGasto->nom_cat_gas }}</td>
+                                                    <td>{{ $gasto->mon_gas }}</td>
+                                                </tr>
+                                                @php
+                                                    $totalMonto += $gasto->mon_gas;
+                                                @endphp
+                                            @endforeach
+                                            <tr>
+                                                <td colspan="3"><strong>Total</strong></td>
+                                                <td>{{ number_format($totalMonto, 2, '.', ',') }}</td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <details>
-                    <summary>Informacion del Camion</summary>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <strong>Placa del Camion:</strong>
-                                    {{ $viaje->camione->pla_cam }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <details>
+                            <summary>Información del Camión</summary>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <strong>Placa del Camión:</strong>
+                                            {{ $viaje->camione->pla_cam }}
+                                        </div>
+                                        <div class="form-group">
+                                            <strong>Marca:</strong>
+                                            {{ $viaje->camione->mar_cam }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <strong>Modelo:</strong>
+                                            {{ $viaje->camione->mod_cam }}
+                                        </div>
+                                        <div class="form-group">
+                                            <strong>Tipo:</strong>
+                                            {{ $viaje->camione->tip_cam }}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <strong>Marca:</strong>
-                                    {{ $viaje->camione->mar_cam }}
-                                </div>
+                                <!-- Agrega aquí los demás campos del camión que deseas mostrar -->
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <strong>Modelo:</strong>
-                                    {{ $viaje->camione->mod_cam }}
-                                </div>
-                                <div class="form-group">
-                                    <strong>Tipo:</strong>
-                                    {{ $viaje->camione->tip_cam }}
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Agrega aquí los demás campos del camión que deseas mostrar -->
+                        </details>
                     </div>
-                </details>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-12">
+        <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <details>
@@ -211,12 +210,88 @@
         </div>
     </div>
  
-@stop
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <details>
+                            <summary>Mapa de Ruta</summary>
+                            <div class="card-body">
+                                <div id="map" style="height: 400px; width: 100%;"></div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+@endsection
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+        var map;
+        var geocoder;
+        var debounceTimer;
+        var directionsService;
+        var directionsRenderer;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 4.5709, lng: -74.2973 },
+                zoom: 6
+            });
+            geocoder = new google.maps.Geocoder();
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+
+            updateMap();
+        }
+
+        function updateMap() {
+            var originValue = '{{ $viaje->ruta->origenCiudad->nom_ciu }}';
+            var destinationValue = '{{ $viaje->ruta->destinoCiudad->nom_ciu}}';
+
+            geocoder.geocode({ address: originValue }, function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    var originLocation = results[0].geometry.location;
+                    geocoder.geocode({ address: destinationValue }, function (results, status) {
+                        if (status === google.maps.GeocoderStatus.OK) {
+                            var destinationLocation = results[0].geometry.location;
+
+                            var request = {
+                                origin: originLocation,
+                                destination: destinationLocation,
+                                travelMode: google.maps.TravelMode.DRIVING
+                            };
+
+                            directionsService.route(request, function (response, status) {
+                                if (status === google.maps.DirectionsStatus.OK) {
+                                    directionsRenderer.setDirections(response);
+                                    var bounds = new google.maps.LatLngBounds();
+                                    bounds.extend(originLocation);
+                                    bounds.extend(destinationLocation);
+                                    map.fitBounds(bounds);
+                                } else {
+                                    window.alert('No se pudo calcular la ruta: ' + status);
+                                    directionsRenderer.setDirections({ routes: [] });
+                                }
+                            });
+                        } else {
+                            window.alert('No se pudo encontrar el destino');
+                            directionsRenderer.setDirections({ routes: [] });
+                        }
+                    });
+                } else {
+                    window.alert('No se pudo encontrar el origen');
+                    directionsRenderer.setDirections({ routes: [] });
+                }
+            });
+        }
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhGHEvQIsLhByKH2e_H2ZEtVrbYnLGcIU&callback=initMap" async defer></script>
 @stop

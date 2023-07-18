@@ -1,6 +1,5 @@
 <div class="box box-info padding-1">
     <div class="box-body">
-        
         <div class="form-group">
             {{ Form::label('Código') }}
             {{ Form::text('cod_rut', $ruta->cod_rut, ['class' => 'form-control' . ($errors->has('cod_rut') ? ' is-invalid' : ''), 'maxlength' => '4', 'pattern' => '[0-9]{4}', 'placeholder' => '1111']) }}
@@ -12,26 +11,27 @@
             {!! $errors->first('nom_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('ori_rut', 'Origen') }}
-            {{ Form::select('ori_rut', $ciudades, $ruta->ori_rut, ['class' => 'form-control' . ($errors->has('ori_rut') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione una ciudad']) }}
+            {{ Form::label('Origen') }}
+            {{ Form::select('ori_rut', $ciudades, $ruta->ori_rut, ['id' => 'ori_rut', 'class' => 'form-control' . ($errors->has('ori_rut') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione una ciudad', 'onchange' => 'updateMap()']) }}
             {!! $errors->first('ori_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('des_rut', 'Destino') }}
-            {{ Form::select('des_rut', $ciudades, $ruta->des_rut, ['class' => 'form-control' . ($errors->has('des_rut') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione una ciudad']) }}
+            {{ Form::label('Destino') }}
+            {{ Form::select('des_rut', $ciudades, $ruta->des_rut, ['id' => 'des_rut', 'class' => 'form-control' . ($errors->has('des_rut') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione una ciudad', 'onchange' => 'updateMap()']) }}
             {!! $errors->first('des_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        <div id="map" style="height: 400px; width: 100%;"></div>
         <div class="form-group">
-    {{ Form::label('Distancia (km)') }}
-    <?php
-        $dis_rut_formatted = number_format($ruta->dis_rut, 0, ',', '.');
-    ?>
-    {{ Form::text('dis_rut', $dis_rut_formatted, ['id' => 'dis_rut', 'class' => 'form-control' . ($errors->has('dis_rut') ? ' is-invalid' : ''), 'placeholder' => '']) }}
-    {!! $errors->first('dis_rut', '<div class="invalid-feedback">:message</div>') !!}
-</div>
+            {{ Form::label('Distancia (km)') }}
+            <?php
+                $dis_rut_formatted = number_format($ruta->dis_rut, 0, ',', '.');
+            ?>
+            {{ Form::text('dis_rut', $dis_rut_formatted, ['id' => 'dis_rut', 'class' => 'form-control', 'readonly' => 'readonly']) }}
+            {!! $errors->first('dis_rut', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
         <div class="form-group">
             {{ Form::label('Duración') }}
-            {{ Form::text('dur_rut', $ruta->dur_rut, ['class' => 'form-control' . ($errors->has('dur_rut') ? ' is-invalid' : '')]) }}
+            {{ Form::text('dur_rut', $ruta->dur_rut, ['id' => 'dur_rut', 'class' => 'form-control', 'readonly' => 'readonly']) }}
             {!! $errors->first('dur_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -57,38 +57,113 @@
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>
-        <a href="  {{ route('rutas.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
+        <a href="{{ route('rutas.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
     </div>
 </div>
 
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhGHEvQIsLhByKH2e_H2ZEtVrbYnLGcIU&callback=initMap" async defer></script>
 <script>
-    // Obtener el campo de input de la distancia
-    var disRutInput = document.getElementById('dis_rut');
+    var map;
+    var geocoder;
+    var debounceTimer;
+    var directionsService;
+    var directionsRenderer;
 
-    // Escuchar el evento de entrada en el campo de input
-    disRutInput.addEventListener('input', function(event) {
-        // Obtener el valor sin separadores de miles
-        var rawValue = event.target.value.replace(/\./g, '');
-
-        // Formatear el valor con separadores de miles
-        var formattedValue = addThousandSeparators(rawValue);
-
-        // Mostrar el valor formateado en el campo de input
-        event.target.value = formattedValue;
-    });
-
-    // Función para agregar separadores de miles
-    function addThousandSeparators(value) {
-        var parts = value.toString().split(".");
-        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        return parts.join(".");
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 4.5709, lng: -74.2973 },
+            zoom: 6
+        });
+        geocoder = new google.maps.Geocoder();
+        directionsService = new google.maps.DirectionsService();
+        directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
     }
 
-    // Escuchar el evento de envío del formulario
-    disRutInput.closest('form').addEventListener('submit', function(event) {
-        // Eliminar los separadores de miles antes de enviar el formulario
-        var rawValue = disRutInput.value.replace(/\./g, '');
-        disRutInput.value = rawValue;
-    });
+    function updateMap() {
+        var origin = document.getElementById('ori_rut');
+        var destination = document.getElementById('des_rut');
+
+        if (origin.selectedIndex === 0 || destination.selectedIndex === 0) {
+            map.setCenter({ lat: 4.5709, lng: -74.2973 });
+            map.setZoom(6);
+            directionsRenderer.setDirections({ routes: [] });
+            document.getElementById('dis_rut').value = '';
+            document.getElementById('dur_rut').value = '';
+            return;
+        }
+
+        var originValue = origin.options[origin.selectedIndex].text;
+        var destinationValue = destination.options[destination.selectedIndex].text;
+
+        geocoder.geocode({ address: originValue }, function (results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                var originLocation = results[0].geometry.location;
+                geocoder.geocode({ address: destinationValue }, function (results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        var destinationLocation = results[0].geometry.location;
+
+                        var request = {
+                            origin: originLocation,
+                            destination: destinationLocation,
+                            travelMode: google.maps.TravelMode.DRIVING
+                        };
+
+                        directionsService.route(request, function (response, status) {
+                            if (status === google.maps.DirectionsStatus.OK) {
+                                directionsRenderer.setDirections(response);
+                                var bounds = new google.maps.LatLngBounds();
+                                bounds.extend(originLocation);
+                                bounds.extend(destinationLocation);
+                                map.fitBounds(bounds);
+
+                                var route = response.routes[0];
+                                var distance = 0;
+                                var duration = 0;
+
+                                for (var i = 0; i < route.legs.length; i++) {
+                                    distance += route.legs[i].distance.value;
+                                    duration += route.legs[i].duration.value;
+                                }
+
+                                distance = distance / 1000; // Convertir de metros a kilómetros
+
+                                var days = Math.floor(duration / (60 * 60 * 24));
+                                var hours = Math.floor((duration % (60 * 60 * 24)) / (60 * 60));
+                                var minutes = Math.floor((duration % (60 * 60)) / 60);
+
+                                var durationText = "";
+                                if (days > 0) {
+                                    durationText += days + " día(s) ";
+                                }
+                                if (hours > 0) {
+                                    durationText += hours + " hora(s) ";
+                                }
+                                if (minutes > 0) {
+                                    durationText += minutes + " minuto(s)";
+                                }
+
+                                document.getElementById('dis_rut').value = distance.toFixed(2);
+                                document.getElementById('dur_rut').value = durationText;
+                            } else {
+                                window.alert('No se pudo calcular la ruta: ' + status);
+                                directionsRenderer.setDirections({ routes: [] });
+                                document.getElementById('dis_rut').value = '';
+                                document.getElementById('dur_rut').value = '';
+                            }
+                        });
+                    } else {
+                        window.alert('No se pudo encontrar el destino');
+                        directionsRenderer.setDirections({ routes: [] });
+                        document.getElementById('dis_rut').value = '';
+                        document.getElementById('dur_rut').value = '';
+                    }
+                });
+            } else {
+                window.alert('No se pudo encontrar el origen');
+                directionsRenderer.setDirections({ routes: [] });
+                document.getElementById('dis_rut').value = '';
+                document.getElementById('dur_rut').value = '';
+            }
+        });
+    }
 </script>

@@ -7,7 +7,7 @@
             {!! $errors->first('cod_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Carga') }}
+            {{ Form::label('Tipo de Carga') }}
             {{ Form::text('car_via', $viaje->car_via, ['class' => 'form-control' . ($errors->has('car_via') ? ' is-invalid' : '')]) }}
             {!! $errors->first('car_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
@@ -20,6 +20,11 @@
             {{ Form::label('Estado') }}
             {{ Form::select('est_via', ['programado' => 'Programado', 'en progreso' => 'En progreso', 'completado' => 'Completado', 'cancelado' => 'Cancelado'], $viaje->est_via, ['class' => 'form-control' . ($errors->has('est_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
             {!! $errors->first('est_via', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('Ruta') }}
+            {{ Form::select('rut_via', $rutas, $viaje->rut_via, ['class' => 'form-control' . ($errors->has('rut_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar ruta']) }}
+            {!! $errors->first('rut_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Fecha de salida') }}
@@ -60,11 +65,6 @@
             {{ Form::label('Cliente') }}
             {{ Form::select('cli_via', $clientes, $viaje->cli_via, ['class' => 'form-control' . ($errors->has('cli_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar cliente']) }}
             {!! $errors->first('cli_via', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('Ruta') }}
-            {{ Form::select('rut_via', $rutas, $viaje->rut_via, ['class' => 'form-control' . ($errors->has('rut_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar ruta']) }}
-            {!! $errors->first('rut_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Empresa') }}

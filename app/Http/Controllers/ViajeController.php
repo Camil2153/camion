@@ -90,6 +90,18 @@ class ViajeController extends Controller
 
         $viaje = Viaje::create($request->all());
 
+        $estadoViaje = $request->input('est_via');
+
+        if ($estadoViaje === 'programado' || $estadoViaje === 'en progreso') {
+            $camione = Camione::findOrFail($request->input('cam_via'));
+            $camione->est_cam = 'fuera de servicio';
+            $camione->save();
+        } elseif ($estadoViaje === 'completado' || $estadoViaje === 'cancelado') {
+            $camione = Camione::findOrFail($request->input('cam_via'));
+            $camione->est_cam = 'disponible';
+            $camione->save();
+        }
+
         return redirect()->route('viajes.index')
             ->with('success', 'Viaje creado exitosamente.');
     }
@@ -204,16 +216,28 @@ class ViajeController extends Controller
      * @param  string $cod_via
      * @return \Illuminate\Http\Response
      */
-    public function edit($cod_via)
-    {
-        $viaje = Viaje::find($cod_via);
-        $camiones = Camione::where('est_cam', 'disponible')->pluck('pla_cam', 'pla_cam');
-        $clientes = Cliente::pluck('nom_cli', 'cod_cli');
-        $rutas = Ruta::pluck('nom_rut', 'cod_rut');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
+ public function edit($cod_via)
+{
+    $viaje = Viaje::find($cod_via);
+    $camiones = Camione::where('est_cam', 'disponible')->pluck('pla_cam', 'pla_cam');
+    $clientes = Cliente::pluck('nom_cli', 'cod_cli');
+    $rutas = Ruta::pluck('nom_rut', 'cod_rut');
+    $empresas = Empresa::pluck('nom_emp', 'nit_emp');
 
-        return view('viaje.edit', compact('viaje', 'camiones', 'clientes', 'rutas', 'empresas'));
+    // Obtén todos los camiones disponibles
+    $camionesDisponibles = Camione::where('est_cam', 'disponible')->get();
+
+    // Pluck solo los camiones disponibles para usar en el formulario de edición
+    $camiones = $camionesDisponibles->pluck('pla_cam', 'pla_cam')->toArray();
+
+    // Agrega el camión asignado al viaje actual a la lista de camiones disponibles
+    // Esto asegura que el camión asignado siempre aparezca en el formulario
+    if (!in_array($viaje->cam_via, $camiones)) {
+        $camiones[$viaje->cam_via] = $viaje->cam_via;
     }
+
+    return view('viaje.edit', compact('viaje', 'camiones', 'clientes', 'rutas', 'empresas'));
+}
 
     /**
      * Update the specified resource in storage.
@@ -250,6 +274,18 @@ class ViajeController extends Controller
 
         // Actualizar los atributos del modelo Viaje
         $viaje->update($request->all());
+
+        $estadoViaje = $request->input('est_via');
+
+        if ($estadoViaje === 'programado' || $estadoViaje === 'en progreso') {
+            $camione = Camione::findOrFail($request->input('cam_via'));
+            $camione->est_cam = 'fuera de servicio';
+            $camione->save();
+        } elseif ($estadoViaje === 'completado' || $estadoViaje === 'cancelado') {
+            $camione = Camione::findOrFail($request->input('cam_via'));
+            $camione->est_cam = 'disponible';
+            $camione->save();
+        }
 
         return redirect()->route('viajes.index')
             ->with('success', 'Viaje actualizado exitosamente.');

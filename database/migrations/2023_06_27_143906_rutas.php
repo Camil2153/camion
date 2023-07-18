@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreign('des_rut')->references('cod_ciu')->on('ciudades');            
 
             $table->string('dis_rut', 15); // distancia ruta
-            $table->string('dur_rut', 15); // duracion ruta
+            $table->string('dur_rut', 30); // duracion ruta
             $table->string('res_rut', 100); // restricciones ruta
             $table->string('com_rut', 25); // complejidad ruta
             $table->string('est_rut', 25); // estado ruta

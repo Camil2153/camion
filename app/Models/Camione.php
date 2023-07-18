@@ -32,7 +32,7 @@ class Camione extends Model
     public $incrementing = false;
 
     static $rules = [
-        'pla_cam' => ['required','unique:camiones', 'regex:/^[A-Z]{3}\d{3}$/'],
+        'pla_cam' => ['required','unique:camiones'],
         'mar_cam' => 'required',
         'mod_cam' => 'required',
         'tip_cam' => 'required',

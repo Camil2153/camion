@@ -40,15 +40,16 @@
             {!! $errors->first('cap_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Promedio de combustible (Litro por Kilometro)') }}
+            {{ Form::label('Promedio de combustible (Galón por Kilometro)') }}
             {{ Form::number('cont_cam', $camione->cont_cam, ['class' => 'form-control' . ($errors->has('cont_cam') ? ' is-invalid' : ''), 'min' => 0, 'step' => 'any','placeholder' => '']) }}
             {!! $errors->first('cont_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Conductor') }}
-            {{ Form::select('con_cam', $conductores, $camione->con_cam, ['class' => 'form-control' . ($errors->has('con_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar conductor']) }}
-            {!! $errors->first('con_cam', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
+    {{ Form::label('Conductor') }}
+    {{ Form::select('con_cam', $conductoresDisponibles, $camione->con_cam, ['class' => 'form-control' . ($errors->has('con_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar conductor']) }}
+    {!! $errors->first('con_cam', '<div class="invalid-feedback">:message</div>') !!}
+</div>
+
         <div class="form-group">
             {{ Form::label('Empresa') }}
             {{ Form::select('emp_cam', $empresas, $camione->emp_cam, ['class' => 'form-control' . ($errors->has('emp_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
