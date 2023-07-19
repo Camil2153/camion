@@ -32,6 +32,126 @@
             {!! $errors->first('kil_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
+            {{ Form::label('ace_mot_ser', 'Se cambio el aceite del motor') }}
+            {{ Form::hidden('ace_mot_ser', 0) }}
+            {{ Form::checkbox('ace_mot_ser', 1, $servicio->ace_mot_ser, ['class' => 'form-check-input' . ($errors->has('ace_mot_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('ace_mot_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('fil_ace_air_com_ser', 'Se reemplazaron los filtros de aceite, aire y combustible') }}
+            {{ Form::hidden('fil_ace_air_com_ser', 0) }}
+            {{ Form::checkbox('fil_ace_air_com_ser', 1, $servicio->fil_ace_air_com_ser, ['class' => 'form-check-input' . ($errors->has('fil_ace_air_com_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('fil_ace_air_com_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('pas_fre_ser', 'Se ajustaron las pastillas de freno') }}
+            {{ Form::hidden('pas_fre_ser', 0) }}
+            {{ Form::checkbox('pas_fre_ser', 1, $servicio->pas_fre_ser, ['class' => 'form-check-input' . ($errors->has('pas_fre_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('pas_fre_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('des_dis_tam_ser', 'Se verificó el desgaste de los discos y tambores') }}
+            {{ Form::hidden('des_dis_tam_ser', 0) }}
+            {{ Form::checkbox('des_dis_tam_ser', 1, $servicio->des_dis_tam_ser, ['class' => 'form-check-input' . ($errors->has('des_dis_tam_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('des_dis_tam_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('niv_cal_liq_fre_ser', 'Se comprobó el nivel y la calidad del líquido de frenos') }}
+            {{ Form::hidden('niv_cal_liq_fre_ser', 0) }}
+            {{ Form::checkbox('niv_cal_liq_fre_ser', 1, $servicio->niv_cal_liq_fre_ser, ['class' => 'form-check-input' . ($errors->has('niv_cal_liq_fre_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('niv_cal_liq_fre_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('aju_lub_com_sus_ser', 'Se ajustaron y lubricaron los componentes de la suspensión') }}
+            {{ Form::hidden('aju_lub_com_sus_ser', 0) }}
+            {{ Form::checkbox('aju_lub_com_sus_ser', 1, $servicio->aju_lub_com_sus_ser, ['class' => 'form-check-input' . ($errors->has('aju_lub_com_sus_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('aju_lub_com_sus_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('ali_rue_ser', 'Se alinearon las ruedas') }}
+            {{ Form::hidden('ali_rue_ser', 0) }}
+            {{ Form::checkbox('ali_rue_ser', 1, $servicio->ali_rue_ser, ['class' => 'form-check-input' . ($errors->has('ali_rue_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('ali_rue_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('cre_dir_ser', 'Se ajustó la cremallera de dirección') }}
+            {{ Form::hidden('cre_dir_ser', 0) }}
+            {{ Form::checkbox('cre_dir_ser', 1, $servicio->cre_dir_ser, ['class' => 'form-check-input' . ($errors->has('cre_dir_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('cre_dir_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('lub_com_nec_ser', 'Se lubricaron los componentes de la dirección') }}
+            {{ Form::hidden('lub_com_nec_ser', 0) }}
+            {{ Form::checkbox('lub_com_nec_ser', 1, $servicio->lub_com_nec_ser, ['class' => 'form-check-input' . ($errors->has('lub_com_nec_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('lub_com_nec_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('exa_sis_esc_ser', 'Se examinó el sistema de escape') }}
+            {{ Form::hidden('exa_sis_esc_ser', 0) }}
+            {{ Form::checkbox('exa_sis_esc_ser', 1, $servicio->exa_sis_esc_ser, ['class' => 'form-check-input' . ($errors->has('exa_sis_esc_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('exa_sis_esc_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('fun_luc_ser', 'Se verificó el funcionamiento de las luces') }}
+            {{ Form::hidden('fun_luc_ser', 0) }}
+            {{ Form::checkbox('fun_luc_ser', 1, $servicio->fun_luc_ser, ['class' => 'form-check-input' . ($errors->has('fun_luc_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('fun_luc_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('ins_cab_ser', 'Se inspeccionó el cableado') }}
+            {{ Form::hidden('ins_cab_ser', 0) }}
+            {{ Form::checkbox('ins_cab_ser', 1, $servicio->ins_cab_ser, ['class' => 'form-check-input' . ($errors->has('ins_cab_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('ins_cab_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('con_ele_ser', 'Se revisaron los conectores eléctricos') }}
+            {{ Form::hidden('con_ele_ser', 0) }}
+            {{ Form::checkbox('con_ele_ser', 1, $servicio->con_ele_ser, ['class' => 'form-check-input' . ($errors->has('con_ele_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('con_ele_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('rot_neu_ser', 'Se rotaron los neumáticos') }}
+            {{ Form::hidden('rot_neu_ser', 0) }}
+            {{ Form::checkbox('rot_neu_ser', 1, $servicio->rot_neu_ser, ['class' => 'form-check-input' . ($errors->has('rot_neu_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('rot_neu_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('ree_neu_ser', 'Se reemplazaron los neumáticos') }}
+            {{ Form::hidden('ree_neu_ser', 0) }}
+            {{ Form::checkbox('ree_neu_ser', 1, $servicio->ree_neu_ser, ['class' => 'form-check-input' . ($errors->has('ree_neu_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('ree_neu_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('niv_cal_liq_ref_ser', 'Se verificó el nivel y la calidad del líquido refrigerante') }}
+            {{ Form::hidden('niv_cal_liq_ref_ser', 0) }}
+            {{ Form::checkbox('niv_cal_liq_ref_ser', 1, $servicio->niv_cal_liq_ref_ser, ['class' => 'form-check-input' . ($errors->has('niv_cal_liq_ref_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('niv_cal_liq_ref_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('ins_rad_man_ser', 'Se inspeccionó el radiador y las mangueras') }}
+            {{ Form::hidden('ins_rad_man_ser', 0) }}
+            {{ Form::checkbox('ins_rad_man_ser', 1, $servicio->ins_rad_man_ser, ['class' => 'form-check-input' . ($errors->has('ins_rad_man_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('ins_rad_man_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('liq_tra_ser', 'Se cambió el líquido de la transmisión') }}
+            {{ Form::hidden('liq_tra_ser', 0) }}
+            {{ Form::checkbox('liq_tra_ser', 1, $servicio->liq_tra_ser, ['class' => 'form-check-input' . ($errors->has('liq_tra_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('liq_tra_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('rev_emb_ser', 'Se revisó el embrague') }}
+            {{ Form::hidden('rev_emb_ser', 0) }}
+            {{ Form::checkbox('rev_emb_ser', 1, $servicio->rev_emb_ser, ['class' => 'form-check-input' . ($errors->has('rev_emb_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('rev_emb_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('niv_cal_liq_tra_ser', 'Se verificó el nivel y la calidad del líquido de la transmisión') }}
+            {{ Form::hidden('niv_cal_liq_tra_ser', 0) }}
+            {{ Form::checkbox('niv_cal_liq_tra_ser', 1, $servicio->niv_cal_liq_tra_ser, ['class' => 'form-check-input' . ($errors->has('niv_cal_liq_tra_ser') ? ' is-invalid' : ''), 'value' => 1, 'style' => 'margin-left: 10px']) }}
+            {!! $errors->first('niv_cal_liq_tra_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
             {{ Form::label('Costo') }}
              <?php
               $cos_ser_formatted = number_format($servicio->cos_ser, 2, ',', '.');

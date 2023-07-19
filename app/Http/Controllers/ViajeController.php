@@ -163,43 +163,91 @@ class ViajeController extends Controller
                         $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas debido a la complejidad y distancia de la ruta.';
                         $posiblesSistemas[] = 'Sistema de suspensión';
                     }
-    
+
+                    // Reglas de negocio para las alertas de mantenimiento
+                    if (!$servicioAplicado->ace_mot_ser) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas en el sistema de motor debido a la necesidad de cambiar el aceite del motor y los filtros de aceite, aire y combustible según las recomendaciones del fabricante.';
+                        $posiblesSistemas[] = 'Sistema de motor';
+                    }
+
+                    if (!$servicioAplicado->pas_fre_ser || !$servicioAplicado->des_dis_tam_ser || !$servicioAplicado->niv_cal_liq_fre_ser) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas en el sistema de frenos debido a la necesidad de revisar y ajustar el sistema de frenos, pastillas de freno y nivel de líquido de frenos.';
+                        $posiblesSistemas[] = 'Sistema de frenos';
+                    }
+
+                    if (!$servicioAplicado->aju_lub_com_sus_ser) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas en el sistema de suspensión debido a la necesidad de inspeccionar y ajustar los componentes de la suspensión durante los servicios de mantenimiento programados.';
+                        $posiblesSistemas[] = 'Sistema de suspensión';
+                    }
+
+                    if (!$servicioAplicado->cre_dir_ser) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas en el sistema de dirección debido a la necesidad de verificar y ajustar el sistema de dirección durante los servicios de mantenimiento programados.';
+                        $posiblesSistemas[] = 'Sistema de dirección';
+                    }
+
+                    if (!$servicioAplicado->exa_sis_esc_ser) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas en el sistema de escape debido a la necesidad de realizar inspecciones periódicas en el sistema de escape para verificar su estado y funcionamiento.';
+                        $posiblesSistemas[] = 'Sistema de escape';
+                    }
+
+                    if (!$servicioAplicado->fun_luc_ser || !$servicioAplicado->ins_cab_ser || !$servicioAplicado->con_ele_ser) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas en el sistema eléctrico debido a la necesidad de realizar inspecciones regulares en el sistema eléctrico para verificar el estado de las luces, el cableado y los conectores.';
+                        $posiblesSistemas[] = 'Sistema eléctrico';
+                    }
+
+                    if (!$servicioAplicado->rot_neu_ser || !$servicioAplicado->ree_neu_ser) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas en el sistema de neumáticos debido a la necesidad de verificar periódicamente la presión de los neumáticos y realizar inspecciones visuales en busca de desgaste o daños.';
+                        $posiblesSistemas[] = 'Sistema de neumáticos';
+                    }
+
+                    if (!$servicioAplicado->niv_cal_liq_ref_ser || !$servicioAplicado->ins_rad_man_ser) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas en el sistema de refrigeración debido a la necesidad de verificar el sistema de refrigeración y el nivel de líquido refrigerante durante los servicios de mantenimiento programados.';
+                        $posiblesSistemas[] = 'Sistema de refrigeración';
+                    }
+
+                    if (!$servicioAplicado->liq_tra_ser || !$servicioAplicado->rev_emb_ser || !$servicioAplicado->niv_cal_liq_tra_ser) {
+                        $posiblesFallas[] = 'Se predice una mayor probabilidad de fallas en el sistema de transmisión y embrague debido a la necesidad de cambiar el líquido de la transmisión y revisar el embrague según las indicaciones del fabricante.';
+                        $posiblesSistemas[] = 'Sistema de transmisión y embrague';
+                    }
+        
                     // Obtener las fallas registradas previamente asociadas al camión
                     $fallasRegistradas = Falla::where('cam_fal', $camione->pla_cam)->get();
-    
+
+                    $registrosFallas = [];
                     foreach ($fallasRegistradas as $fallaRegistrada) {
-                        $posiblesFallas[] = 'Se encontró una falla registrada previamente: ' . $fallaRegistrada->desc_fal;
-                        $posiblesSistemas[] = $fallaRegistrada->sistema->nom_sis;
+                        $registrosFallas[] = [
+                            'fecha' => $fallaRegistrada->fec_fal,
+                            'descripcion' => $fallaRegistrada->desc_fal,
+                            'sistema' => $fallaRegistrada->sistema->nom_sis,
+                        ];
                     }
-    
-                    $posiblesAlertas = [];
 
                     // Verificar la fecha de vencimiento de los documentos del camión
                     $documentoCamion = DocumentosCamione::where('cam_doc_cam', $camione->pla_cam)->first();
-                
+
                     if ($documentoCamion && $documentoCamion->vig_doc_cam !== null) {
                         $fechaVencimientoDocumentoCamion = Carbon::parse($documentoCamion->vig_doc_cam);
                         $diasRestantes = $fechaVencimientoDocumentoCamion->diffInDays(now());
-                
+
                         if ($diasRestantes <= 30) {
                             $posiblesAlertas[] = 'El documento ' . $documentoCamion->nom_doc_cam . ' está próximo a vencerse. Quedan ' . $diasRestantes . ' días.';
                         }
                     }
-                
+
                     // Verificar la fecha de vencimiento de la licencia del conductor
                     $documentoConductor = DocumentosConductore::where('con_doc_con', $camione->con_cam)->first();
-                
+
                     if ($documentoConductor && $documentoConductor->fec_ven_lic_doc_con !== null) {
                         $fechaVencimientoLicenciaConductor = Carbon::parse($documentoConductor->fec_ven_lic_doc_con);
                         $diasRestantesLicencia = now()->diffInDays($fechaVencimientoLicenciaConductor);
-                
+
                         if ($diasRestantesLicencia <= 30) {
                             $posiblesAlertas[] = 'La licencia del conductor está próxima a vencerse. Quedan ' . $diasRestantesLicencia . ' días.';
                         }
                     }
-    
+   
                     // Pasar los posibles fallos y sistemas a la vista correspondiente
-                    return view('viaje.show', compact('viaje', 'posiblesFallas', 'posiblesSistemas', 'posiblesAlertas'));
+                    return view('viaje.show', compact('viaje', 'posiblesFallas', 'posiblesSistemas', 'registrosFallas', 'posiblesAlertas'));
                 }
             }
         }

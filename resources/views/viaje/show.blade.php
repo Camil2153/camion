@@ -22,7 +22,7 @@
 
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <strong>Fecha de Salida:</strong>
                                     {{ $viaje->fec_sal_via }}, {{ $viaje->hor_sal_via }}
@@ -44,7 +44,7 @@
                                     {{ $viaje->empresa->nom_emp }}
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <strong>Estado:</strong>
                                     @php
@@ -83,6 +83,11 @@
                                     {{ $viaje->com_via }}
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="map-container">
+                                    <div id="map" style="height: 200px; width: 100%;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -93,8 +98,20 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <details>
-                            <summary>Gastos</summary>
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#gastos">Gastos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#informacionCamion">Información del Camión</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#fallas">Predecir fallas</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div id="gastos" class="tab-pane fade">
                             <div class="card-body">
                                 <table class="table">
                                     <thead>
@@ -129,18 +146,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </details>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <details>
-                            <summary>Información del Camión</summary>
+                        </div>
+                        <div id="informacionCamion" class="tab-pane fade">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -166,64 +173,49 @@
                                 </div>
                                 <!-- Agrega aquí los demás campos del camión que deseas mostrar -->
                             </div>
-                        </details>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        </div>
+                        <div id="fallas" class="tab-pane fade">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="container">
+                                    @if (isset($posiblesAlertas) && count($posiblesAlertas) > 0)
+                                        <p>Alertas:</p>
+                                        <ul>
+                                            @foreach ($posiblesAlertas as $alerta)
+                                                <li>{{ $alerta }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
 
-        <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <details>
-                    <summary>Predecir fallas</summary>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="container">
-                            @if (isset($posiblesAlertas) && count($posiblesAlertas) > 0)
-                                <p>Alertas:</p>
-                                <ul>
-                                    @foreach ($posiblesAlertas as $alerta)
-                                        <li>{{ $alerta }}</li>
-                                    @endforeach
-                                </ul>
-                            @endif
+                                    @if (isset($posiblesFallas) && count($posiblesFallas) > 0)
+                                        <p>Posibles fallas:</p>
+                                        <ul>
+                                            @foreach ($posiblesFallas as $key => $falla)
+                                                <li>{{ $falla }} - {{ $posiblesSistemas[$key] }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @elseif (isset($mensaje))
+                                        <p>{{ $mensaje }}</p>
+                                    @else
+                                        <p>No se encontraron posibles fallas.</p>
+                                    @endif
 
-                            @if(isset($posiblesFallas) && count($posiblesFallas) > 0)
-                                <p>Posibles fallas:</p>
-                                <ul>
-                                    @foreach($posiblesFallas as $key => $falla)
-                                        <li>{{ $falla }} - {{ $posiblesSistemas[$key] }}</li>
-                                    @endforeach
-                                </ul>
-                            @elseif(isset($mensaje))
-                                <p>{{ $mensaje }}</p>
-                            @else
-                                <p>No se encontraron posibles fallas.</p>
-                            @endif
+                                    @if (isset($registrosFallas) && count($registrosFallas) > 0)
+                                        <p>Fallas registradas:</p>
+                                        <ul>
+                                            @foreach ($registrosFallas as $falla)
+                                                <li>{{ $falla['fecha'] }} - {{ $falla['descripcion'] }} - {{ $falla['sistema'] }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <!-- Agrega aquí los demás campos del camión que deseas mostrar -->
-                    </div>
-                </details>
-            </div>
-        </div>
-    </div>
- 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <details>
-                            <summary>Mapa de Ruta</summary>
-                            <div class="card-body">
-                                <div id="map" style="height: 400px; width: 100%;"></div>
-                            </div>
-                        </details>
                     </div>
                 </div>
             </div>
-        </div>
+         </div>
     </section>
 @endsection
 
@@ -294,4 +286,5 @@
     </script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhGHEvQIsLhByKH2e_H2ZEtVrbYnLGcIU&callback=initMap" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @stop

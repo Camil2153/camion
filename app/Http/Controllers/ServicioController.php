@@ -105,7 +105,7 @@ class ServicioController extends Controller
      */
     public function update(Request $request, Servicio $servicio)
     {
-        request()->validate(Servicio::$rules);
+        $request->validate(Arr::except(Servicio::$rules, 'cod_ser'));
 
         $servicio->update($request->all());
 
