@@ -18,21 +18,14 @@
             <tr>
 
                 <th>Código</th>
-                <th>Componente</th>
                 <th>Descripción</th>
                 <th>Fecha</th>
                 <th>Kilometraje</th>
-                <th>Tiempo de Inactividad</th>
                 <th>Gravedad</th>
                 <th>Estado Actual</th>
                 <th>Responsable de Detección</th>
-                <th>Responsable de Reparación</th>
-                <th>Acciones</th>
-                <th>Costo</th>
                 <th>Sistema</th>
                 <th>Camion</th>
-                <th>Taller</th>
-                <th>Empresa</th>
                 <th>Acciones</th>
 
             </tr>
@@ -42,21 +35,14 @@
                 <tr>
 
                     <td>{{ $falla->cod_fal }}</td>
-                    <td>{{ $falla->com_fal }}</td>
                     <td>{{ $falla->desc_fal }}</td>
                     <td>{{ $falla->fec_fal }}</td>
                     <td>{{ $falla->kil_fal }}</td>
-                    <td>{{ $falla->tie_ina_fal }}</td>
                     <td>{{ $falla->gra_fal }}</td>
                     <td>{{ $falla->est_act_fal }}</td>
                     <td>{{ $falla->res_det_fal }}</td>
-                    <td>{{ $falla->res_rep_fal }}</td>
-                    <td>{{ $falla->acc_fal }}</td>
-                    <td>{{ $falla->cos_fal }}</td>
                     <td>{{ $falla->sistema->nom_sis }}</td>
                     <td>{{ $falla->cam_fal }}</td>
-                    <td>{{ $falla->tallere->nom_tal }}</td>
-                    <td>{{ $falla->empresa->nom_emp }}</td>
 
                     <td>
                         <form action="{{ route('fallas.destroy',$falla->cod_fal) }}" method="POST">

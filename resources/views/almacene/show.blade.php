@@ -55,10 +55,6 @@
                             <strong>Estado:</strong>
                             {{ $almacene->est_alm }}
                         </div>
-                        <div class="form-group">
-                            <strong>Empresa:</strong>
-                            {{ $almacene->empresa->nom_emp }}
-                        </div>
 
                     </div>
                 </div>

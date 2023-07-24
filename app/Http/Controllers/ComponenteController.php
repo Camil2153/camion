@@ -5,7 +5,6 @@ use Illuminate\Support\Arr;
 use App\Models\Componente;
 use Illuminate\Http\Request;
 use App\Models\Sistema;
-use App\Models\Empresa;
 
 /**
  * Class ComponenteController
@@ -43,8 +42,7 @@ class ComponenteController extends Controller
     {
         $componente = new Componente();
         $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('componente.create', compact('componente', 'empresas', 'sistemas'));
+        return view('componente.create', compact('componente', 'sistemas'));
     }
 
     /**
@@ -60,7 +58,7 @@ class ComponenteController extends Controller
         $componente = Componente::create($request->all());
 
         return redirect()->route('componentes.index')
-            ->with('success', 'Componente created successfully.');
+            ->with('success', 'Componente creado exitosamente');
     }
 
     /**
@@ -86,8 +84,7 @@ class ComponenteController extends Controller
     {
         $componente = Componente::find($num_ser_com);
         $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('componente.edit', compact('componente', 'empresas', 'sistemas'));
+        return view('componente.edit', compact('componente', 'sistemas'));
     }
 
     /**
@@ -113,7 +110,7 @@ class ComponenteController extends Controller
         // Actualizar los atributos del modelo componente
         $componente->update($request->all());
     
-        return redirect()->route('componentes.index')->with('success', 'componente updated successfully');
+        return redirect()->route('componentes.index')->with('success', 'Componente actualizado existosamente');
     }
 
     /**
@@ -126,6 +123,6 @@ class ComponenteController extends Controller
         $componente = Componente::find($num_ser_com)->delete();
 
         return redirect()->route('componentes.index')
-            ->with('success', 'Componente deleted successfully');
+            ->with('success', 'Componente eliminado exitosamente');
     }
 }

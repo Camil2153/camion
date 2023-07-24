@@ -43,12 +43,8 @@
                             <strong>Sistema:</strong>
                             {{ $componente->sistema->nom_sis }}
                         </div>
-                        <div class="form-group">
-                            <strong>Empresa:</strong>
-                            {{ $componente->empresa->nom_emp }}
-                        </div>
 
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>

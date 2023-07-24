@@ -45,14 +45,9 @@
                         </div>
                         <div class="form-group">
                             <strong>Ciudad:</strong>
-                            {{ $cliente->ciudade->nom_ciu }}
+                            {{ $cliente->ciu_cli }}
                         </div>
-                        <div class="form-group">
-                            <strong>Empresa:</strong>
-                            {{ $cliente->empresa->nom_emp }}
                         </div>
-
-                    </div>
                 </div>
             </div>
         </div>

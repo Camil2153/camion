@@ -5,7 +5,6 @@ use Illuminate\Support\Arr;
 use App\Models\Camione;
 use Illuminate\Http\Request;
 use App\Models\Conductore;
-use App\Models\Empresa;
 
 /**
  * Class CamioneController
@@ -43,13 +42,12 @@ class CamioneController extends Controller
     {
         $camione = new Camione();
         $conductores = Conductore::pluck('nom_con', 'dni_con');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
         $conductoresDisponibles = Conductore::whereNotIn('dni_con', function ($query) {
             $query->select('con_cam')
                   ->from('camiones');
         })->pluck('nom_con', 'dni_con')->toArray();
 
-        return view('camione.create', compact('camione', 'empresas', 'conductoresDisponibles'));
+        return view('camione.create', compact('camione', 'conductoresDisponibles'));
     }
 
     /**
@@ -65,8 +63,7 @@ class CamioneController extends Controller
         $camione = Camione::create($request->all());
 
         return redirect()->route('camiones.index')
-            ->with('success', 'Camione created successfully.');
-            
+            ->with('success', 'Camion creado exitosamente');
     }
 
     /**
@@ -92,13 +89,12 @@ class CamioneController extends Controller
     {
         $camione = Camione::find($pla_cam);
         $conductores = Conductore::pluck('nom_con', 'dni_con');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
         $conductoresDisponibles = Conductore::whereNotIn('dni_con', function ($query) {
             $query->select('con_cam')
                   ->from('camiones');
         })->pluck('nom_con', 'dni_con')->toArray();
 
-        return view('camione.edit', compact('camione', 'empresas', 'conductoresDisponibles'));
+        return view('camione.edit', compact('camione', 'conductoresDisponibles'));
     }
 
     /**
@@ -124,7 +120,7 @@ class CamioneController extends Controller
         // Actualizar los atributos del modelo camione
         $camione->update($request->all());
     
-        return redirect()->route('camiones.index')->with('success', 'camione updated successfully');
+        return redirect()->route('camiones.index')->with('success', 'Camion actualizado exitosamente');
     }
 
     /**
@@ -137,6 +133,6 @@ class CamioneController extends Controller
         $camione = Camione::find($pla_cam)->delete();
 
         return redirect()->route('camiones.index')
-            ->with('success', 'Camione deleted successfully');
+            ->with('success', 'Camion eliminado exitosamente');
     }
 }

@@ -5,7 +5,6 @@ use Illuminate\Support\Arr;
 use App\Models\Almacene;
 use Illuminate\Http\Request;
 use App\Models\Componente;
-use App\Models\Empresa;
 
 /**
  * Class AlmaceneController
@@ -43,8 +42,7 @@ class AlmaceneController extends Controller
     {
         $almacene = new Almacene();
         $componentes = Componente::pluck('nom_com', 'num_ser_com');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('almacene.create', compact('almacene', 'empresas', 'componentes'));
+        return view('almacene.create', compact('almacene', 'componentes'));
     }
 
     /**
@@ -60,7 +58,7 @@ class AlmaceneController extends Controller
         $almacene = Almacene::create($request->all());
 
         return redirect()->route('almacenes.index')
-            ->with('success', 'Almacene created successfully.');
+            ->with('success', 'Almacen creado exitosamente');
     }
 
     /**
@@ -86,8 +84,7 @@ class AlmaceneController extends Controller
     {
         $almacene = Almacene::find($cod_alm);
         $componentes = Componente::pluck('nom_com', 'num_ser_com');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('almacene.edit', compact('almacene', 'empresas', 'componentes'));
+        return view('almacene.edit', compact('almacene', 'componentes'));
     }
 
     /**
@@ -104,7 +101,7 @@ class AlmaceneController extends Controller
         $almacene->update($request->all());
 
         return redirect()->route('almacenes.index')
-            ->with('success', 'Almacene updated successfully');
+            ->with('success', 'Almacen actualizado exitosamente');
     }
 
     /**
@@ -117,6 +114,6 @@ class AlmaceneController extends Controller
         $almacene = Almacene::find($cod_alm)->delete();
 
         return redirect()->route('almacenes.index')
-            ->with('success', 'Almacene deleted successfully');
+            ->with('success', 'Almacene eliminado exitosamente');
     }
 }

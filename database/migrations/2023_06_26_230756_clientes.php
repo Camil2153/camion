@@ -18,14 +18,7 @@ return new class extends Migration
             $table->string('col_cli', 35); // colonia cliente
             $table->string('dir_cli', 35); // direccion cliente
             $table->string('rfc_cli', 15); // rfc cliente
-            $table->string('ciu_cli', 3); // ciudad cliente
-        
-            // Definición de la relación con la tabla de paises para la columna pai_emp
-            $table->foreign('ciu_cli')->references('cod_ciu')->on('ciudades');
-            $table->string('emp_cli', 15); // empresa cliente
-        
-            // Definición de la relación con la tabla de paises para la columna pai_emp
-            $table->foreign('emp_cli')->references('nit_emp')->on('empresas');
+            $table->string('ciu_cli', 40); // ciudad cliente
             $table->timestamps();
         });
     }

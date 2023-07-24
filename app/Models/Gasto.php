@@ -12,12 +12,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property $fec_gas
  * @property $cat_gas
  * @property $via_gas
- * @property $emp_gas
  * @property $created_at
  * @property $updated_at
  *
  * @property CategoriasGasto $categoriasGasto
- * @property Empresa $empresa
  * @property Viaje $viaje
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
@@ -34,7 +32,6 @@ class Gasto extends Model
 		'fec_gas' => 'required',
 		'cat_gas' => 'required',
 		'via_gas' => 'required',
-		'emp_gas' => 'required',
     ];
 
     protected $perPage = 20;
@@ -44,7 +41,7 @@ class Gasto extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_gas','mon_gas','fec_gas','cat_gas','via_gas','emp_gas'];
+    protected $fillable = ['cod_gas','mon_gas','fec_gas','cat_gas','via_gas'];
 
 
     /**
@@ -53,14 +50,6 @@ class Gasto extends Model
     public function categoriasGasto()
     {
         return $this->hasOne('App\Models\CategoriasGasto', 'cod_cat_gas', 'cat_gas');
-    }
-    
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function empresa()
-    {
-        return $this->hasOne('App\Models\Empresa', 'nit_emp', 'emp_gas');
     }
     
     /**

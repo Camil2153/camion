@@ -23,10 +23,7 @@
                 <th>Destino</th>
                 <th>Distancia</th>
                 <th>Duración</th>
-                <th>Restricciones</th>
-                <th>Complejidad</th>
                 <th>Estado</th>
-                <th>Empresa</th>
                 <th>Acciones</th>
 
             </tr>
@@ -37,14 +34,11 @@
 +
                     <td>{{ $ruta->cod_rut }}</td>
                     <td>{{ $ruta->nom_rut }}</td>
-                    <td>{{ $ruta->origenCiudad->nom_ciu }}</td>
-                    <td>{{ $ruta->destinoCiudad->nom_ciu }}</td>
+                    <td>{{ $ruta->ori_rut }}</td>
+                    <td>{{ $ruta->des_rut }}</td>
                     <td>{{ number_format($ruta->dis_rut, 0, '.', '.') }}</td>
                     <td>{{ $ruta->dur_rut }}</td>
-                    <td>{{ $ruta->res_rut }}</td>
-                    <td>{{ $ruta->com_rut }}</td>
                     <td>{{ $ruta->est_rut }}</td>
-                    <td>{{ $ruta->empresa->nom_emp }}</td>
 
                     <td>
                         <form action="{{ route('rutas.destroy',$ruta->cod_rut) }}" method="POST">

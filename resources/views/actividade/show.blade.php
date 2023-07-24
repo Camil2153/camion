@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Ver Pais</h1>
+    <h1>>Ver Actividad</h1>
 @stop
 
 @section('content')
@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-right">
-                            <a class="btn btn-secundary border border-secondary btn-sm" href="{{ route('paises.index') }}"> {{ __('Volver') }}</a>
+                            <a class="btn btn-secundary border border-secondary btn-sm" href="{{ route('actividades.index') }}"> {{ __('Volver') }}</a>
                         </div>
                     </div>
 
@@ -21,11 +21,11 @@
                         
                         <div class="form-group">
                             <strong>Código:</strong>
-                            {{ $paise->cod_pai }}
+                            {{ $actividade->cod_act }}
                         </div>
                         <div class="form-group">
                             <strong>Nombre:</strong>
-                            {{ $paise->nom_pai }}
+                            {{ $actividade->nom_act }}
                         </div>
 
                     </div>

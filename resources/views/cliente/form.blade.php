@@ -33,13 +33,8 @@
         </div>
         <div class="form-group">
             {{ Form::label('Ciudad') }}
-            {{ Form::select('ciu_cli', $ciudades, $cliente->ciu_cli, ['class' => 'form-control' . ($errors->has('ciu_cli') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar ciudad']) }}
+            {{ Form::text('ciu_cli', $cliente->ciu_cli, ['id' => 'ciu_cli', 'class' => 'form-control' . ($errors->has('ciu_cli') ? ' is-invalid' : '')]) }}
             {!! $errors->first('ciu_cli', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('Empresa') }}
-            {{ Form::select('emp_cli', $empresas, $cliente->emp_cli, ['class' => 'form-control' . ($errors->has('emp_cli') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
-            {!! $errors->first('emp_cli', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
     </div>

@@ -28,15 +28,23 @@
                             {{ $empresa->nom_emp }}
                         </div>
                         <div class="form-group">
+                            <strong>Pais:</strong>
+                            {{ $empresa->pai_emp }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Region:</strong>
+                            {{ $empresa->reg_emp }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Código postal:</strong>
+                            {{ $empresa->cod_pos_emp }}
+                        </div>
+                        <div class="form-group">
                             <strong>Dirección:</strong>
                             {{ $empresa->dir_emp }}
                         </div>
-                        <div class="form-group">
-                            <strong>Pais:</strong>
-                            {{ $empresa->paise->nom_pai }}
-                        </div>
 
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>

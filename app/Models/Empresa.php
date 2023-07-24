@@ -9,26 +9,30 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property $nit_emp
  * @property $nom_emp
- * @property $dir_emp
  * @property $pai_emp
+ * @property $reg_emp
+ * @property $cod_pos_emp
+ * @property $dir_emp
  * @property $created_at
  * @property $updated_at
  *
- * @property Paise $paise
+ * @property Viaje[] $viajes
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Empresa extends Model
 {
 
-    protected $primaryKey = 'nit_emp';
-    public $incrementing = false;
+  protected $primaryKey = 'nit_emp';
+  public $incrementing = false;
 
-    static $rules = [
-		'nit_emp' => 'required|unique:empresas',
+  static $rules = [
+  'nit_emp' => 'required|unique:empresas',
 		'nom_emp' => 'required',
-		'dir_emp' => 'required',
 		'pai_emp' => 'required',
+		'reg_emp' => 'required',
+		'cod_pos_emp' => 'required',
+		'dir_emp' => 'required',
     ];
 
     protected $perPage = 20;
@@ -38,15 +42,15 @@ class Empresa extends Model
      *
      * @var array
      */
-    protected $fillable = ['nit_emp','nom_emp','dir_emp','pai_emp'];
+    protected $fillable = ['nit_emp','nom_emp','pai_emp','reg_emp','cod_pos_emp','dir_emp'];
 
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function paise()
+    public function viajes()
     {
-        return $this->hasOne('App\Models\Paise', 'cod_pai', 'pai_emp');
+        return $this->hasMany('App\Models\Viaje', 'emp_via', 'nit_emp');
     }
     
 

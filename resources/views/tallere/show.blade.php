@@ -47,10 +47,6 @@
                             <strong>Ruta:</strong>
                             {{ $tallere->ruta->nom_rut }}
                         </div>
-                        <div class="form-group">
-                            <strong>Empresa:</strong>
-                            {{ $tallere->empresa->nom_emp }}
-                        </div>
 
                     </div>
                 </div>

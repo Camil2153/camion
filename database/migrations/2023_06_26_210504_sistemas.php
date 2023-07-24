@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sistemas', function (Blueprint $table) {
             $table->string('cod_sis', 2)->primary(); // codigo sistema
-            $table->string('nom_sis', 15); //nombre sistema
+            $table->string('nom_sis', 50); //nombre sistema
             $table->timestamps();
         }); 
     }

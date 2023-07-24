@@ -22,6 +22,11 @@
             {!! $errors->first('tip_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
+            {{ Form::label('Número de ejes') }}
+            {{ Form::text('num_eje_cam', $camione->num_eje_cam, ['class' => 'form-control' . ($errors->has('num_eje_cam') ? ' is-invalid' : '')]) }}
+            {!! $errors->first('num_eje_cam', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
             {{ Form::label('Estado') }}
             {{ Form::select('est_cam', ['disponible' => 'Disponible', 'en mantenimiento' => 'En Mantenimiento', 'fuera de servicio' => 'Fuera de Servicio'], $camione->est_cam, ['class' => 'form-control' . ($errors->has('est_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
             {!! $errors->first('est_cam', '<div class="invalid-feedback">:message</div>') !!}
@@ -40,21 +45,16 @@
             {!! $errors->first('cap_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Promedio de combustible (Galón por Kilometro)') }}
+            {{ Form::label('Promedio de combustible (Litros por Kilometro)') }}
             {{ Form::number('cont_cam', $camione->cont_cam, ['class' => 'form-control' . ($errors->has('cont_cam') ? ' is-invalid' : ''), 'min' => 0, 'step' => 'any','placeholder' => '']) }}
             {!! $errors->first('cont_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-    {{ Form::label('Conductor') }}
-    {{ Form::select('con_cam', $conductoresDisponibles, $camione->con_cam, ['class' => 'form-control' . ($errors->has('con_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar conductor']) }}
-    {!! $errors->first('con_cam', '<div class="invalid-feedback">:message</div>') !!}
-</div>
-
-        <div class="form-group">
-            {{ Form::label('Empresa') }}
-            {{ Form::select('emp_cam', $empresas, $camione->emp_cam, ['class' => 'form-control' . ($errors->has('emp_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
-            {!! $errors->first('emp_cam', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::label('Conductor') }}
+            {{ Form::select('con_cam', $conductoresDisponibles, $camione->con_cam, ['class' => 'form-control' . ($errors->has('con_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar conductor']) }}
+            {!! $errors->first('con_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>

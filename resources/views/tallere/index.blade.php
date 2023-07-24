@@ -24,7 +24,6 @@
                 <th>Horario</th>
                 <th>Número de Contacto</th>
                 <th>Ruta</th>
-                <th>Empresa</th>
                 <th>Acciones</th>
 
             </tr>
@@ -40,7 +39,6 @@
                     <td>{{ $tallere->hor_tal }}</td>
                     <td>{{ $tallere->num_con_tal }}</td>
                     <td>{{ $tallere->ruta->nom_rut }}</td>
-                    <td>{{ $tallere->empresa->nom_emp }}</td>
 
                     <td>
                         <form action="{{ route('talleres.destroy',$tallere->nit_tal) }}" method="POST">

@@ -34,13 +34,8 @@
             {{ Form::select('sis_com', $sistemas, $componente->sis_com, ['class' => 'form-control' . ($errors->has('sis_com') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar sistema']) }}
             {!! $errors->first('sis_com', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-        <div class="form-group">
-            {{ Form::label('Empresa') }}
-            {{ Form::select('emp_com', $empresas, $componente->emp_com, ['class' => 'form-control' . ($errors->has('emp_com') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
-            {!! $errors->first('emp_com', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
 
-    </div>
+        </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>
         <a href="  {{ route('componentes.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>

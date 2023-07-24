@@ -16,12 +16,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property $fec_adq_alm
  * @property $fec_ven_alm
  * @property $est_alm
- * @property $emp_alm
  * @property $created_at
  * @property $updated_at
  *
  * @property Componente $componente
- * @property Empresa $empresa
+ * @property Servicio[] $servicios
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -41,7 +40,6 @@ class Almacene extends Model
 		'fec_adq_alm' => 'required',
 		'fec_ven_alm' => 'required',
 		'est_alm' => 'required',
-		'emp_alm' => 'required',
     ];
 
     protected $perPage = 20;
@@ -51,7 +49,7 @@ class Almacene extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_alm','com_alm','cat_alm','can_alm','ubi_alm','pro_alm','fec_adq_alm','fec_ven_alm','est_alm','emp_alm'];
+    protected $fillable = ['cod_alm','com_alm','cat_alm','can_alm','ubi_alm','pro_alm','fec_adq_alm','fec_ven_alm','est_alm'];
 
 
     /**
@@ -63,11 +61,11 @@ class Almacene extends Model
     }
     
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function empresa()
+    public function servicios()
     {
-        return $this->hasOne('App\Models\Empresa', 'nit_emp', 'emp_alm');
+        return $this->hasMany('App\Models\Servicio', 'alm_ser', 'cod_alm');
     }
     
 

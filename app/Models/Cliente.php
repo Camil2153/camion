@@ -14,12 +14,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property $dir_cli
  * @property $rfc_cli
  * @property $ciu_cli
- * @property $emp_cli
  * @property $created_at
  * @property $updated_at
  *
- * @property Ciudade $ciudade
- * @property Empresa $empresa
+ * @property Viaje[] $viajes
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -30,14 +28,13 @@ class Cliente extends Model
     public $incrementing = false;
 
     static $rules = [
-		'cod_cli' => 'required|unique:clientes',
-		'nom_cli' => 'required',
-		'nom_com_cli' => 'required',
-		'col_cli' => 'required',
-		'dir_cli' => 'required',
-		'rfc_cli' => 'required',
-		'ciu_cli' => 'required',
-		'emp_cli' => 'required',
+        'cod_cli' => 'required|unique:clientes',
+        'nom_cli' => 'required',
+        'nom_com_cli' => 'required',
+        'col_cli' => 'required',
+        'dir_cli' => 'required',
+        'rfc_cli' => 'required',
+        'ciu_cli' => 'required',
     ];
 
     protected $perPage = 20;
@@ -47,23 +44,15 @@ class Cliente extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_cli','nom_cli','nom_com_cli','col_cli','dir_cli','rfc_cli','ciu_cli','emp_cli'];
+    protected $fillable = ['cod_cli','nom_cli','nom_com_cli','col_cli','dir_cli','rfc_cli','ciu_cli'];
 
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function ciudade()
+    public function viajes()
     {
-        return $this->hasOne('App\Models\Ciudade', 'cod_ciu', 'ciu_cli');
-    }
-    
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function empresa()
-    {
-        return $this->hasOne('App\Models\Empresa', 'nit_emp', 'emp_cli');
+        return $this->hasMany('App\Models\Viaje', 'cli_via', 'cod_cli');
     }
     
 

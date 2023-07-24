@@ -29,11 +29,6 @@
             {{ Form::select('via_gas', $viajes, $gasto->via_gas, ['class' => 'form-control' . ($errors->has('via_gas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar viaje']) }}
             {!! $errors->first('via_gas', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-        <div class="form-group">
-            {{ Form::label('Empresa') }}
-            {{ Form::select('emp_gas', $empresas, $gasto->emp_gas, ['class' => 'form-control' . ($errors->has('emp_gas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
-            {!! $errors->first('emp_gas', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
 
     </div>
     <div class="box-footer mt20">

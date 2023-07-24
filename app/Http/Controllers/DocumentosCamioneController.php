@@ -5,7 +5,6 @@ use Illuminate\Support\Arr;
 use App\Models\DocumentosCamione;
 use Illuminate\Http\Request;
 use App\Models\Camione;
-use App\Models\Empresa;
 
 /**
  * Class DocumentosCamioneController
@@ -43,8 +42,7 @@ class DocumentosCamioneController extends Controller
     {
         $documentosCamione = new DocumentosCamione();
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('documentos-camione.create', compact('documentosCamione', 'empresas', 'camiones'));
+        return view('documentos-camione.create', compact('documentosCamione', 'camiones'));
     }
 
     /**
@@ -60,7 +58,7 @@ class DocumentosCamioneController extends Controller
         $documentosCamione = DocumentosCamione::create($request->all());
 
         return redirect()->route('documentos-camiones.index')
-            ->with('success', 'DocumentosCamione created successfully.');
+            ->with('success', 'DocumentosCamione creado exitosamente');
     }
 
     /**
@@ -86,11 +84,10 @@ class DocumentosCamioneController extends Controller
     {
         $documentosCamione = DocumentosCamione::find($cod_doc_cam);
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('documentos-camione.edit', compact('documentosCamione', 'empresas', 'camiones'));
+        return view('documentos-camione.edit', compact('documentosCamione', 'camiones'));
     }
 
-    /**
+        /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
@@ -113,7 +110,7 @@ class DocumentosCamioneController extends Controller
         // Actualizar los atributos del modelo documentosCamione
         $documentosCamione->update($request->all());
     
-        return redirect()->route('documentos-camiones.index')->with('success', 'documentosCamione updated successfully');
+        return redirect()->route('documentos-camiones.index')->with('success', 'documentosCamione actualizado exitosamente');
     }
 
     /**
@@ -126,6 +123,6 @@ class DocumentosCamioneController extends Controller
         $documentosCamione = DocumentosCamione::find($cod_doc_cam)->delete();
 
         return redirect()->route('documentos-camiones.index')
-            ->with('success', 'DocumentosCamione deleted successfully');
+            ->with('success', 'DocumentosCamione eliminado exitosamente');
     }
 }

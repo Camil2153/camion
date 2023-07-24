@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Arr;
 use App\Models\Servicio;
 use Illuminate\Http\Request;
-use App\Models\TiposServicio;
-use App\Models\Camione;
+use App\Models\Sistema;
+use App\Models\Actividade;
+use App\Models\Falla;
 use App\Models\Tallere;
-use App\Models\Empresa;
+use App\Models\Camione;
+use App\Models\Almacene;
 
 /**
  * Class ServicioController
@@ -44,11 +46,13 @@ class ServicioController extends Controller
     public function create()
     {
         $servicio = new Servicio();
-        $tiposServicios = TiposServicio::pluck('nom_tip_ser', 'cod_tip_ser');
-        $camiones = Camione::pluck('pla_cam', 'pla_cam');
+        $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
+        $actividades = Actividade::pluck('nom_act', 'cod_act');
+        $fallas = Falla::pluck('desc_fal', 'cod_fal');
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('servicio.create', compact('servicio', 'tiposServicios', 'camiones', 'talleres', 'empresas'));
+        $camiones = Camione::pluck('pla_cam', 'pla_cam');
+        $almacenes = Almacene::pluck('com_alm', 'cod_alm');
+        return view('servicio.create', compact('servicio', 'sistemas', 'actividades', 'fallas', 'talleres', 'camiones', 'almacenes'));
     }
 
     /**
@@ -59,12 +63,15 @@ class ServicioController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Servicio::$rules);
+        $request->validate([
+            // Otras reglas de validación...
+            'tip_ser' => 'required|in:preventivo,correctivo',
+        ]);
 
         $servicio = Servicio::create($request->all());
 
         return redirect()->route('servicios.index')
-            ->with('success', 'Servicio created successfully.');
+            ->with('success', 'Servicio creado exitosamente');
     }
 
     /**
@@ -89,11 +96,13 @@ class ServicioController extends Controller
     public function edit($cod_ser)
     {
         $servicio = Servicio::find($cod_ser);
-        $tiposServicios = TiposServicio::pluck('nom_tip_ser', 'cod_tip_ser');
-        $camiones = Camione::pluck('pla_cam', 'pla_cam');
+        $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
+        $actividades = Actividade::pluck('nom_act', 'cod_act');
+        $fallas = Falla::pluck('desc_fal', 'cod_fal');
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('servicio.edit', compact('servicio', 'tiposServicios', 'camiones', 'talleres', 'empresas'));
+        $camiones = Camione::pluck('pla_cam', 'pla_cam');
+        $almacenes = Almacene::pluck('com_alm', 'cod_alm');
+        return view('servicio.edit', compact('servicio', 'sistemas', 'actividades', 'fallas', 'talleres', 'camiones', 'almacenes'));
     }
 
     /**
@@ -110,7 +119,7 @@ class ServicioController extends Controller
         $servicio->update($request->all());
 
         return redirect()->route('servicios.index')
-            ->with('success', 'Servicio updated successfully');
+            ->with('success', 'Servicio actualizado exitosamente');
     }
 
     /**
@@ -123,6 +132,7 @@ class ServicioController extends Controller
         $servicio = Servicio::find($cod_ser)->delete();
 
         return redirect()->route('servicios.index')
-            ->with('success', 'Servicio deleted successfully');
+            ->with('success', 'Servicio eliminado exitosamente');
     }
+       
 }

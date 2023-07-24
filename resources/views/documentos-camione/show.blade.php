@@ -39,11 +39,7 @@
                             <strong>Camion:</strong>
                             {{ $documentosCamione->cam_doc_cam }}
                         </div>
-                        <div class="form-group">
-                            <strong>Empresa:</strong>
-                            {{ $documentosCamione->empresa->nom_emp }}
-                        </div>
-
+                        
                     </div>
                 </div>
             </div>

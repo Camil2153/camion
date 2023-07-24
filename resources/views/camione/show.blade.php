@@ -44,6 +44,10 @@
                             </span>
                         </div>
                         <div class="form-group">
+                            <strong>Número de ejes:</strong>
+                            {{ $camione->num_eje_cam }}
+                        </div>
+                        <div class="form-group">
                             <strong>Kilometraje:</strong>
                             {{ $camione->kil_cam }}
                         </div>
@@ -59,11 +63,6 @@
                             <strong>Conductor:</strong>
                             {{ $camione->conductore->nom_con }}
                         </div>
-                        <div class="form-group">
-                            <strong>Empresa:</strong>
-                            {{ $camione->empresa->nom_emp }}
-                        </div>
-                        
                     </div>
                 </div>
             </div>

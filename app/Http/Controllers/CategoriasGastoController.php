@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Arr;
 use App\Models\CategoriasGasto;
 use Illuminate\Http\Request;
-use App\Models\Empresa;
 
 /**
  * Class CategoriasGastoController
@@ -41,8 +40,7 @@ class CategoriasGastoController extends Controller
     public function create()
     {
         $categoriasGasto = new CategoriasGasto();
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('categorias-gasto.create', compact('categoriasGasto', 'empresas'));
+        return view('categorias-gasto.create', compact('categoriasGasto'));
     }
 
     /**
@@ -58,7 +56,7 @@ class CategoriasGastoController extends Controller
         $categoriasGasto = CategoriasGasto::create($request->all());
 
         return redirect()->route('categorias-gastos.index')
-            ->with('success', 'CategoriasGasto created successfully.');
+            ->with('success', 'CategoriasGasto creada exitosamente');
     }
 
     /**
@@ -77,14 +75,14 @@ class CategoriasGastoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  string $cod_cat_gas
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($cod_cat_gas)
+    public function edit($id)
     {
-        $categoriasGasto = CategoriasGasto::find($cod_cat_gas);
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('categorias-gasto.edit', compact('categoriasGasto', 'empresas'));
+        $categoriasGasto = CategoriasGasto::find($id);
+
+        return view('categorias-gasto.edit', compact('categoriasGasto'));
     }
 
     /**
@@ -110,7 +108,7 @@ class CategoriasGastoController extends Controller
         // Actualizar los atributos del modelo categoriasGasto
         $categoriasGasto->update($request->all());
     
-        return redirect()->route('categorias-gastos.index')->with('success', 'categoriasGasto updated successfully');
+        return redirect()->route('categorias-gastos.index')->with('success', 'categoriasGasto actualizada exitosamente');
     }
 
     /**
@@ -123,6 +121,6 @@ class CategoriasGastoController extends Controller
         $categoriasGasto = CategoriasGasto::find($cod_cat_gas)->delete();
 
         return redirect()->route('categorias-gastos.index')
-            ->with('success', 'CategoriasGasto deleted successfully');
+            ->with('success', 'CategoriasGasto eliminada exitosamnete');
     }
 }

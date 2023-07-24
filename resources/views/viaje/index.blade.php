@@ -25,7 +25,6 @@
                 <th>Hora de Salida</th>
                 <th>Fecha de Llegada</th>
                 <th>Hora de Llegada</th>
-                <th>Kilometraje</th>
                 <th>Combustible</th>
                 <th>Camion</th>
                 <th>Cliente</th>
@@ -43,23 +42,22 @@
                     <td>{{ $viaje->car_via }}</td>
                     <td>{{ $viaje->pes_via }}</td>
                     <td>
-            @if ($viaje->est_via == 'completado')
-                <span class="badge badge-success">{{ $viaje->est_via }}</span>
-            @elseif ($viaje->est_via == 'cancelado')
-                <span class="badge badge-danger">{{ $viaje->est_via }}</span>
-            @elseif ($viaje->est_via == 'en progreso')
-                <span class="badge badge-warning">{{ $viaje->est_via }}</span>
-            @elseif ($viaje->est_via == 'programado')
-                <span class="badge badge-primary">{{ $viaje->est_via }}</span>
-            @else
-                {{ $viaje->est_via }}
-            @endif
-        </td>
+                        @if ($viaje->est_via == 'completado')
+                            <span class="badge badge-success">{{ $viaje->est_via }}</span>
+                        @elseif ($viaje->est_via == 'cancelado')
+                            <span class="badge badge-danger">{{ $viaje->est_via }}</span>
+                        @elseif ($viaje->est_via == 'en progreso')
+                            <span class="badge badge-warning">{{ $viaje->est_via }}</span>
+                        @elseif ($viaje->est_via == 'programado')
+                            <span class="badge badge-primary">{{ $viaje->est_via }}</span>
+                        @else
+                            {{ $viaje->est_via }}
+                        @endif
+                    </td>
                     <td>{{ $viaje->fec_sal_via }}</td>
                     <td>{{ $viaje->hor_sal_via }}</td>
                     <td>{{ $viaje->fec_lle_via }}</td>
                     <td>{{ $viaje->hor_lle_via }}</td>
-                    <td>{{ $viaje->kil_via }}</td>
                     <td>{{ $viaje->com_via }}</td>
                     <td>{{ $viaje->cam_via }}</td>
                     <td>{{ $viaje->cliente->nom_cli }}</td>

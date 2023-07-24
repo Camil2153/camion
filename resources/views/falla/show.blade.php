@@ -24,10 +24,6 @@
                             {{ $falla->cod_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Componente:</strong>
-                            {{ $falla->com_fal }}
-                        </div>
-                        <div class="form-group">
                             <strong>Descripción:</strong>
                             {{ $falla->desc_fal }}
                         </div>
@@ -38,10 +34,6 @@
                         <div class="form-group">
                             <strong>Kilometraje:</strong>
                             {{ $falla->kil_fal }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Tiempo de Inactividad:</strong>
-                            {{ $falla->tie_ina_fal }}
                         </div>
                         <div class="form-group">
                             <strong>Gravedad:</strong>
@@ -56,32 +48,12 @@
                             {{ $falla->res_det_fal }}
                         </div>
                         <div class="form-group">
-                            <strong>Responsable de Reparación:</strong>
-                            {{ $falla->res_rep_fal }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Acciones:</strong>
-                            {{ $falla->acc_fal }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Costo:</strong>
-                            {{ $falla->cos_fal }}
-                        </div>
-                        <div class="form-group">
                             <strong>Sistema:</strong>
                             {{ $falla->sistema->nom_sis }}
                         </div>
                         <div class="form-group">
                             <strong>Camion:</strong>
                             {{ $falla->cam_fal }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Taller:</strong>
-                            {{ $falla->tallere->nom_tal }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Empresa:</strong>
-                            {{ $falla->empresa->nom_emp }}
                         </div>
 
                     </div>

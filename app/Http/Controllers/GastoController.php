@@ -6,7 +6,6 @@ use App\Models\Gasto;
 use Illuminate\Http\Request;
 use App\Models\CategoriasGasto;
 use App\Models\Viaje;
-use App\Models\Empresa;
 
 /**
  * Class GastoController
@@ -45,8 +44,7 @@ class GastoController extends Controller
         $gasto = new Gasto();
         $categorias = CategoriasGasto::pluck('nom_cat_gas', 'cod_cat_gas');
         $viajes = Viaje::pluck('cod_via', 'cod_via');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('gasto.create', compact('gasto', 'categorias', 'viajes', 'empresas'));
+        return view('gasto.create', compact('gasto', 'categorias', 'viajes'));
     }
 
     /**
@@ -62,7 +60,7 @@ class GastoController extends Controller
         $gasto = Gasto::create($request->all());
 
         return redirect()->route('gastos.index')
-            ->with('success', 'Gasto created successfully.');
+            ->with('success', 'Gasto creado exitosamente');
     }
 
     /**
@@ -89,8 +87,7 @@ class GastoController extends Controller
         $gasto = Gasto::find($cod_gas);
         $categorias = CategoriasGasto::pluck('nom_cat_gas', 'cod_cat_gas');
         $viajes = Viaje::pluck('cod_via', 'cod_via');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('gasto.edit', compact('gasto', 'categorias', 'viajes', 'empresas'));
+        return view('gasto.edit', compact('gasto', 'categorias', 'viajes'));
     }
 
     /**
@@ -116,7 +113,7 @@ public function update(Request $request, gasto $gasto)
     // Actualizar los atributos del modelo gasto
     $gasto->update($request->all());
 
-    return redirect()->route('gastos.index')->with('success', 'gasto updated successfully');
+    return redirect()->route('gastos.index')->with('success', 'Gasto actualizado exitosamente');
 }
 
     /**katherin <3
@@ -129,6 +126,6 @@ public function update(Request $request, gasto $gasto)
         $gasto = Gasto::find($cod_gas)->delete();
 
         return redirect()->route('gastos.index')
-            ->with('success', 'Gasto deleted successfully');
+            ->with('success', 'Gasto eliminado exitosamente');
     }
 }

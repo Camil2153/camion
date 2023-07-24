@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Nuevo Documento de Conductor</h1>
+    <h1>Nueva Actividad</h1>
 @stop
 
 @section('content')
@@ -15,10 +15,10 @@
 
                 <div class="card card-default">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('documentos-conductores.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('actividades.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
-                            @include('documentos-conductore.form')
+                            @include('actividade.form')
 
                         </form>
                     </div>

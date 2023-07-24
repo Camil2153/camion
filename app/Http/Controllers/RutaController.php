@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Arr;
 use App\Models\Ruta;
 use Illuminate\Http\Request;
-use App\Models\Ciudade;
-use App\Models\Empresa;
 
 /**
  * Class RutaController
@@ -42,9 +40,7 @@ class RutaController extends Controller
     public function create()
     {
         $ruta = new Ruta();
-        $ciudades = Ciudade::pluck('nom_ciu', 'cod_ciu');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('ruta.create', compact('ruta', 'empresas', 'ciudades'));
+        return view('ruta.create', compact('ruta'));
     }
 
     /**
@@ -60,7 +56,7 @@ class RutaController extends Controller
         $ruta = Ruta::create($request->all());
 
         return redirect()->route('rutas.index')
-            ->with('success', 'Ruta created successfully.');
+            ->with('success', 'Ruta creada exitosamente');
     }
 
     /**
@@ -85,9 +81,7 @@ class RutaController extends Controller
     public function edit($cod_rut)
     {
         $ruta = Ruta::find($cod_rut);
-        $ciudades = Ciudade::pluck('nom_ciu', 'cod_ciu');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('ruta.edit', compact('ruta', 'empresas', 'ciudades'));
+        return view('ruta.edit', compact('ruta'));
     }
 
     /**
@@ -113,7 +107,7 @@ class RutaController extends Controller
         // Actualizar los atributos del modelo ruta
         $ruta->update($request->all());
     
-        return redirect()->route('rutas.index')->with('success', 'ruta updated successfully');
+        return redirect()->route('rutas.index')->with('success', 'Ruta actualizada exitosamente');
     }
 
     /**
@@ -126,6 +120,6 @@ class RutaController extends Controller
         $ruta = Ruta::find($cod_rut)->delete();
 
         return redirect()->route('rutas.index')
-            ->with('success', 'Ruta deleted successfully');
+            ->with('success', 'Ruta eliminada exitosamente');
     }
 }

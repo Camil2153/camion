@@ -19,8 +19,10 @@
 
                 <th>NIT</th>
                 <th>Nombre</th>
-                <th>Dirección</th>
                 <th>Pais</th>
+                <th>Region</th>
+                <th>Código postal</th>
+                <th>Dirección</th>
                 <th>Acciones</th>
 
             </tr>
@@ -28,11 +30,13 @@
         <tbody>
             @foreach ($empresas as $empresa)
                 <tr>
-
+                    
                     <td>{{ $empresa->nit_emp }}</td>
                     <td>{{ $empresa->nom_emp }}</td>
+                    <td>{{ $empresa->pai_emp }}</td>
+                    <td>{{ $empresa->reg_emp }}</td>
+                    <td>{{ $empresa->cod_pos_emp }}</td>
                     <td>{{ $empresa->dir_emp }}</td>
-                    <td>{{ $empresa->paise->nom_pai }}</td>
 
                     <td>
                         <form action="{{ route('empresas.destroy',$empresa->nit_emp) }}" method="POST">

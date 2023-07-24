@@ -47,12 +47,7 @@
             {!! $errors->first('hor_lle_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Kilometraje') }}
-            {{ Form::number('kil_via', $viaje->kil_via, ['class' => 'form-control' . ($errors->has('kil_via') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
-            {!! $errors->first('kil_via', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('Combustible (Galones)') }}
+            {{ Form::label('Combustible (Litros Por Kilometro)') }}
             {{ Form::text('com_via', $viaje->com_via, ['class' => 'form-control' . ($errors->has('com_via') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
             {!! $errors->first('com_via', '<div class="invalid-feedback">:message</div>') !!}
         </div>

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Arr;
 use App\Models\Empresa;
 use Illuminate\Http\Request;
-use App\Models\Paise;
 
 /**
  * Class EmpresaController
@@ -41,8 +40,7 @@ class EmpresaController extends Controller
     public function create()
     {
         $empresa = new Empresa();
-        $paises = Paise::pluck('nom_pai', 'cod_pai');
-        return view('empresa.create', compact('empresa', 'paises'));
+        return view('empresa.create', compact('empresa'));
     }
 
     /**
@@ -58,7 +56,7 @@ class EmpresaController extends Controller
         $empresa = Empresa::create($request->all());
 
         return redirect()->route('empresas.index')
-            ->with('success', 'Empresa created successfully.');
+            ->with('success', 'Empresa creada exitosamente');
     }
 
     /**
@@ -83,8 +81,8 @@ class EmpresaController extends Controller
     public function edit($nit_emp)
     {
         $empresa = Empresa::find($nit_emp);
-        $paises = Paise::pluck('nom_pai', 'cod_pai');
-        return view('empresa.edit', compact('empresa', 'paises'));
+
+        return view('empresa.edit', compact('empresa'));
     }
 
     /**
@@ -110,7 +108,7 @@ class EmpresaController extends Controller
         // Actualizar los atributos del modelo empresa
         $empresa->update($request->all());
     
-        return redirect()->route('empresas.index')->with('success', 'empresa updated successfully');
+        return redirect()->route('empresas.index')->with('success', 'Empresa actualizada exitosamente');
     }
 
     /**
@@ -123,6 +121,6 @@ class EmpresaController extends Controller
         $empresa = Empresa::find($nit_emp)->delete();
 
         return redirect()->route('empresas.index')
-            ->with('success', 'Empresa deleted successfully');
+            ->with('success', 'Empresa eliminada exitosamente');
     }
 }

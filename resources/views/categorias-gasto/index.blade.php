@@ -20,7 +20,6 @@
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
-                <th>Empresa</th>
                 <th>Acciones</th>
 
             </tr>
@@ -32,7 +31,6 @@
                     <td>{{ $categoriasGasto->cod_cat_gas }}</td>
                     <td>{{ $categoriasGasto->nom_cat_gas }}</td>
                     <td>{{ $categoriasGasto->desc_cat_gas }}</td>
-                    <td>{{ $categoriasGasto->empresa->nom_emp }}</td>
 
                     <td>
                         <form action="{{ route('categorias-gastos.destroy',$categoriasGasto->cod_cat_gas) }}" method="POST">

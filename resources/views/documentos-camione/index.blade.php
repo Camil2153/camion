@@ -22,7 +22,6 @@
                 <th>Estado</th>
                 <th>Vigencia de Documento</th>
                 <th>Camion</th>
-                <th>Empresa</th>
                 <th>Acciones</th>
 
             </tr>
@@ -36,7 +35,6 @@
                     <td>{{ $documentosCamione->est_doc_cam }}</td>
                     <td>{{ $documentosCamione->vig_doc_cam }}</td>
                     <td>{{ $documentosCamione->cam_doc_cam }}</td>
-                    <td>{{ $documentosCamione->empresa->nom_emp }}</td>
 
                     <td>
                         <form action="{{ route('documentos-camiones.destroy',$documentosCamione->cod_doc_cam) }}" method="POST">

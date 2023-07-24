@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Arr;
 use App\Models\Conductore;
 use Illuminate\Http\Request;
-use App\Models\Empresa;
 
+/**
+ * Class ConductoreController
+ * @package App\Http\Controllers
+ */
 class ConductoreController extends Controller
 {
     public function __construct()
@@ -37,8 +40,7 @@ class ConductoreController extends Controller
     public function create()
     {
         $conductore = new Conductore();
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('conductore.create', compact('conductore', 'empresas'));
+        return view('conductore.create', compact('conductore'));
     }
 
     /**
@@ -54,7 +56,7 @@ class ConductoreController extends Controller
         $conductore = Conductore::create($request->all());
 
         return redirect()->route('conductores.index')
-            ->with('success', 'Conductore created successfully.');
+            ->with('success', 'Conductor creado exitosamente');
     }
 
     /**
@@ -84,10 +86,9 @@ class ConductoreController extends Controller
     public function edit($dni_con)
     {
         $conductore = Conductore::where('dni_con', $dni_con)->first();
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
 
         if ($conductore) {
-            return view('conductore.edit', compact('conductore', 'empresas'));
+            return view('conductore.edit', compact('conductore'));
         }
 
         return redirect()->route('conductores.index')
@@ -117,8 +118,9 @@ class ConductoreController extends Controller
         // Actualizar los atributos del modelo conductore
         $conductore->update($request->all());
     
-        return redirect()->route('conductores.index')->with('success', 'conductore updated successfully');
+        return redirect()->route('conductores.index')->with('success', 'Conductor actualizado exitosamente');
     }
+
     /**
      * Remove the specified resource from storage.
      *

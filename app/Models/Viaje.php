@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property $hor_sal_via
  * @property $fec_lle_via
  * @property $hor_lle_via
- * @property $kil_via
  * @property $com_via
  * @property $cam_via
  * @property $cli_via
@@ -27,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Camione $camione
  * @property Cliente $cliente
  * @property Empresa $empresa
+ * @property Gasto[] $gastos
  * @property Ruta $ruta
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
@@ -46,7 +46,6 @@ class Viaje extends Model
 		'hor_sal_via' => 'required',
 		'fec_lle_via' => 'required',
 		'hor_lle_via' => 'required',
-		'kil_via' => 'required',
 		'com_via' => 'required',
 		'cam_via' => 'required',
 		'cli_via' => 'required',
@@ -61,7 +60,7 @@ class Viaje extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_via','car_via','pes_via','est_via','fec_sal_via','hor_sal_via','fec_lle_via','hor_lle_via','kil_via','com_via','cam_via','cli_via','rut_via','emp_via'];
+    protected $fillable = ['cod_via','car_via','pes_via','est_via','fec_sal_via','hor_sal_via','fec_lle_via','hor_lle_via','com_via','cam_via','cli_via','rut_via','emp_via'];
 
 
     /**
@@ -89,16 +88,20 @@ class Viaje extends Model
     }
     
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function gastos()
+    {
+        return $this->hasMany('App\Models\Gasto', 'via_gas', 'cod_via');
+    }
+    
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function ruta()
     {
         return $this->hasOne('App\Models\Ruta', 'cod_rut', 'rut_via');
     }
-
-    public function gastos()
-    {
-        return $this->hasMany(Gasto::class, 'via_gas');
-    }
     
+
 }

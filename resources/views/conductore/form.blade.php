@@ -32,11 +32,31 @@
         {!! $errors->first('cor_ele_con', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="form-group">
-        {{ Form::label('Empresa') }}
-        {{ Form::select('emp_con', $empresas, $conductore->emp_con, ['class' => 'form-control' . ($errors->has('emp_con') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
-        {!! $errors->first('emp_con', '<div class="invalid-feedback">:message</div>') !!}
+        {{ Form::label('Número de licencia') }}
+        {{ Form::text('num_lic_con', $conductore->num_lic_con, ['class' => 'form-control' . ($errors->has('num_lic_con') ? ' is-invalid' : '')]) }}
+        {!! $errors->first('num_lic_con', '<div class="invalid-feedback">:message</div>') !!}
     </div>
-        
+    <div class="form-group">
+        {{ Form::label('Fecha de expedición licencia') }}
+        {{ Form::date('fec_exp_lic_con', $conductore->fec_exp_lic_con, ['class' => 'form-control' . ($errors->has('fec_exp_lic_con') ? ' is-invalid' : '')]) }}
+        {!! $errors->first('fec_exp_lic_con', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+    <div class="form-group">
+        {{ Form::label('Fecha de vencimiento licencia') }}
+        {{ Form::date('fec_ven_lic_con', $conductore->fec_ven_lic_con, ['class' => 'form-control' . ($errors->has('fec_ven_lic_con') ? ' is-invalid' : '')]) }}
+        {!! $errors->first('fec_ven_lic_con', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+    <div class="form-group">
+        {{ Form::label('Categoria licencia') }}
+        {{ Form::text('cat_lic_con', $conductore->cat_lic_con, ['class' => 'form-control' . ($errors->has('cat_lic_con') ? ' is-invalid' : '')]) }}
+        {!! $errors->first('cat_lic_con', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+    <div class="form-group">
+        {{ Form::label('EPS') }}
+        {{ Form::text('eps_con', $conductore->eps_con, ['class' => 'form-control' . ($errors->has('eps_con') ? ' is-invalid' : '')]) }}
+        {!! $errors->first('eps_con', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>

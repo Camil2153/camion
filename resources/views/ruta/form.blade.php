@@ -12,12 +12,12 @@
         </div>
         <div class="form-group">
             {{ Form::label('Origen') }}
-            {{ Form::select('ori_rut', $ciudades, $ruta->ori_rut, ['id' => 'ori_rut', 'class' => 'form-control' . ($errors->has('ori_rut') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione una ciudad', 'onchange' => 'updateMap()']) }}
+            {{ Form::text('ori_rut', $ruta->ori_rut, ['id' => 'ori_rut', 'class' => 'form-control' . ($errors->has('ori_rut') ? ' is-invalid' : ''), 'onchange' => 'updateMap()']) }}
             {!! $errors->first('ori_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Destino') }}
-            {{ Form::select('des_rut', $ciudades, $ruta->des_rut, ['id' => 'des_rut', 'class' => 'form-control' . ($errors->has('des_rut') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione una ciudad', 'onchange' => 'updateMap()']) }}
+            {{ Form::text('des_rut', $ruta->des_rut, ['id' => 'des_rut', 'class' => 'form-control' . ($errors->has('des_rut') ? ' is-invalid' : ''), 'onchange' => 'updateMap()']) }}
             {!! $errors->first('des_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div id="map" style="height: 400px; width: 100%;"></div>
@@ -35,24 +35,9 @@
             {!! $errors->first('dur_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Restricciones') }}
-            {{ Form::text('res_rut', $ruta->res_rut, ['class' => 'form-control' . ($errors->has('res_rut') ? ' is-invalid' : '')]) }}
-            {!! $errors->first('res_rut', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('Complejidad') }}
-            {{ Form::select('com_rut', ['Fácil' => 'Fácil', 'Moderado' => 'Moderado', 'Difícil' => 'Difícil'], $ruta->com_rut, ['class' => 'form-control' . ($errors->has('com_rut') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar nivel']) }}
-            {!! $errors->first('com_rut', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
             {{ Form::label('Estado') }}
-            {{ Form::select('est_rut', ['Bueno estado' => 'Buen estado', 'Regular estado' => 'Regular estado', 'Mal estado' => 'Mal estado', 'Cerrada' => 'Cerrada', 'En construcción' => 'En construcción'], $ruta->est_rut, ['class' => 'form-control' . ($errors->has('est_rut') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
+            {{ Form::text('est_rut', $ruta->est_rut, ['class' => 'form-control' . ($errors->has('est_rut') ? ' is-invalid' : '')]) }}
             {!! $errors->first('est_rut', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('Empresa') }}
-            {{ Form::select('emp_rut', $empresas, $ruta->emp_rut, ['class' => 'form-control' . ($errors->has('emp_rut') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
-            {!! $errors->first('emp_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
     <div class="box-footer mt20">
@@ -80,10 +65,10 @@
     }
 
     function updateMap() {
-        var origin = document.getElementById('ori_rut');
-        var destination = document.getElementById('des_rut');
+        var origin = document.getElementById('ori_rut').value; // Get the value directly
+        var destination = document.getElementById('des_rut').value; // Get the value directly
 
-        if (origin.selectedIndex === 0 || destination.selectedIndex === 0) {
+        if (!origin || !destination) { // Check if either input is empty
             map.setCenter({ lat: 4.5709, lng: -74.2973 });
             map.setZoom(6);
             directionsRenderer.setDirections({ routes: [] });
@@ -92,13 +77,10 @@
             return;
         }
 
-        var originValue = origin.options[origin.selectedIndex].text;
-        var destinationValue = destination.options[destination.selectedIndex].text;
-
-        geocoder.geocode({ address: originValue }, function (results, status) {
+        geocoder.geocode({ address: origin }, function (results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
                 var originLocation = results[0].geometry.location;
-                geocoder.geocode({ address: destinationValue }, function (results, status) {
+                geocoder.geocode({ address: destination }, function (results, status) { // Change destinationValue to destination
                     if (status === google.maps.GeocoderStatus.OK) {
                         var destinationLocation = results[0].geometry.location;
 

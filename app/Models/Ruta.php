@@ -13,16 +13,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property $des_rut
  * @property $dis_rut
  * @property $dur_rut
- * @property $res_rut
- * @property $com_rut
  * @property $est_rut
- * @property $emp_rut
  * @property $created_at
  * @property $updated_at
  *
- * @property Ciudade $ciudade
- * @property Ciudade $ciudade
- * @property Empresa $empresa
+ * @property Tallere[] $talleres
+ * @property Viaje[] $viajes
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -39,10 +35,7 @@ class Ruta extends Model
 		'des_rut' => 'required',
 		'dis_rut' => 'required',
 		'dur_rut' => 'required',
-		'res_rut' => 'required',
-		'com_rut' => 'required',
 		'est_rut' => 'required',
-		'emp_rut' => 'required',
     ];
 
     protected $perPage = 20;
@@ -52,31 +45,23 @@ class Ruta extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_rut','nom_rut','ori_rut','des_rut','dis_rut','dur_rut','res_rut','com_rut','est_rut','emp_rut'];
+    protected $fillable = ['cod_rut','nom_rut','ori_rut','des_rut','dis_rut','dur_rut','est_rut'];
 
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function origenCiudad()
+    public function talleres()
     {
-        return $this->hasOne('App\Models\Ciudade', 'cod_ciu', 'ori_rut');
+        return $this->hasMany('App\Models\Tallere', 'rut_tal', 'cod_rut');
     }
     
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function destinoCiudad()
+    public function viajes()
     {
-        return $this->hasOne('App\Models\Ciudade', 'cod_ciu', 'des_rut');
-    }
-    
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function empresa()
-    {
-        return $this->hasOne('App\Models\Empresa', 'nit_emp', 'emp_rut');
+        return $this->hasMany('App\Models\Viaje', 'rut_via', 'cod_rut');
     }
     
 

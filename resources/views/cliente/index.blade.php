@@ -24,7 +24,6 @@
                 <th>Dirección</th>
                 <th>RFC</th>
                 <th>Ciudad</th>
-                <th>Empresa</th>
                 <th>Acciones</th>
 
             </tr>
@@ -39,8 +38,7 @@
                     <td>{{ $cliente->col_cli }}</td>
                     <td>{{ $cliente->dir_cli }}</td>
                     <td>{{ $cliente->rfc_cli }}</td>
-                    <td>{{ $cliente->ciudade->nom_ciu }}</td>
-                    <td>{{ $cliente->empresa->nom_emp }}</td>
+					<td>{{ $cliente->ciu_cli }}</td>
 
                     <td>
                         <form action="{{ route('clientes.destroy',$cliente->cod_cli) }}" method="POST">

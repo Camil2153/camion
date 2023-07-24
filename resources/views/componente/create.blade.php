@@ -26,7 +26,7 @@
             </div>
         </div>
     </section>
-@stop
+    @stop
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">

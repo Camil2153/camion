@@ -36,12 +36,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'viajes.edit', 'description' => 'Editar viaje'])->syncRoles([$role1,$role2]);
         Permission::create(['name' => 'viajes.destroy', 'description' => 'Eliminar viaje'])->syncRoles([$role1,$role2]);
 
-        Permission::create(['name' => 'paises.index', 'description' => 'Ver listado de paises'])->syncRoles([$role1,$role2,$role3]); 
-        Permission::create(['name' => 'paises.create', 'description' => 'Registrar nuevo pais'])->syncRoles([$role1,$role2,$role3]); 
-        Permission::create(['name' => 'paises.show', 'description' => 'Ver pais'])->syncRoles([$role1,$role2,$role3]);
-        Permission::create(['name' => 'paises.edit', 'description' => 'Editar pais'])->syncRoles([$role1,$role2,$role3]);
-        Permission::create(['name' => 'paises.destroy', 'description' => 'Eliminar pais'])->syncRoles([$role1,$role2,$role3]);
-
         Permission::create(['name' => 'empresas.index', 'description' => 'Ver listado de empresas'])->syncRoles([$role1,$role2,$role3]); 
         Permission::create(['name' => 'empresas.create', 'description' => 'Registrar nueva empresa'])->syncRoles([$role1,$role2,$role3]); 
         Permission::create(['name' => 'empresas.show', 'description' => 'Ver empresa'])->syncRoles([$role1,$role2,$role3]);
@@ -66,12 +60,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'componentes.edit', 'description' => 'Editar componente'])->syncRoles([$role1,$role2,$role3]);
         Permission::create(['name' => 'componentes.destroy', 'description' => 'Eliminar componente'])->syncRoles([$role1,$role2,$role3]);
 
-        Permission::create(['name' => 'ciudades.index', 'description' => 'Ver listado de ciudades'])->syncRoles([$role1,$role2,$role3]); 
-        Permission::create(['name' => 'ciudades.create', 'description' => 'Registrar nueva ciudad'])->syncRoles([$role1,$role2,$role3]); 
-        Permission::create(['name' => 'ciudades.show', 'description' => 'Ver ciudad'])->syncRoles([$role1,$role2,$role3]);
-        Permission::create(['name' => 'ciudades.edit', 'description' => 'Editar ciudad'])->syncRoles([$role1,$role2,$role3]);
-        Permission::create(['name' => 'ciudades.destroy', 'description' => 'Eliminar ciudad'])->syncRoles([$role1,$role2,$role3]);
-
         Permission::create(['name' => 'clientes.index', 'description' => 'Ver listado de clientes'])->syncRoles([$role1,$role2,$role3]); 
         Permission::create(['name' => 'clientes.create', 'description' => 'Registrar nuevo cliente'])->syncRoles([$role1,$role2,$role3]); 
         Permission::create(['name' => 'clientes.show', 'description' => 'Ver cliente'])->syncRoles([$role1,$role2,$role3]);
@@ -84,11 +72,11 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'camiones.edit', 'description' => 'Editar camion'])->syncRoles([$role1,$role2,$role3]);
         Permission::create(['name' => 'camiones.destroy', 'description' => 'Eliminar camion'])->syncRoles([$role1,$role2,$role3]);
 
-        Permission::create(['name' => 'tipos-servicios.index', 'description' => 'Ver listado de servicios'])->syncRoles([$role1,$role2,$role3]); 
-        Permission::create(['name' => 'tipos-servicios.create', 'description' => 'Registrar nuevo servicio'])->syncRoles([$role1,$role2,$role3]); 
-        Permission::create(['name' => 'tipos-servicios.show', 'description' => 'Ver servicio'])->syncRoles([$role1,$role2,$role3]);
-        Permission::create(['name' => 'tipos-servicios.edit', 'description' => 'Editar servicio'])->syncRoles([$role1,$role2,$role3]);
-        Permission::create(['name' => 'tipos-servicios.destroy', 'description' => 'Eliminar servicio'])->syncRoles([$role1,$role2,$role3]);
+        Permission::create(['name' => 'actividades.index', 'description' => 'Ver listado de actividades'])->syncRoles([$role1,$role2,$role3]); 
+        Permission::create(['name' => 'actividades.create', 'description' => 'Registrar nueva actividad'])->syncRoles([$role1,$role2,$role3]); 
+        Permission::create(['name' => 'actividades.show', 'description' => 'Ver actividad'])->syncRoles([$role1,$role2,$role3]);
+        Permission::create(['name' => 'actividades.edit', 'description' => 'Editar actividad'])->syncRoles([$role1,$role2,$role3]);
+        Permission::create(['name' => 'actividades.destroy', 'description' => 'Eliminar actividad'])->syncRoles([$role1,$role2,$role3]);
 
         Permission::create(['name' => 'almacenes.index', 'description' => 'Ver listado de almacenes'])->syncRoles([$role1,$role2,$role3]); 
         Permission::create(['name' => 'almacenes.create', 'description' => 'Registrar nuevo almacen'])->syncRoles([$role1,$role2,$role3]); 
@@ -119,12 +107,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'talleres.show', 'description' => 'Ver taller'])->syncRoles([$role1,$role2,$role3]);
         Permission::create(['name' => 'talleres.edit', 'description' => 'Editar taller'])->syncRoles([$role1,$role2,$role3]);
         Permission::create(['name' => 'talleres.destroy', 'description' => 'Eliminar taller'])->syncRoles([$role1,$role2,$role3]);
-
-        Permission::create(['name' => 'documentos-conductores.index', 'description' => 'Ver listado de documentos de conductores'])->syncRoles([$role1,$role2,$role3]); 
-        Permission::create(['name' => 'documentos-conductores.create', 'description' => 'Registrar nuevo documento de conductor'])->syncRoles([$role1,$role2,$role3]); 
-        Permission::create(['name' => 'documentos-conductores.show', 'description' => 'Ver documento de conductor'])->syncRoles([$role1,$role2,$role3]);
-        Permission::create(['name' => 'documentos-conductores.edit', 'description' => 'Editar documento de conductor'])->syncRoles([$role1,$role2,$role3]);
-        Permission::create(['name' => 'documentos-conductores.destroy', 'description' => 'Eliminar documento de conductor'])->syncRoles([$role1,$role2,$role3]);
 
         Permission::create(['name' => 'servicios.index', 'description' => 'Ver listado de servicios'])->syncRoles([$role1,$role2,$role3]); 
         Permission::create(['name' => 'servicios.create', 'description' => 'Registrar nuevo servicio'])->syncRoles([$role1,$role2,$role3]); 

@@ -36,11 +36,6 @@
             {{ Form::select('rut_tal', $rutas, $tallere->rut_tal, ['class' => 'form-control' . ($errors->has('rut_tal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar ruta']) }}
             {!! $errors->first('rut_tal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-        <div class="form-group">
-            {{ Form::label('Empresa') }}
-            {{ Form::select('emp_tal', $empresas, $tallere->emp_tal, ['class' => 'form-control' . ($errors->has('emp_tal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
-            {!! $errors->first('emp_tal', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
 
     </div>
     <div class="box-footer mt20">

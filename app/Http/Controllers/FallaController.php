@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Arr;
 use App\Models\Falla;
 use Illuminate\Http\Request;
-use App\Models\Componente;
 use App\Models\Sistema;
 use App\Models\Camione;
-use App\Models\Tallere;
-use App\Models\Empresa;
 
 /**
  * Class FallaController
@@ -45,12 +42,9 @@ class FallaController extends Controller
     public function create()
     {
         $falla = new Falla();
-        $componentes = Componente::pluck('nom_com', 'num_ser_com');
         $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
-        $talleres = Tallere::pluck('nom_tal', 'nit_tal');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('falla.create', compact('falla', 'componentes', 'sistemas', 'camiones', 'talleres', 'empresas'));
+        return view('falla.create', compact('falla', 'sistemas', 'camiones'));
     }
 
     /**
@@ -66,7 +60,7 @@ class FallaController extends Controller
         $falla = Falla::create($request->all());
 
         return redirect()->route('fallas.index')
-            ->with('success', 'Falla created successfully.');
+            ->with('success', 'Falla creada exitosamente');
     }
 
     /**
@@ -91,12 +85,9 @@ class FallaController extends Controller
     public function edit($cod_fal)
     {
         $falla = Falla::find($cod_fal);
-        $componentes = Componente::pluck('nom_com', 'num_ser_com');
         $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
-        $talleres = Tallere::pluck('nom_tal', 'nit_tal');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('falla.edit', compact('falla', 'componentes', 'sistemas', 'camiones', 'talleres', 'empresas'));
+        return view('falla.edit', compact('falla', 'sistemas', 'camiones'));
     }
 
     /**
@@ -122,7 +113,7 @@ class FallaController extends Controller
         // Actualizar los atributos del modelo falla
         $falla->update($request->all());
     
-        return redirect()->route('fallas.index')->with('success', 'falla updated successfully');
+        return redirect()->route('fallas.index')->with('success', 'Falla actualizada exitosamente');
     }
 
     /**
@@ -135,6 +126,6 @@ class FallaController extends Controller
         $falla = Falla::find($cod_fal)->delete();
 
         return redirect()->route('fallas.index')
-            ->with('success', 'Falla deleted successfully');
+            ->with('success', 'Falla eliminada exitosamente');
     }
 }

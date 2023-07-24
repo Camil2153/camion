@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Editar Documento de Conductor</h1>
+    <h1>Editar Actividad</h1>
 @stop
 
 @section('content')
@@ -15,11 +15,11 @@
 
                 <div class="card card-default">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('documentos-conductores.update', $documentosConductore->num_lic_doc_con) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('actividades.update', $actividade->cod_act) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 
-                            @include('documentos-conductore.form')
+                            @include('actividade.form')
 
                         </form>
                     </div>

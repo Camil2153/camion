@@ -19,10 +19,6 @@ return new class extends Migration
             $table->string('cam_doc_cam', 7); // camion documento camion
 
             $table->foreign('cam_doc_cam')->references('pla_cam')->on('camiones');
-            $table->string('emp_doc_cam', 15); // empresa documento camion
-        
-            // Definición de la relación con la tabla de paises para la columna pai_emp
-            $table->foreign('emp_doc_cam')->references('nit_emp')->on('empresas');
             $table->timestamps();
         });
     }

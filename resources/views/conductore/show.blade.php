@@ -44,8 +44,24 @@
                             {{ $conductore->cor_ele_con }}
                         </div>
                         <div class="form-group">
-                            <strong>Empresa:</strong>
-                            {{ $conductore->empresa->nom_emp }}
+                            <strong>Número de licencia:</strong>
+                            {{ $conductore->num_lic_con }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Fecha de expedición licencia:</strong>
+                            {{ $conductore->fec_exp_lic_con }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Fecha de vencimiento licencia:</strong>
+                            {{ $conductore->fec_ven_lic_con }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Categoria licencia:</strong>
+                            {{ $conductore->cat_lic_con }}
+                        </div>
+                        <div class="form-group">
+                            <strong>EPS:</strong>
+                            {{ $conductore->eps_con }}
                         </div>
 
                     </div>

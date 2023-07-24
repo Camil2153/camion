@@ -31,12 +31,8 @@
                             <strong>Descripción:</strong>
                             {{ $categoriasGasto->desc_cat_gas }}
                         </div>
-                        <div class="form-group">
-                            <strong>Empresa:</strong>
-                            {{ $categoriasGasto->empresa->nom_emp }}
-                        </div>
 
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>

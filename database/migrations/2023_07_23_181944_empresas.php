@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('empresas', function (Blueprint $table) {
             $table->string('nit_emp', 10)->primary(); // nit empresa
             $table->string('nom_emp', 45); // nombre empresa
+            $table->string('pai_emp', 45); // pais empresa
+            $table->string('reg_emp', 45); // region empresa
+            $table->string('cod_pos_emp', 45); // codigo postal empresa
             $table->string('dir_emp', 45); // direccion empresa
-            $table->string('pai_emp', 2); // pais empresa
-        
-            // Definición de la relación con la tabla de paises para la columna pai_emp
-            $table->foreign('pai_emp')->references('cod_pai')->on('paises');
             $table->timestamps();
         });              
     }

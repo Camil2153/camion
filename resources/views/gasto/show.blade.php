@@ -39,10 +39,6 @@
                             <strong>Viaje:</strong>
                             {{ $gasto->via_gas }}
                         </div>
-                        <div class="form-group">
-                            <strong>Empresa:</strong>
-                            {{ $gasto->empresa->nom_emp }}
-                        </div>
 
                     </div>
                 </div>

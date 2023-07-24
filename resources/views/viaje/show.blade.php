@@ -75,8 +75,8 @@
                                     {{ $viaje->pes_via }}
                                 </div>
                                 <div class="form-group">
-                                    <strong>Kilometraje:</strong>
-                                    {{ $viaje->kil_via }}
+                                    <strong>Distancia:</strong>
+                                    {{ $viaje->ruta->dis_rut }}
                                 </div>
                                 <div class="form-group">
                                     <strong>Combustible:</strong>
@@ -106,7 +106,7 @@
                                 <a class="nav-link" data-bs-toggle="tab" href="#informacionCamion">Información del Camión</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#fallas">Predecir fallas</a>
+                                <a class="nav-link" data-bs-toggle="tab" href="#alertas">Alertas</a>
                             </li>
                         </ul>
                     </div>
@@ -171,47 +171,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Agrega aquí los demás campos del camión que deseas mostrar -->
+
                             </div>
                         </div>
-                        <div id="fallas" class="tab-pane fade">
+                        <div id="alertas" class="tab-pane fade">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="container">
-                                    @if (isset($posiblesAlertas) && count($posiblesAlertas) > 0)
-                                        <p>Alertas:</p>
-                                        <ul>
-                                            @foreach ($posiblesAlertas as $alerta)
-                                                <li>{{ $alerta }}</li>
+                                        @if($alertas && count($alertas) > 0)
+                                            @foreach($alertas as $alerta)
+                                                <div class="alert alert-{{ $alerta['color'] }}" role="alert">
+                                                    {{ $alerta['mensaje'] }}
+                                                </div>
                                             @endforeach
-                                        </ul>
-                                    @endif
-
-                                    @if (isset($posiblesFallas) && count($posiblesFallas) > 0)
-                                        <p>Posibles fallas:</p>
-                                        <ul>
-                                            @foreach ($posiblesFallas as $key => $falla)
-                                                <li>{{ $falla }} - {{ $posiblesSistemas[$key] }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @elseif (isset($mensaje))
-                                        <p>{{ $mensaje }}</p>
-                                    @else
-                                        <p>No se encontraron posibles fallas.</p>
-                                    @endif
-
-                                    @if (isset($registrosFallas) && count($registrosFallas) > 0)
-                                        <p>Fallas registradas:</p>
-                                        <ul>
-                                            @foreach ($registrosFallas as $falla)
-                                                <li>{{ $falla['fecha'] }} - {{ $falla['descripcion'] }} - {{ $falla['sistema'] }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>       
                     </div>
                 </div>
             </div>
@@ -221,6 +198,28 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+
+    <style>
+    .alert-red {
+        background-color: #FF0000;
+        color: #000000;
+    }
+
+    .alert-orange {
+        background-color: #FF6B1A;
+        color: #000000;
+    }
+
+    .alert-yellow {
+        background-color: #FFEE00;
+        color: #000000;
+    }
+
+    .alert-green {
+        background-color: #3ADB35;
+        color: #000000;
+    }
+    </style>
 @stop
 
 @section('js')
@@ -244,8 +243,8 @@
         }
 
         function updateMap() {
-            var originValue = '{{ $viaje->ruta->origenCiudad->nom_ciu }}';
-            var destinationValue = '{{ $viaje->ruta->destinoCiudad->nom_ciu}}';
+            var originValue = '{{ $viaje->ruta->ori_rut }}';
+            var destinationValue = '{{ $viaje->ruta->des_rut}}';
 
             geocoder.geocode({ address: originValue }, function (results, status) {
                 if (status === google.maps.GeocoderStatus.OK) {

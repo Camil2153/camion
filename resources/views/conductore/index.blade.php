@@ -23,7 +23,11 @@
                 <th>Dirección</th>
                 <th>Número de teléfono</th>
                 <th>Correo electrónico</th>
-                <th>Empresa</th>
+                <th>Número de licencia</th>
+                <th>Fecha de expedición licencia</th>
+                <th>Fecha de vencimiento licencia</th>
+                <th>Categoria licencia</th>
+                <th>EPS</th>
                 <th>Acciones</th>
 
             </tr>
@@ -38,7 +42,11 @@
                     <td>{{ $conductore->dir_con }}</td>
                     <td>{{ $conductore->num_tel_con }}</td>
                     <td>{{ $conductore->cor_ele_con }}</td>
-                    <td>{{ $conductore->empresa->nom_emp }}</td>
+                    <td>{{ $conductore->num_lic_con }}</td>
+                    <td>{{ $conductore->fec_exp_lic_con }}</td>
+                    <td>{{ $conductore->fec_ven_lic_con }}</td>
+                    <td>{{ $conductore->cat_lic_con }}</td>
+                    <td>{{ $conductore->eps_con }}</td>
 
                     <td>
                         <form action="{{ route('conductores.destroy',$conductore->dni_con) }}" method="POST">

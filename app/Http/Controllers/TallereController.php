@@ -5,7 +5,6 @@ use Illuminate\Support\Arr;
 use App\Models\Tallere;
 use Illuminate\Http\Request;
 use App\Models\Ruta;
-use App\Models\Empresa;
 
 /**
  * Class TallereController
@@ -43,8 +42,7 @@ class TallereController extends Controller
     {
         $tallere = new Tallere();
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('tallere.create', compact('tallere', 'rutas', 'empresas'));
+        return view('tallere.create', compact('tallere', 'rutas'));
     }
 
     /**
@@ -60,7 +58,7 @@ class TallereController extends Controller
         $tallere = Tallere::create($request->all());
 
         return redirect()->route('talleres.index')
-            ->with('success', 'Tallere created successfully.');
+            ->with('success', 'Taller creado exitosamente');
     }
 
     /**
@@ -86,8 +84,7 @@ class TallereController extends Controller
     {
         $tallere = Tallere::find($nit_tal);
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('tallere.edit', compact('tallere', 'rutas', 'empresas'));
+        return view('tallere.edit', compact('tallere', 'rutas'));
     }
 
     /**
@@ -113,7 +110,7 @@ class TallereController extends Controller
         // Actualizar los atributos del modelo tallere
         $tallere->update($request->all());
     
-        return redirect()->route('talleres.index')->with('success', 'tallere updated successfully');
+        return redirect()->route('talleres.index')->with('success', 'Taller actualizado exitosamente');
     }
 
     /**
@@ -126,6 +123,6 @@ class TallereController extends Controller
         $tallere = Tallere::find($nit_tal)->delete();
 
         return redirect()->route('talleres.index')
-            ->with('success', 'Tallere deleted successfully');
+            ->with('success', 'Taller eliminado exitosamente');
     }
 }

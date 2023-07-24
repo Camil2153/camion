@@ -46,13 +46,8 @@
             {{ Form::select('est_alm', ['disponible' => 'Disponible', 'reservado' => 'Reservado', 'en reparación' => 'En reparación', 'agotado' => 'Agotado'], $almacene->est_alm, ['class' => 'form-control' . ($errors->has('est_alm') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
             {!! $errors->first('est_alm', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-        <div class="form-group">
-            {{ Form::label('Empresa') }}
-            {{ Form::select('emp_alm', $empresas, $almacene->emp_alm, ['class' => 'form-control' . ($errors->has('emp_alm') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
-            {!! $errors->first('emp_alm', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
 
-    </div>
+        </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>
         <a href="  {{ route('almacenes.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>

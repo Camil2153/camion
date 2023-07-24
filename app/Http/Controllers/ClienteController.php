@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Arr;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
-use App\Models\Ciudade;
-use App\Models\Empresa;
 
 /**
  * Class ClienteController
@@ -42,9 +40,7 @@ class ClienteController extends Controller
     public function create()
     {
         $cliente = new Cliente();
-        $ciudades = Ciudade::pluck('nom_ciu', 'cod_ciu');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('cliente.create', compact('cliente', 'empresas', 'ciudades'));
+        return view('cliente.create', compact('cliente'));
     }
 
     /**
@@ -60,7 +56,7 @@ class ClienteController extends Controller
         $cliente = Cliente::create($request->all());
 
         return redirect()->route('clientes.index')
-            ->with('success', 'Cliente created successfully.');
+            ->with('success', 'Cliente creado exactamente');
     }
 
     /**
@@ -79,15 +75,14 @@ class ClienteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  string $cod_cli
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($cod_cli)
+    public function edit($id)
     {
-        $cliente = Cliente::find($cod_cli);
-        $ciudades = Ciudade::pluck('nom_ciu', 'cod_ciu');
-        $empresas = Empresa::pluck('nom_emp', 'nit_emp');
-        return view('cliente.edit', compact('cliente', 'empresas', 'ciudades'));
+        $cliente = Cliente::find($id);
+
+        return view('cliente.edit', compact('cliente'));
     }
 
     /**
@@ -113,8 +108,9 @@ class ClienteController extends Controller
         // Actualizar los atributos del modelo cliente
         $cliente->update($request->all());
     
-        return redirect()->route('clientes.index')->with('success', 'cliente updated successfully');
+        return redirect()->route('clientes.index')->with('success', 'Cliente actualizado exitosamente');
     }
+
     /**
      * @param string $cod_cli
      * @return \Illuminate\Http\RedirectResponse
@@ -125,6 +121,6 @@ class ClienteController extends Controller
         $cliente = Cliente::find($cod_cli)->delete();
 
         return redirect()->route('clientes.index')
-            ->with('success', 'Cliente deleted successfully');
+            ->with('success', 'Cliente eliminado exitosamente');
     }
 }

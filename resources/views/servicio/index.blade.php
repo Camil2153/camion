@@ -18,15 +18,21 @@
             <tr>
 
                 <th>Código</th>
-                <th>Tipo de Servicio</th>
-                <th>Camion</th>
-                <th>Descripción</th>
                 <th>Fecha</th>
-                <th>Kilometraje</th>
-                <th>Costo</th>
-                <th>Responsable</th>
+                <th>Sistema</th>
+                <th>Actividad</th>
+                <th>Estado</th>
+                <th>Tipo de Servicio</th>
+                <th>Falla</th>
+                <th>Detalles</th>
+                <th>Camion</th>
                 <th>Taller</th>
-                <th>Empresa</th>
+                <th>Responsable</th>
+                <th>Intervalo de Tiempo</th>
+                <th>Intervalo de Kilometraje</th>
+                <th>Alerta</th>
+                <th>Costo</th>
+                <th>Almacen</th>
                 <th>Acciones</th>
 
             </tr>
@@ -34,17 +40,22 @@
         <tbody>
             @foreach ($servicios as $servicio)
                 <tr>
-
                     <td>{{ $servicio->cod_ser }}</td>
-                    <td>{{ $servicio->tiposServicio->nom_tip_ser }}</td>
-                    <td>{{ $servicio->cam_ser }}</td>
-                    <td>{{ $servicio->desc_ser }}</td>
                     <td>{{ $servicio->fec_ser }}</td>
-                    <td>{{ $servicio->kil_ser }}</td>
-                    <td>{{ $servicio->cos_ser }}</td>
+                    <td>{{ $servicio->sistema->nom_sis }}</td>
+                    <td>{{ $servicio->actividade->nom_act }}</td>
+                    <td>{{ $servicio->est_ser }}</td>
+                    <td>{{ $servicio->tip_ser }}</td>
+                    <td>{{ $servicio->falla->desc_fal ?? 'N/A' }}</td>
+                    <td>{{ $servicio->det_ser }}</td>
+                    <td>{{ $servicio->camione->pla_cam }}</td>
+                    <td>{{ $servicio->tallere->nom_tal ?? 'N/A' }}</td>		
                     <td>{{ $servicio->res_ser }}</td>
-                    <td>{{ $servicio->tallere->nom_tal }}</td>
-                    <td>{{ $servicio->empresa->nom_emp }}</td>
+                    <td>{{ $servicio->int_tie_tip_ser }}</td>
+                    <td>{{ $servicio->int_kil_tip_ser }}</td>
+                    <td>{{ $servicio->ale_ser }}</td>
+                    <td>{{ $servicio->cos_ser }}</td>
+                    <td>{{ $servicio->almacene->com_alm ?? 'N/A' }}</td>
 
                     <td>
                         <form action="{{ route('servicios.destroy',$servicio->cod_ser) }}" method="POST">

@@ -13,18 +13,17 @@ use Illuminate\Database\Eloquent\Model;
  * @property $desc_com
  * @property $cos_com
  * @property $sis_com
- * @property $emp_com
  * @property $created_at
  * @property $updated_at
  *
- * @property Empresa $empresa
+ * @property Almacene[] $almacenes
  * @property Sistema $sistema
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Componente extends Model
 {
-
+    
     protected $primaryKey = 'num_ser_com';
     public $incrementing = false;
     
@@ -35,7 +34,6 @@ class Componente extends Model
 		'desc_com' => 'required',
 		'cos_com' => 'required',
 		'sis_com' => 'required',
-		'emp_com' => 'required',
     ];
 
     protected $perPage = 20;
@@ -45,15 +43,15 @@ class Componente extends Model
      *
      * @var array
      */
-    protected $fillable = ['num_ser_com','nom_com','mar_com','desc_com','cos_com','sis_com','emp_com'];
+    protected $fillable = ['num_ser_com','nom_com','mar_com','desc_com','cos_com','sis_com'];
 
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function empresa()
+    public function almacenes()
     {
-        return $this->hasOne('App\Models\Empresa', 'nit_emp', 'emp_com');
+        return $this->hasMany('App\Models\Almacene', 'com_alm', 'num_ser_com');
     }
     
     /**

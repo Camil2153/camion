@@ -29,11 +29,11 @@
                         </div>
                         <div class="form-group">
                             <strong>Origen:</strong>
-                            {{ $ruta->origenCiudad->nom_ciu }}
+                            {{ $ruta->ori_rut }}
                         </div>
                         <div class="form-group">
                             <strong>Destino:</strong>
-                            {{ $ruta->destinoCiudad->nom_ciu }}
+                            {{ $ruta->des_rut }}
                         </div>
                         <div class="form-group">
                             <strong>Distancia:</strong>
@@ -44,20 +44,8 @@
                             {{ $ruta->dur_rut }}
                         </div>
                         <div class="form-group">
-                            <strong>Restricciones:</strong>
-                            {{ $ruta->res_rut }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Complejidad:</strong>
-                            {{ $ruta->com_rut }}
-                        </div>
-                        <div class="form-group">
                             <strong>Estado:</strong>
                             {{ $ruta->est_rut }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Empresa:</strong>
-                            {{ $ruta->empresa->nom_emp }}
                         </div>
 
                     </div>

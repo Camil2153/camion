@@ -26,11 +26,6 @@
             {{ Form::select('cam_doc_cam', $camiones, $documentosCamione->cam_doc_cam, ['class' => 'form-control' . ($errors->has('cam_doc_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion']) }}
             {!! $errors->first('cam_doc_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-        <div class="form-group">
-            {{ Form::label('Empresa') }}
-            {{ Form::select('emp_doc_cam', $empresas, $documentosCamione->emp_doc_cam, ['class' => 'form-control' . ($errors->has('emp_doc_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
-            {!! $errors->first('emp_doc_cam', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
 
     </div>
     <div class="box-footer mt20">
