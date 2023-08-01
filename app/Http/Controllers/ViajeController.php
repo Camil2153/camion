@@ -327,5 +327,6 @@ class ViajeController extends Controller
         return redirect()->route('viajes.index')
             ->with('success', 'Viaje eliminado exitosamente');
     }
+    
 
 }

@@ -39,7 +39,17 @@
                     <td>{{ $falla->fec_fal }}</td>
                     <td>{{ $falla->kil_fal }}</td>
                     <td>{{ $falla->gra_fal }}</td>
-                    <td>{{ $falla->est_act_fal }}</td>
+                    <td>
+                    @if ($falla->est_act_fal == 'reparada')
+                        <span class="badge badge-success">{{ $falla->est_act_fal }}</span>
+                    @elseif ($falla->est_act_fal == 'proceso')
+                        <span class="badge badge-warning">{{ $falla->est_act_fal }}</span>
+                        @elseif ($falla->est_act_fal == 'pendiente')
+                        <span class="badge badge-danger">{{ $falla->est_act_fal }}</span>
+                    @else
+                        {{ $falla->est_act_fal }}
+                    @endif
+                    </td>
                     <td>{{ $falla->res_det_fal }}</td>
                     <td>{{ $falla->sistema->nom_sis }}</td>
                     <td>{{ $falla->cam_fal }}</td>

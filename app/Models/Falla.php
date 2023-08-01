@@ -37,7 +37,7 @@ class Falla extends Model
 		'fec_fal' => 'required',
 		'kil_fal' => 'required',
 		'gra_fal' => 'required',
-		'est_act_fal' => 'required',
+		'est_act_fal' => 'sometimes',
 		'res_det_fal' => 'required',
 		'sis_fal' => 'required',
 		'cam_fal' => 'required',

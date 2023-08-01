@@ -11,6 +11,11 @@
             {{ Form::text('nom_act', $actividade->nom_act, ['class' => 'form-control' . ($errors->has('nom_act') ? ' is-invalid' : '')]) }}
             {!! $errors->first('nom_act', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        <div class="form-group">
+            {{ Form::label('Sistema') }}
+            {{ Form::select('act_sis', $sistemas, $actividade->act_sis, ['class' => 'form-control' . ($errors->has('act_sis') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar sistema', 'id' => 'act_sis']) }}
+            {!! $errors->first('act_sis', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
 
         </div>
     <div class="box-footer mt20">

@@ -41,8 +41,14 @@ class AlmaceneController extends Controller
     public function create()
     {
         $almacene = new Almacene();
-        $componentes = Componente::pluck('nom_com', 'num_ser_com');
-        return view('almacene.create', compact('almacene', 'componentes'));
+        $componentesDisponibles = Componente::pluck('nom_com', 'num_ser_com');
+        // Obtener los componentes ya registrados en el almacén
+        $componentesRegistrados = $almacene->pluck('com_alm');
+    
+        // Combinar los componentes disponibles con los registrados para asegurarse de mostrar el componente actualmente seleccionado (si está registrado)
+        $componentesFiltrados = $componentesDisponibles->except($componentesRegistrados);
+    
+        return view('almacene.create', compact('almacene', 'componentesFiltrados'));
     }
 
     /**
@@ -83,8 +89,14 @@ class AlmaceneController extends Controller
     public function edit($cod_alm)
     {
         $almacene = Almacene::find($cod_alm);
-        $componentes = Componente::pluck('nom_com', 'num_ser_com');
-        return view('almacene.edit', compact('almacene', 'componentes'));
+        $componentesDisponibles = Componente::pluck('nom_com', 'num_ser_com');
+    // Obtener los componentes ya registrados en el almacén
+    $componentesRegistrados = $almacene->pluck('com_alm');
+
+    // Combinar los componentes disponibles con los registrados para asegurarse de mostrar el componente actualmente seleccionado (si está registrado)
+    $componentesFiltrados = $componentesDisponibles->except($componentesRegistrados);
+
+        return view('almacene.edit', compact('almacene', 'componentesFiltrados'));
     }
 
     /**
@@ -96,7 +108,16 @@ class AlmaceneController extends Controller
      */
     public function update(Request $request, Almacene $almacene)
     {
-        request()->validate(Almacene::$rules);
+               // Validar los campos del formulario, excepto 'cod_alm'
+               $request->validate(Arr::except(Almacene::$rules, 'cod_alm'));
+    
+               // Verificar si el valor de 'cod_alm' ha cambiado
+               if ($request->input('cod_alm') !== $almacene->cod_alm) {
+                   // Validar 'cod_alm' como único en la tabla 'camiones'
+                   $request->validate([
+                       'cod_alm' => 'required|unique:camiones,cod_alm',
+                   ]);
+               }
 
         $almacene->update($request->all());
 

@@ -44,7 +44,21 @@
                     <td>{{ $servicio->fec_ser }}</td>
                     <td>{{ $servicio->sistema->nom_sis }}</td>
                     <td>{{ $servicio->actividade->nom_act }}</td>
-                    <td>{{ $servicio->est_ser }}</td>
+                    <td>
+                    @if ($servicio->est_ser == 'No comenzada')
+                        <span class="badge badge-dark">{{ $servicio->est_ser }}</span>
+                    @elseif ($servicio->est_ser == 'En curso')
+                        <span class="badge badge-info">{{ $servicio->est_ser }}</span>
+                    @elseif ($servicio->est_ser == 'Aplazada')
+                        <span class="badge badge-warning">{{ $servicio->est_ser }}</span>
+                        @elseif ($servicio->est_ser == 'Cancelada')
+                        <span class="badge badge-danger">{{ $servicio->est_ser }}</span>
+                        @elseif ($servicio->est_ser == 'Completada')
+                        <span class="badge badge-success">{{ $servicio->est_ser }}</span>
+                    @else
+                        {{ $servicio->est_ser }}
+                    @endif
+                    </td>
                     <td>{{ $servicio->tip_ser }}</td>
                     <td>{{ $servicio->falla->desc_fal ?? 'N/A' }}</td>
                     <td>{{ $servicio->det_ser }}</td>
@@ -54,7 +68,8 @@
                     <td>{{ $servicio->int_tie_tip_ser }}</td>
                     <td>{{ $servicio->int_kil_tip_ser }}</td>
                     <td>{{ $servicio->ale_ser }}</td>
-                    <td>{{ $servicio->cos_ser }}</td>
+                    <td>{{ number_format($servicio->cos_ser, 2, ',', '.') }}</td>
+
                     <td>{{ $servicio->almacene->com_alm ?? 'N/A' }}</td>
 
                     <td>

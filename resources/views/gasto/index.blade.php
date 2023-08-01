@@ -31,7 +31,7 @@
                 <tr>
   
                     <td>{{ $gasto->cod_gas }}</td>
-                    <td>{{ $gasto->mon_gas }}</td>
+                    <td>{{ number_format($gasto->mon_gas, 2, ',', '.') }}</td>
                     <td>{{ $gasto->fec_gas }}</td>
                     <td>{{ $gasto->categoriasGasto->nom_cat_gas }}</td>
                     <td>{{ $gasto->via_gas }}</td>

@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::post('/actualizar-estado/{codigoServicio}', 'ServicioController@actualizarEstado')->name('servicios.actualizarEstado');
 Route::resource('viajes', App\Http\Controllers\ViajeController::class);
 Route::resource('gastos', App\Http\Controllers\GastoController::class);
 Route::resource('categorias-gastos', App\Http\Controllers\CategoriasGastoController::class);

@@ -32,11 +32,21 @@ class ServicioController extends Controller
      */
     public function index()
     {
-        $servicios = Servicio::paginate();
-
-        return view('servicio.index', compact('servicios'))
-            ->with('i', (request()->input('page', 1) - 1) * $servicios->perPage());
+        // Obtener los servicios paginados desde la base de datos
+        $servicios = Servicio::paginate(10);
+    
+        // Definimos el mapeo de estados a colores
+        $statusColors = [
+            'No comenzada' => 'badge-dark',
+            'En curso' => 'badge-info',
+            'Aplazada' => 'badge-warning',
+            'Cancelada' => 'badge-danger',
+            'Completada' => 'badge-success',
+        ];
+    
+        return view('servicio.index', compact('servicios', 'statusColors'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -48,11 +58,13 @@ class ServicioController extends Controller
         $servicio = new Servicio();
         $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
         $actividades = Actividade::pluck('nom_act', 'cod_act');
-        $fallas = Falla::pluck('desc_fal', 'cod_fal');
+        $fallasDisponibles = Falla::pluck('desc_fal', 'cod_fal');
+        $fallasRegistrados = $servicio->pluck('fal_ser');
+        $fallasFiltrados = $fallasDisponibles->except($fallasRegistrados);
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
-        $almacenes = Almacene::pluck('com_alm', 'cod_alm');
-        return view('servicio.create', compact('servicio', 'sistemas', 'actividades', 'fallas', 'talleres', 'camiones', 'almacenes'));
+        $almacenes = Almacene::where('est_alm', 'disponible')->pluck('com_alm', 'cod_alm');
+        return view('servicio.create', compact('servicio', 'sistemas', 'actividades', 'fallasFiltrados', 'talleres', 'camiones', 'almacenes'));
     }
 
     /**
@@ -63,11 +75,22 @@ class ServicioController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            // Otras reglas de validación...
-            'tip_ser' => 'required|in:preventivo,correctivo',
-        ]);
-
+        if ($request->has('fal_ser') && $request->get('fal_ser') !== null) {
+            // Obtener el ID de la falla seleccionada
+            $fallaId = $request->get('fal_ser');
+            
+            // Buscar la falla en la base de datos
+            $falla = Falla::find($fallaId);
+            
+            // Si se encontró la falla en la base de datos
+            if ($falla) {
+                // Actualizar el estado de la falla a "En proceso de reparación"
+                $falla->est_act_fal = 'proceso';
+                $falla->save();
+            }
+        }
+        
+        request()->validate(Servicio::$rules);
         $servicio = Servicio::create($request->all());
 
         return redirect()->route('servicios.index')
@@ -98,11 +121,11 @@ class ServicioController extends Controller
         $servicio = Servicio::find($cod_ser);
         $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
         $actividades = Actividade::pluck('nom_act', 'cod_act');
-        $fallas = Falla::pluck('desc_fal', 'cod_fal');
+        $fallasFiltrados = $servicio->falla->desc_fal;
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
-        $almacenes = Almacene::pluck('com_alm', 'cod_alm');
-        return view('servicio.edit', compact('servicio', 'sistemas', 'actividades', 'fallas', 'talleres', 'camiones', 'almacenes'));
+        $almacenes = Almacene::where('est_alm', 'disponible')->pluck('com_alm', 'cod_alm');
+        return view('servicio.edit', compact('servicio', 'sistemas', 'actividades', 'fallasFiltrados', 'talleres', 'camiones', 'almacenes'));
     }
 
     /**
@@ -115,8 +138,26 @@ class ServicioController extends Controller
     public function update(Request $request, Servicio $servicio)
     {
         $request->validate(Arr::except(Servicio::$rules, 'cod_ser'));
-
+        if ($request->has('est_ser') && $request->est_ser === 'Completada') {
+            if ($servicio->fal_ser) {
+                $falla = Falla::findOrFail($servicio->fal_ser);
+                $falla->est_act_fal = 'reparada';
+                $falla->save();
+            }
+        }
         $servicio->update($request->all());
+
+        $estadoServicio = $request->input('est_ser');
+
+        if ($estadoServicio === 'No comenzada' || $estadoServicio === 'En curso') {
+            $camione = Camione::findOrFail($request->input('cam_ser'));
+            $camione->est_cam = 'en mantenimiento';
+            $camione->save();
+        } elseif ($estadoServicio === 'Completada' || $estadoServicio === 'Cancelada' || $estadoServicio === 'Aplazada') {
+            $camione = Camione::findOrFail($request->input('cam_ser'));
+            $camione->est_cam = 'disponible';
+            $camione->save();
+        }
 
         return redirect()->route('servicios.index')
             ->with('success', 'Servicio actualizado exitosamente');
@@ -134,5 +175,21 @@ class ServicioController extends Controller
         return redirect()->route('servicios.index')
             ->with('success', 'Servicio eliminado exitosamente');
     }
-       
+   
+ 
+public function actualizarEstado(Request $request, $codigoServicio)
+{
+    // Valida el nuevo estado (opcional, si es necesario)
+    $request->validate([
+        'estado' => 'required|in:No comenzada,En curso,Aplazada,Cancelada,Completada'
+    ]);
+
+    // Encuentra el servicio por el código y actualiza su estado
+    $servicio = Servicio::find($codigoServicio);
+    $servicio->est_ser = $request->input('estado');
+    $servicio->save();
+
+    // Devuelve una respuesta JSON (opcional, para informar el resultado)
+    return response()->json(['success' => true, 'message' => 'Estado actualizado exitosamente']);
+}
 }

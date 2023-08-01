@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Actividade;
 use Illuminate\Http\Request;
+use App\Models\Sistema;
+
 
 /**
  * Class ActividadeController
@@ -32,7 +34,8 @@ class ActividadeController extends Controller
     public function create()
     {
         $actividade = new Actividade();
-        return view('actividade.create', compact('actividade'));
+        $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
+        return view('actividade.create', compact('actividade', 'sistemas'));
     }
 
     /**
@@ -73,8 +76,8 @@ class ActividadeController extends Controller
     public function edit($cod_act)
     {
         $actividade = Actividade::find($cod_act);
-
-        return view('actividade.edit', compact('actividade'));
+        $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
+        return view('actividade.edit', compact('actividade', 'sistemas'));
     }
 
     /**

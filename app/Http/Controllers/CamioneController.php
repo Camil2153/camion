@@ -59,7 +59,7 @@ class CamioneController extends Controller
     public function store(Request $request)
     {
         request()->validate(Camione::$rules);
-
+        $request->merge(['est_cam' => 'disponible']);
         $camione = Camione::create($request->all());
 
         return redirect()->route('camiones.index')
@@ -89,10 +89,8 @@ class CamioneController extends Controller
     {
         $camione = Camione::find($pla_cam);
         $conductores = Conductore::pluck('nom_con', 'dni_con');
-        $conductoresDisponibles = Conductore::whereNotIn('dni_con', function ($query) {
-            $query->select('con_cam')
-                  ->from('camiones');
-        })->pluck('nom_con', 'dni_con')->toArray();
+        $conductoresDisponibles = $camione->conductore->nom_con;
+
 
         return view('camione.edit', compact('camione', 'conductoresDisponibles'));
     }

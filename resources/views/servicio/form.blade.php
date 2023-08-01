@@ -1,9 +1,9 @@
 <div class="box box-info padding-1">
     <div class="box-body form-grid">
     
-        <div class="form-group">
+    <div class="form-group">
             {{ Form::label('Código') }}
-            {{ Form::text('cod_ser', $servicio->cod_ser, ['class' => 'form-control' . ($errors->has('cod_ser') ? ' is-invalid' : ''), 'pattern' => '[0-9]{4}', 'maxlength' => '4', 'placeholder' => '1111']) }}
+            {{ Form::text('cod_ser', $servicio->cod_ser, ['class' => 'form-control' . ($errors->has('cod_ser') ? ' is-invalid' : ''), 'pattern' => '[0-9]{7}', 'maxlength' => '7', 'placeholder' => 'XXXXXXX', 'id' => 'cod_ser']) }}
             {!! $errors->first('cod_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -13,29 +13,38 @@
         </div>
         <div class="form-group">
             {{ Form::label('Sistema') }}
-            {{ Form::select('sis_ser', $sistemas, $servicio->sis_ser, ['class' => 'form-control' . ($errors->has('sis_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar sistema']) }}
+            {{ Form::select('sis_ser', $sistemas, $servicio->sis_ser, ['class' => 'form-control' . ($errors->has('sis_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar sistema', 'id' => 'sis_ser']) }}
             {!! $errors->first('sis_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Estado') }}
-            {{ Form::select('est_ser', ['No comenzada' => 'No comenzada', 'En curso' => 'En curso', 'Aplazada' => 'Aplazada', 'Cancelada' => 'Cancelada', 'Completada' => 'Completada'], $servicio->est_ser, ['class' => 'form-control' . ($errors->has('est_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
+            @if (Route::currentRouteName() === 'servicios.create')
+                {{ Form::select('est_ser', ['No comenzada' => 'No comenzada', 'En curso' => 'En curso'], $servicio->est_ser, [
+                    'class' => 'form-control' . ($errors->has('est_ser') ? ' is-invalid' : ''),
+                    'placeholder' => 'Seleccionar estado']) }}
+            @else
+                {{ Form::select('est_ser', ['No comenzada' => 'No comenzada', 'En curso' => 'En curso', 'Aplazada' => 'Aplazada', 'Cancelada' => 'Cancelada', 'Completada' => 'Completada'], $servicio->est_ser, [
+                    'class' => 'form-control' . ($errors->has('est_ser') ? ' is-invalid' : ''),
+                    'placeholder' => 'Seleccionar estado',
+                ]) }}
+            @endif
             {!! $errors->first('est_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Actividad') }}
-            {{ Form::select('act_ser', $actividades, $servicio->act_ser, ['class' => 'form-control' . ($errors->has('act_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar actividad']) }}
+            {{ Form::select('act_ser', $actividades, $servicio->act_ser, ['class' => 'form-control' . ($errors->has('act_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar actividad', 'id' => 'act_ser']) }}
             {!! $errors->first('act_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Tipo de servicio') }}
             <div class="radio-container">
                 <label class="radio-custom">
-                    {{ Form::radio('tip_ser', 'preventivo', $servicio->tip_ser === 'preventivo', ['required']) }}
+                    {{ Form::radio('tip_ser', 'preventivo', $servicio->tip_ser === 'preventivo', ['required', 'id' => 'tipo-preventivo']) }}
                     Preventivo
                 </label>
 
                 <label class="radio-custom">
-                    {{ Form::radio('tip_ser', 'correctivo', $servicio->tip_ser === 'correctivo', ['required']) }}
+                    {{ Form::radio('tip_ser', 'correctivo', $servicio->tip_ser === 'correctivo', ['required', 'id' => 'tipo-correctivo']) }}
                     Correctivo
                 </label>
             </div>
@@ -52,9 +61,13 @@
             {{ Form::select('cam_ser', $camiones, $servicio->cam_ser, ['class' => 'form-control' . ($errors->has('cam_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion']) }}
             {!! $errors->first('cam_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-        <div class="form-group">
+        <div class="form-group" id="falla-field">
             {{ Form::label('Falla') }}
-            {{ Form::select('fal_ser', $fallas, $servicio->fal_ser, ['class' => 'form-control' . ($errors->has('fal_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar falla']) }}
+            @if (Route::currentRouteName() === 'servicios.edit') <!-- Verificar si es una ruta de edición -->
+            {{ Form::select('fal_ser', [$servicio->fal_ser => $servicio->falla->desc_fal], $servicio->fal_ser, ['class' => 'form-control' . ($errors->has('fal_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar falla', 'disabled' => 'disabled']) }}
+            @else <!-- Modo creación -->
+            {{ Form::select('fal_ser', $fallasFiltrados, $servicio->fal_ser ?? null, ['class' => 'form-control' . ($errors->has('fal_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar falla']) }}
+            @endif
             {!! $errors->first('fal_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -85,22 +98,25 @@
         </div>
     <div class="box-body form-grid">
         <div class="form-group">
-            {{ Form::label('Costo') }}
-            {{ Form::text('cos_ser', $servicio->cos_ser, ['class' => 'form-control' . ($errors->has('cos_ser') ? ' is-invalid' : '')]) }}
+        {{ Form::label('Costo') }}
+             <?php
+              $cos_ser_formatted = number_format($servicio->cos_ser, 0, ',', '.');
+             ?>
+            {{ Form::text('cos_ser', $cos_ser_formatted, ['id' => 'cos_ser', 'class' => 'form-control' . ($errors->has('cos_ser') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
             {!! $errors->first('cos_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Almacen') }}
-            {{ Form::select('alm_ser', $almacenes, $servicio->alm_ser, ['class' => 'form-control' . ($errors->has('alm_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar taller']) }}
+            {{ Form::select('alm_ser', $almacenes, $servicio->alm_ser, ['class' => 'form-control' . ($errors->has('alm_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar componente']) }}
             {!! $errors->first('alm_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 </div>
 
 
     </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>
-        <a href="  {{ route('servicios.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
+    <div class="box-footer mt20 text-center">
+        <button type="submit" class="btn btn-outline-success btn-sm custom-btn">{{ __('Guardar') }}</button>
+        <a href="  {{ route('servicios.index') }}" class="btn  btn-outline-danger btn-sm custom-btn">Cancelar</a>
     </div>
 </div>
 
@@ -122,23 +138,110 @@
     .form-group label {
         margin-bottom: 5px;
     }
+
+    /* Estilo cuando el mouse no está encima */
+    .custom-btn {
+  font-weight: bold; /* Ajusta el grosor del texto */
+}
+
 </style>
 
 <script>
+
     document.addEventListener('DOMContentLoaded', function () {
-        const checkboxPreventivo = document.getElementById('checkbox-preventivo');
-        const checkboxCorrectivo = document.getElementById('checkbox-correctivo');
+        const tipoPreventivo = document.getElementById('tipo-preventivo');
+        const tipoCorrectivo = document.getElementById('tipo-correctivo');
+        const fallaField = document.getElementById('falla-field');
+        const codSerField = document.getElementById('cod_ser');
+        const sisSerField = document.getElementById('sis_ser');
+        const actSerField = document.getElementById('act_ser');
 
-        checkboxPreventivo.addEventListener('change', function () {
-            if (this.checked) {
-                checkboxCorrectivo.checked = false;
+        // Función para mostrar u ocultar el campo "Falla"
+        function toggleFallaField() {
+            if (tipoCorrectivo.checked) {
+                fallaField.style.display = 'block';
+            } else {
+                fallaField.style.display = 'none';
             }
+        }
+
+        // Llamamos a la función para que se ejecute inicialmente con el valor predeterminado
+        toggleFallaField();
+
+        // Agregamos el evento 'change' al campo "Tipo de servicio" para que llame a la función cuando cambie
+        tipoCorrectivo.addEventListener('change', toggleFallaField);
+        tipoPreventivo.addEventListener('change', toggleFallaField);
+
+        // Agregamos evento al campo "Sistema" para actualizar el código de servicio
+        sisSerField.addEventListener('change', function () {
+            const sistemaValue = sisSerField.value;
+            const codigoActividadValue = actSerField.value.padStart(2, '0');
+            const codigoSistemaValue = sistemaValue.padStart(2, '0');
+            codSerField.value = codigoSistemaValue + codigoActividadValue + getNextServiceCode();
         });
 
-        checkboxCorrectivo.addEventListener('change', function () {
-            if (this.checked) {
-                checkboxPreventivo.checked = false;
-            }
+        // Agregamos evento al campo "Actividad" para actualizar el código de servicio
+        actSerField.addEventListener('change', function () {
+            const sistemaValue = sisSerField.value;
+            const codigoActividadValue = actSerField.value.padStart(2, '0');
+            const codigoSistemaValue = sistemaValue.padStart(2, '0');
+            codSerField.value = codigoSistemaValue + codigoActividadValue + getNextServiceCode();
         });
+
+        // Función para obtener el próximo número de tres dígitos para el código del servicio
+        function getNextServiceCode() {
+            // Aquí debes implementar la lógica para obtener el próximo número de tres dígitos (autoincremental)
+            // Puedes usar una lógica similar a como se hace para obtener el siguiente número de factura o transacción en un sistema
+            // Por ejemplo, consultar la base de datos para obtener el último número de servicio y luego incrementarlo en 1.
+            // Si no tienes acceso a una base de datos, puedes almacenar el último número en una variable global y aumentarlo en cada uso.
+            // Aquí, asumiremos que tienes la función getNextNumberFromDatabase() para obtener el siguiente número de servicio.
+            // Reemplaza esta función con tu lógica real.
+
+            // Ejemplo: Obtenemos el último número de servicio (reemplaza esto con tu lógica real)
+            const lastServiceNumber = 1;
+
+            // Incrementamos el número y lo formateamos con ceros a la izquierda para obtener un número de tres dígitos
+            const nextServiceNumber = (lastServiceNumber + 1).toString().padStart(3, '0');
+
+            return nextServiceNumber;
+        };
+    });
+    </script>
+
+    
+<script>
+    // Obtener el campo de input del costo
+    var cosComInput = document.getElementById('cos_ser');
+
+    // Escuchar el evento de entrada en el campo de input
+    cosComInput.addEventListener('input', function(event) {
+        // Obtener el valor sin separadores de miles
+        var rawValue = event.target.value.replace(/\./g, '');
+
+        // Formatear el valor con separadores de miles y decimales
+        var formattedValue = addThousandSeparators(rawValue, 2);
+
+        // Mostrar el valor formateado en el campo de input
+        event.target.value = formattedValue;
+    });
+
+    // Función para agregar separadores de miles y decimales
+    function addThousandSeparators(value, decimalPlaces) {
+        var parts = value.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        var formattedValue = parts.join(".");
+        
+        if (decimalPlaces && parts.length > 1) {
+            formattedValue += '.' + parts[1].slice(0, decimalPlaces);
+        }
+
+        return formattedValue;
+    }
+
+    // Escuchar el evento de envío del formulario
+    cosComInput.closest('form').addEventListener('submit', function(event) {
+        // Eliminar los separadores de miles antes de enviar el formulario
+        var rawValue = cosComInput.value.replace(/\./g, '');
+        cosComInput.value = rawValue;
     });
 </script>

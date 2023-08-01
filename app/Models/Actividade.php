@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property $cod_act
  * @property $nom_act
+ * @property $act_sis
  * @property $created_at
  * @property $updated_at
  *
@@ -25,6 +26,7 @@ class Actividade extends Model
     static $rules = [
         'cod_act' => 'required|unique:actividades',
         'nom_act' => 'required',
+        'act_sis' => 'required',
     ];
 
     protected $perPage = 20;
@@ -34,7 +36,7 @@ class Actividade extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_act','nom_act'];
+    protected $fillable = ['cod_act','nom_act','act_sis'];
 
 
     /**
@@ -45,5 +47,8 @@ class Actividade extends Model
         return $this->hasMany('App\Models\Servicio', 'act_ser', 'cod_act');
     }
     
-
+    public function sistema()
+    {
+        return $this->hasOne('App\Models\Sistema', 'cod_sis', 'act_sis');
+    }
 }

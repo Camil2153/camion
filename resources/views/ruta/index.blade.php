@@ -31,7 +31,7 @@
         <tbody>
             @foreach ($rutas as $ruta)
                 <tr>
-+
+
                     <td>{{ $ruta->cod_rut }}</td>
                     <td>{{ $ruta->nom_rut }}</td>
                     <td>{{ $ruta->ori_rut }}</td>

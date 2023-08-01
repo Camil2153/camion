@@ -55,14 +55,29 @@ class FallaController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Falla::$rules);
+        if ($request->has('servicio_id') && $request->get('servicio_id') !== null) {
+            // Obtener el ID del servicio al que se está asignando la falla
+            $servicioId = $request->get('servicio_id');
+            
+            // Buscar el servicio en la base de datos
+            $servicio = Servicio::find($servicioId);
+            
+            // Si se encontró el servicio en la base de datos
+            if ($servicio) {
+                // Actualizar el estado de la falla a "En proceso de reparación"
+                $this->est_act_fal = 'proceso';
+                $this->save();
+            }
+        }
 
+        $request->merge(['est_act_fal' => 'pendiente']);
+        request()->validate(Falla::$rules);
         $falla = Falla::create($request->all());
 
         return redirect()->route('fallas.index')
             ->with('success', 'Falla creada exitosamente');
+    
     }
-
     /**
      * Display the specified resource.
      *
@@ -112,7 +127,7 @@ class FallaController extends Controller
     
         // Actualizar los atributos del modelo falla
         $falla->update($request->all());
-    
+        $falla->update($request->except('est_act_fal'));
         return redirect()->route('fallas.index')->with('success', 'Falla actualizada exitosamente');
     }
 

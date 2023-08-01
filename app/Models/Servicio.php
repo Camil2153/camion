@@ -42,12 +42,12 @@ class Servicio extends Model
     public $incrementing = false;
 
     static $rules = [
-		'cod_ser' => 'required|unique:servicios',
+		'cod_ser' => ['required','unique:servicios'],
 		'fec_ser' => 'required',
 		'sis_ser' => 'required',
 		'act_ser' => 'required',
 		'est_ser' => 'required',
-		'tip_ser' => 'required',
+		'tip_ser' => 'required|in:preventivo,correctivo',
 		'det_ser' => 'required',
 		'cam_ser' => 'required',
 		'res_ser' => 'required',

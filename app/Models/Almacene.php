@@ -68,5 +68,20 @@ class Almacene extends Model
         return $this->hasMany('App\Models\Servicio', 'alm_ser', 'cod_alm');
     }
     
+ // Evento que se dispara antes de guardar el modelo
+ protected static function boot()
+ {
+     parent::boot();
 
+     // Definimos el evento "saving" que se ejecuta antes de guardar el modelo
+     static::saving(function ($almacene) {
+         if ($almacene->can_alm == 0) {
+             $almacene->est_alm = 'agotado';
+         }
+         else{
+            $almacene->est_alm = 'disponible';
+         }
+     });
+ }
+ 
 }

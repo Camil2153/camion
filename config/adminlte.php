@@ -423,16 +423,9 @@ return [
         ],
         [
             'text'    => 'Simulación',
-            'icon'    => 'fas fa-fw fa-share',
+            'url'  => 'viajes',
+            'icon' => 'fa fa-suitcase',
             'can' => 'users.index',
-            'submenu' => [
-                    [
-                        'text' => 'Viajes',
-                        'url'  => 'viajes',
-                        'icon' => 'fa fa-suitcase',
-                        'can' => 'users.index',
-                    ],
-            ],
         ],
         [
             'text'    => 'Consultas',

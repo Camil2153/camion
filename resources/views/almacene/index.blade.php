@@ -42,7 +42,19 @@
                     <td>{{ $almacene->pro_alm }}</td>
                     <td>{{ $almacene->fec_adq_alm }}</td>
                     <td>{{ $almacene->fec_ven_alm }}</td>
-                    <td>{{ $almacene->est_alm }}</td>
+                    <td>
+                    @if ($almacene->est_alm == 'disponible')
+                        <span class="badge badge-success">{{ $almacene->est_alm }}</span>
+                    @elseif ($almacene->est_alm == 'reservado')
+                        <span class="badge badge-dark">{{ $almacene->est_alm }}</span>
+                    @elseif ($almacene->est_alm == 'en reparación')
+                        <span class="badge badge-warning">{{ $almacene->est_alm }}</span>
+                        @elseif ($almacene->est_alm == 'agotado')
+                        <span class="badge badge-danger">{{ $almacene->est_alm }}</span>
+                    @else
+                        {{ $almacene->est_alm }}
+                    @endif
+                    </td>
 
                     <td>
                         <form action="{{ route('almacenes.destroy',$almacene->cod_alm) }}" method="POST">

@@ -1,5 +1,5 @@
 <div class="box box-info padding-1">
-    <div class="box-body">
+    <div class="box-body form-grid">
         <div class="form-group">
             {{ Form::label('Código') }}
             {{ Form::text('cod_rut', $ruta->cod_rut, ['class' => 'form-control' . ($errors->has('cod_rut') ? ' is-invalid' : ''), 'maxlength' => '4', 'pattern' => '[0-9]{4}', 'placeholder' => '1111']) }}
@@ -35,10 +35,11 @@
             {!! $errors->first('dur_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Estado') }}
-            {{ Form::text('est_rut', $ruta->est_rut, ['class' => 'form-control' . ($errors->has('est_rut') ? ' is-invalid' : '')]) }}
+            {{ Form::label('Número de Peajes') }}
+            {{ Form::text('est_rut', $ruta->est_rut, ['id' => 'est_rut', 'class' => 'form-control' . ($errors->has('est_rut') ? ' is-invalid' : ''), 'readonly' => 'readonly']) }}
             {!! $errors->first('est_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>
@@ -62,11 +63,17 @@
         geocoder = new google.maps.Geocoder();
         directionsService = new google.maps.DirectionsService();
         directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+
+        // Agregar eventos de escucha para los campos de origen y destino
+        var originInput = document.getElementById('ori_rut');
+        var destinationInput = document.getElementById('des_rut');
+        originInput.addEventListener('input', updateMap);
+        destinationInput.addEventListener('input', updateMap);
     }
 
     function updateMap() {
-        var origin = document.getElementById('ori_rut').value; // Get the value directly
-        var destination = document.getElementById('des_rut').value; // Get the value directly
+        var origin = document.getElementById('ori_rut').value;
+        var destination = document.getElementById('des_rut').value;
 
         if (!origin || !destination) { // Check if either input is empty
             map.setCenter({ lat: 4.5709, lng: -74.2973 });
@@ -77,74 +84,73 @@
             return;
         }
 
-        geocoder.geocode({ address: origin }, function (results, status) {
-            if (status === google.maps.GeocoderStatus.OK) {
-                var originLocation = results[0].geometry.location;
-                geocoder.geocode({ address: destination }, function (results, status) { // Change destinationValue to destination
-                    if (status === google.maps.GeocoderStatus.OK) {
-                        var destinationLocation = results[0].geometry.location;
+        var originAutocomplete = new google.maps.places.Autocomplete(origin);
+        var destinationAutocomplete = new google.maps.places.Autocomplete(destination);
 
-                        var request = {
-                            origin: originLocation,
-                            destination: destinationLocation,
-                            travelMode: google.maps.TravelMode.DRIVING
-                        };
+        var waypoints = [];
 
-                        directionsService.route(request, function (response, status) {
-                            if (status === google.maps.DirectionsStatus.OK) {
-                                directionsRenderer.setDirections(response);
-                                var bounds = new google.maps.LatLngBounds();
-                                bounds.extend(originLocation);
-                                bounds.extend(destinationLocation);
-                                map.fitBounds(bounds);
+        var directionsRequest = {
+            origin: origin,
+            destination: destination,
+            waypoints: waypoints,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
 
-                                var route = response.routes[0];
-                                var distance = 0;
-                                var duration = 0;
+        directionsService.route(directionsRequest, function(response, status) {
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsRenderer.setDirections(response);
 
-                                for (var i = 0; i < route.legs.length; i++) {
-                                    distance += route.legs[i].distance.value;
-                                    duration += route.legs[i].duration.value;
-                                }
+                var num_peajes = 0;
+                var peajeCosto = 0;
 
-                                distance = distance / 1000; // Convertir de metros a kilómetros
+                for (var i = 0; i < response.routes.length; i++) {
+                    var route = response.routes[i];
+                    var distance = 0;
+                    var duration = 0;
 
-                                var days = Math.floor(duration / (60 * 60 * 24));
-                                var hours = Math.floor((duration % (60 * 60 * 24)) / (60 * 60));
-                                var minutes = Math.floor((duration % (60 * 60)) / 60);
+                    for (var j = 0; j < route.legs.length; j++) {
+                        var leg = route.legs[j];
+                        distance += leg.distance.value;
+                        duration += leg.duration.value;
 
-                                var durationText = "";
-                                if (days > 0) {
-                                    durationText += days + " día(s) ";
-                                }
-                                if (hours > 0) {
-                                    durationText += hours + " hora(s) ";
-                                }
-                                if (minutes > 0) {
-                                    durationText += minutes + " minuto(s)";
-                                }
+                        for (var k = 0; k < leg.steps.length; k++) {
+                            var step = leg.steps[k];
 
-                                document.getElementById('dis_rut').value = distance.toFixed(2);
-                                document.getElementById('dur_rut').value = durationText;
-                            } else {
-                                window.alert('No se pudo calcular la ruta: ' + status);
-                                directionsRenderer.setDirections({ routes: [] });
-                                document.getElementById('dis_rut').value = '';
-                                document.getElementById('dur_rut').value = '';
+                            if (step.tollRoad) {
+                                peajeCosto += step.tolls[0].value;
+                                num_peajes++;
                             }
-                        });
-                    } else {
-                        window.alert('No se pudo encontrar el destino');
-                        directionsRenderer.setDirections({ routes: [] });
-                        document.getElementById('dis_rut').value = '';
-                        document.getElementById('dur_rut').value = '';
+                        }
                     }
-                });
+                }
+
+                distance = distance / 1000;
+
+                var days = Math.floor(duration / (60 * 60 * 24));
+                var hours = Math.floor((duration % (60 * 60 * 24)) / (60 * 60));
+                var minutes = Math.floor((duration % (60 * 60)) / 60);
+                var durationText = "";
+
+                if (days > 0) {
+                    durationText += days + " día(s) ";
+                }
+                if (hours > 0) {
+                    durationText += hours + " hora(s) ";
+                }
+                if (minutes > 0) {
+                    durationText += minutes + " minuto(s)";
+                }
+
+                document.getElementById('dis_rut').value = distance.toFixed(2);
+                document.getElementById('dur_rut').value = durationText;
+                document.getElementById('est_rut').value = num_peajes;
+                document.getElementById('es_rut').value = peajeCosto.toFixed(2);
             } else {
-                window.alert('No se pudo encontrar el origen');
+                window.alert('No se pudo calcular la ruta: ' + status);
                 directionsRenderer.setDirections({ routes: [] });
                 document.getElementById('dis_rut').value = '';
                 document.getElementById('dur_rut').value = '';
+                document.getElementById('est_rut').value = '';
             }
         });
     }

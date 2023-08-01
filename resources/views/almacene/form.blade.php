@@ -8,7 +8,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Componente') }}
-            {{ Form::select('com_alm', $componentes, $almacene->com_alm, ['class' => 'form-control' . ($errors->has('com_alm') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar componente']) }}
+            {{ Form::select('com_alm', $componentesFiltrados, $almacene->com_alm ?? null, ['class' => 'form-control' . ($errors->has('com_alm') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar componente']) }}
             {!! $errors->first('com_alm', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

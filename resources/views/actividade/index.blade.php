@@ -19,6 +19,7 @@
 
                 <th>Código</th>
                 <th>Nombre</th>
+                <th>Sistema</th>
                 <th>Acciones</th>
 
             </tr>
@@ -29,6 +30,7 @@
 
                         <td>{{ $actividade->cod_act }}</td>
                         <td>{{ $actividade->nom_act }}</td>
+                        <td>{{ $actividade->sistema->nom_sis }}</td>
 
                     <td>
                         <form action="{{ route('actividades.destroy',$actividade->cod_act) }}" method="POST">

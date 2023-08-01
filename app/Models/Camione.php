@@ -40,7 +40,7 @@ class Camione extends Model
 		'mod_cam' => 'required',
 		'tip_cam' => 'required',
 		'num_eje_cam' => 'required',
-		'est_cam' => 'required',
+		'est_cam' => 'sometimes',
 		'kil_cam' => 'required',
 		'cap_cam' => 'required',
 		'cont_cam' => 'required',

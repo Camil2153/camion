@@ -28,7 +28,11 @@
         </div>
         <div class="form-group">
             {{ Form::label('Estado') }}
-            {{ Form::select('est_cam', ['disponible' => 'Disponible', 'en mantenimiento' => 'En Mantenimiento', 'fuera de servicio' => 'Fuera de Servicio'], $camione->est_cam, ['class' => 'form-control' . ($errors->has('est_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
+            @if (Route::currentRouteName() === 'camiones.edit')
+            {{ Form::select('est_cam', ['disponible' => 'Disponible', 'en mantenimiento' => 'En Mantenimiento', 'fuera de servicio' => 'Fuera de Servicio'], $camione->est_cam, ['class' => 'form-control' . ($errors->has('est_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado',  'disabled' => 'disabled']) }}
+            @else <!-- Modo creación -->
+            {{ Form::select('est_cam', ['disponible' => 'Disponible', 'en mantenimiento' => 'En Mantenimiento', 'fuera de servicio' => 'Fuera de Servicio'], 'disponible', ['class' => 'form-control' . ($errors->has('est_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado', 'disabled' => 'disabled']) }}
+            @endif
             {!! $errors->first('est_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -51,10 +55,13 @@
         </div>
         <div class="form-group">
             {{ Form::label('Conductor') }}
+            @if (Route::currentRouteName() === 'camiones.edit') <!-- Verificar si es una ruta de edición -->
+                {{ Form::select('con_cam', [$camione->con_cam => $camione->conductore->nom_con], $camione->con_cam, ['class' => 'form-control' . ($errors->has('con_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar conductor', 'disabled' => 'disabled']) }}
+            @else <!-- Modo creación -->
             {{ Form::select('con_cam', $conductoresDisponibles, $camione->con_cam, ['class' => 'form-control' . ($errors->has('con_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar conductor']) }}
+            @endif
             {!! $errors->first('con_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>

@@ -27,7 +27,10 @@
                             <strong>Nombre:</strong>
                             {{ $actividade->nom_act }}
                         </div>
-
+                        <div class="form-group">
+                            <strong>Sistema:</strong>
+                            {{ $actividade->sistema->nom_sis }}
+                        </div>
                     </div>
                 </div>
             </div>
