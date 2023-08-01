@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $updated_at
  *
  * @property Servicio[] $servicios
+ * @property Sistema $sistema
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -25,8 +26,8 @@ class Actividade extends Model
     
     static $rules = [
         'cod_act' => 'required|unique:actividades',
-        'nom_act' => 'required',
-        'act_sis' => 'required',
+		'nom_act' => 'required',
+		'act_sis' => 'required',
     ];
 
     protected $perPage = 20;
@@ -47,8 +48,13 @@ class Actividade extends Model
         return $this->hasMany('App\Models\Servicio', 'act_ser', 'cod_act');
     }
     
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function sistema()
     {
         return $this->hasOne('App\Models\Sistema', 'cod_sis', 'act_sis');
     }
+    
+
 }

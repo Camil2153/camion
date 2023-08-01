@@ -128,29 +128,34 @@ class ViajeController extends Controller
         // Obtener el conductor asociado al camión
         $conductor = $camion->conductore;
 
+        $serviciosEnAlerta = [];
+
         if ($conductor) {
             // Convertir la fecha de vencimiento de la licencia a un objeto Carbon
             $fechaVencimientoLicencia = Carbon::parse($conductor->fec_ven_lic_con);
     
             // Calcular la diferencia de días entre la fecha de vencimiento de la licencia y la fecha actual
             $diasRestantesLicencia = $fechaVencimientoLicencia->diffInDays(now());
-    
-            // Verificar si la licencia está próxima a vencerse (30 días o menos)
-            if ($diasRestantesLicencia <= 9) {
-                $colorAlerta = 'red';
-            } elseif ($diasRestantesLicencia <= 16) {
-                $colorAlerta = 'orange';
-            } elseif ($diasRestantesLicencia <= 23) {
-                $colorAlerta = 'yellow';
-            } else {
-                $colorAlerta = 'green';
-            }
 
-            // Agregar la alerta al array de alertas
-            $alertas[] = [
-                'mensaje' => 'La licencia del conductor está próxima a vencerse. Quedan ' . $diasRestantesLicencia . ' días.',
-                'color' => $colorAlerta,
-            ];
+            // Verificar si los días restantes son mayores a 30
+            if ($diasRestantesLicencia <= 30) {
+                // Verificar si la licencia está próxima a vencerse (30 días o menos)
+                if ($diasRestantesLicencia <= 9) {
+                    $colorAlerta = 'red';
+                } elseif ($diasRestantesLicencia <= 16) {
+                    $colorAlerta = 'orange';
+                } elseif ($diasRestantesLicencia <= 23) {
+                    $colorAlerta = 'yellow';
+                } else {
+                    $colorAlerta = 'green';
+                }
+
+                // Agregar la alerta al array de alertas
+                $alertas[] = [
+                    'mensaje' => 'La licencia del conductor está próxima a vencerse. Quedan ' . $diasRestantesLicencia . ' días.',
+                    'color' => $colorAlerta,
+                ];
+            }
         }
 
         // Obtener el registro de documentos del camión
@@ -161,6 +166,11 @@ class ViajeController extends Controller
             if ($documento->vig_doc_cam !== null) {
                 $fechaVencimientoDocumentoCamion = Carbon::parse($documento->vig_doc_cam);
                 $diasRestantes = $fechaVencimientoDocumentoCamion->diffInDays(now());
+
+            // Verificar si los días restantes son mayores a 30
+            if ($diasRestantes > 30) {
+                continue; // No se cumple la condición, no se agrega alerta y se pasa al siguiente documento
+            }
 
             // Asignar el color de la alerta según los días restantes
             if ($diasRestantes <= 9) {
@@ -214,7 +224,7 @@ class ViajeController extends Controller
                 $colorAlerta = 'green';
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
             } elseif ($kilometrajeEsperado >= $kilometrajeLimite - 300 && !$alertaAsignada) {
-                // Rojo si el kilometraje esperado está a menos de 10 km del límite
+                // Rojo si el kilometraje esperado está a menos de 300 km del límite
                 $colorAlerta = 'red';
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
             } else {
@@ -228,11 +238,19 @@ class ViajeController extends Controller
                     'mensaje' => $servicio->ale_ser,
                     'color' => $colorAlerta,
                 ];
+
+                // Verificar si el servicio actual está en alerta y agregarlo a la lista de servicios en alerta
+                $serviciosEnAlerta[] = [
+                    'codigo' => $servicio->cod_ser,
+                    'fecha' => $fechaLimite->format('Y-m-d'),
+                    'categoria' => $servicio->tip_ser,
+                    'monto' => $servicio->cos_ser,
+                ];
             }
         }
 
         // Retornar la vista con los datos del viaje y las alertas
-        return view('viaje.show', compact('viaje', 'alertas'));
+        return view('viaje.show', compact('viaje', 'alertas', 'serviciosEnAlerta'));
     }
 
     /**
@@ -328,5 +346,4 @@ class ViajeController extends Controller
             ->with('success', 'Viaje eliminado exitosamente');
     }
     
-
 }
