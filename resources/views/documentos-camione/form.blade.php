@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Estado') }}
-            {{ Form::select('est_doc_cam', ['Válido' => 'Válido', 'Vencido' => 'Vencido', 'No actualizado' => 'No actualizado'], $documentosCamione->est_doc_cam, ['class' => 'form-control' . ($errors->has('est_doc_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
+            {{ Form::select('est_doc_cam', ['válido' => 'Válido', 'vencido' => 'Vencido'], $documentosCamione->est_doc_cam, ['class' => 'form-control' . ($errors->has('est_doc_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
             {!! $errors->first('est_doc_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

@@ -32,7 +32,15 @@
           
                     <td>{{ $documentosCamione->cod_doc_cam }}</td>
                     <td>{{ $documentosCamione->nom_doc_cam }}</td>
-                    <td>{{ $documentosCamione->est_doc_cam }}</td>
+                    <td>
+                    @if ($documentosCamione->est_doc_cam == 'válido')
+                        <span class="badge badge-success">{{ $documentosCamione->est_doc_cam }}</span>
+                    @elseif ($documentosCamione->est_doc_cam == 'vencido')
+                        <span class="badge badge-danger">{{ $documentosCamione->est_doc_cam }}</span>
+                    @else
+                        {{ $documentosCamione->est_doc_cam }}
+                    @endif
+                    </td>
                     <td>{{ $documentosCamione->vig_doc_cam }}</td>
                     <td>{{ $documentosCamione->cam_doc_cam }}</td>
 

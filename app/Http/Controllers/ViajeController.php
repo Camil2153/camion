@@ -133,63 +133,116 @@ class ViajeController extends Controller
         if ($conductor) {
             // Convertir la fecha de vencimiento de la licencia a un objeto Carbon
             $fechaVencimientoLicencia = Carbon::parse($conductor->fec_ven_lic_con);
-    
+            
             // Calcular la diferencia de días entre la fecha de vencimiento de la licencia y la fecha actual
-            $diasRestantesLicencia = $fechaVencimientoLicencia->diffInDays(now());
-
-            // Verificar si los días restantes son mayores a 30
-            if ($diasRestantesLicencia <= 30) {
+            $diasRestantesLicencia = now()->diffInDays($fechaVencimientoLicencia, false);
+            
+            // Verificar si los días restantes son mayores o iguales a 0
+            if ($diasRestantesLicencia >= 0) {
                 // Verificar si la licencia está próxima a vencerse (30 días o menos)
                 if ($diasRestantesLicencia <= 9) {
-                    $colorAlerta = 'red';
+                    $colorAlertaLicencia = 'red';
+                    // Poner el estado del camión en "Fuera de servicio" si la licencia está vencida
+                    $camion->est_cam = 'fuera de servicio';
+                    $camion->save();
                 } elseif ($diasRestantesLicencia <= 16) {
-                    $colorAlerta = 'orange';
+                    $colorAlertaLicencia = 'orange';
                 } elseif ($diasRestantesLicencia <= 23) {
-                    $colorAlerta = 'yellow';
+                    $colorAlertaLicencia = 'yellow';
                 } else {
-                    $colorAlerta = 'green';
+                    $colorAlertaLicencia = 'green';
                 }
-
-                // Agregar la alerta al array de alertas
+            
+                // Agregar la alerta de licencia al array de alertas, pero solo si la licencia no vence hoy
+                if ($diasRestantesLicencia != 0) {
+                    $alertas[] = [
+                        'mensaje' => 'La licencia del conductor está próxima a vencerse. Quedan ' . $diasRestantesLicencia . ' días.',
+                        'color' => $colorAlertaLicencia,
+                    ];
+                } else {
+                    // Si la licencia vence hoy, mostramos una alerta especial en rojo
+                    $alertas[] = [
+                        'mensaje' => 'La licencia del conductor vence hoy.',
+                        'color' => 'red',
+                    ];
+                }
+            } else {
+                // Si los días restantes son menores a 0, significa que la licencia está vencida
+                $diasVencida = abs($diasRestantesLicencia); // Obtener el valor absoluto para mostrar el número positivo
                 $alertas[] = [
-                    'mensaje' => 'La licencia del conductor está próxima a vencerse. Quedan ' . $diasRestantesLicencia . ' días.',
-                    'color' => $colorAlerta,
+                    'mensaje' => 'La licencia del conductor venció. Hace ' . $diasVencida . ' días.',
+                    'color' => 'red', // Podemos asignar un color rojo para indicar que está vencida
                 ];
+            
+                // Poner el estado del camión en "Fuera de servicio" ya que la licencia está vencida
+                $camion->est_cam = 'fuera de servicio';
+                $camion->save();
             }
         }
-
+        
         // Obtener el registro de documentos del camión
         $documentosCamion = $camion->documentosCamiones;
-
+        
         foreach ($documentosCamion as $documento) {
             // Verificar si el documento está vigente
             if ($documento->vig_doc_cam !== null) {
                 $fechaVencimientoDocumentoCamion = Carbon::parse($documento->vig_doc_cam);
-                $diasRestantes = $fechaVencimientoDocumentoCamion->diffInDays(now());
-
-            // Verificar si los días restantes son mayores a 30
-            if ($diasRestantes > 30) {
-                continue; // No se cumple la condición, no se agrega alerta y se pasa al siguiente documento
-            }
-
-            // Asignar el color de la alerta según los días restantes
-            if ($diasRestantes <= 9) {
-                $colorAlerta = 'red';
-            } elseif ($diasRestantes <= 16) {
-                $colorAlerta = 'orange';
-            } elseif ($diasRestantes <= 23) {
-                $colorAlerta = 'yellow';
-            } else {
-                $colorAlerta = 'green';
-            }
-
-            // Agregar la alerta al array de alertas con su color
-            $alertas[] = [
-                'mensaje' => 'El documento ' . $documento->nom_doc_cam . ' está próximo a vencerse. Quedan ' . $diasRestantes . ' días.',
-                'color' => $colorAlerta,
-            ];
-            }
-        }
+                $diasRestantes = now()->diffInDays($fechaVencimientoDocumentoCamion, false);
+        
+                // Verificar si los días restantes son mayores a 30
+                if ($diasRestantes > 30) {
+                    continue; // No se cumple la condición, no se agrega alerta y se pasa al siguiente documento
+                }
+        
+                // Verificar si los días restantes son mayores o iguales a 0
+                if ($diasRestantes >= 0) {
+                    // Verificar si el documento está próximo a vencerse (30 días o menos)
+                    if ($diasRestantes == 0) {
+                        // El documento vence hoy
+                        $alertas[] = [
+                            'mensaje' => 'El documento ' . $documento->nom_doc_cam . ' vence hoy.',
+                            'color' => 'red',
+                        ];
+                        // Poner el estado del documento del camion en "vencido"
+                        $documento->est_doc_cam = 'vencido';
+                        $documento->save();
+                    } elseif ($diasRestantes <= 9) {
+                        $colorAlertaDocumento = 'red';
+                        // Poner el estado del camión en "Fuera de servicio" si el documento está vencido
+                        $camion->est_cam = 'fuera de servicio';
+                        $camion->save();
+                    } elseif ($diasRestantes <= 16) {
+                        $colorAlertaDocumento = 'orange';
+                    } elseif ($diasRestantes <= 23) {
+                        $colorAlertaDocumento = 'yellow';
+                    } else {
+                        $colorAlertaDocumento = 'green';
+                    }
+        
+                    // Agregar la alerta del documento al array de alertas, pero solo si el documento no vence hoy
+                    if ($diasRestantes != 0) {
+                        $alertas[] = [
+                            'mensaje' => 'El documento ' . $documento->nom_doc_cam . ' está próximo a vencerse. Quedan ' . $diasRestantes . ' días.',
+                            'color' => $colorAlertaDocumento,
+                        ];
+                    }
+                } else {
+                    // Si los días restantes son menores a 0, significa que el documento está vencido
+                    $diasVencido = abs($diasRestantes); // Obtener el valor absoluto para mostrar el número positivo
+                    $alertas[] = [
+                        'mensaje' => 'El documento ' . $documento->nom_doc_cam . ' venció. Hace ' . $diasVencido . ' días.',
+                        'color' => 'red', // Podemos asignar un color rojo para indicar que está vencido
+                    ];
+            
+                    // Poner el estado del camión en "Fuera de servicio" ya que el documento está vencido
+                    $camion->est_cam = 'fuera de servicio';
+                    $camion->save();
+                    // Poner el estado del documento del camion en "vencido"
+                    $documento->est_doc_cam = 'vencido';
+                    $documento->save();
+                }
+            }   
+        }                
     
         // Iterar sobre los servicios y verificar los días restantes y el kilometraje
         foreach ($servicios as $servicio) {
@@ -217,6 +270,9 @@ class ViajeController extends Controller
             if (isset($fechaLimite) && $fechaLimite->lte($fechaLlegada) && !$alertaAsignada) {
                 // Rojo si la fecha de llegada excede la fecha limite
                 $colorAlerta = 'red';
+                // Poner el estado del camión en "Fuera de servicio" si la fecha de llegada excede la fecha limite
+                $camion->est_cam = 'fuera de servicio';
+                $camion->save();
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
             } elseif (isset($fechaLimite) && $fechaLimite->diffInDays($fechaLlegada) <= round($intervaloPrevio * 0.33) && !$alertaAsignada) {
                 // Naranja si la fecha de llegada está al 33% o menos dias de la fecha limite
@@ -233,6 +289,9 @@ class ViajeController extends Controller
             } elseif (isset($kilometrajeLimite) && $kilometrajeLimite <= $kilometrajeEsperado && !$alertaAsignada) {
                 // Rojo si el kilometraje esperado excede el kilometraje límite
                 $colorAlerta = 'red';
+                // Poner el estado del camión en "Fuera de servicio" si el kilometraje esperado excede el kilometraje límite
+                $camion->est_cam = 'fuera de servicio';
+                $camion->save();
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
             } elseif (isset($kilometrajeLimite) && ($kilometrajeLimite - $kilometrajeEsperado) <= round($intervaloPrevio * 0.33) && !$alertaAsignada) {
                 // Naranja si el kilometraje esperado está al 33% o menos kilometros del kilometraje límite

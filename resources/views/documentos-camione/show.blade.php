@@ -29,7 +29,11 @@
                         </div>
                         <div class="form-group">
                             <strong>Estado:</strong>
-                            {{ $documentosCamione->est_doc_cam }}
+                            <span class="estado-documentosCamion {{ str_replace(' ', '-', $documentosCamione->est_doc_cam) }}">
+                                <div class="estado-documentosCamion-box">
+                                    {{ $documentosCamione->est_doc_cam }}
+                                </div>
+                            </span>
                         </div>
                         <div class="form-group">
                             <strong>Vigencia de Documento:</strong>
@@ -49,6 +53,21 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .estado-documentosCamion.válido {
+            background-color: green;
+            color: white;
+        }
+        .estado-documentosCamion.vencido {
+            background-color: red;
+            color: white;
+        }
+        .estado-documentosCamion-box {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+    </style>
 @stop
 
 @section('js')
