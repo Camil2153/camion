@@ -137,14 +137,23 @@ class ViajeController extends Controller
             // Calcular la diferencia de días entre la fecha de vencimiento de la licencia y la fecha actual
             $diasRestantesLicencia = now()->diffInDays($fechaVencimientoLicencia, false);
             
-            // Verificar si los días restantes son mayores o iguales a 0
-            if ($diasRestantesLicencia >= 0) {
+            // Verificar si los días restantes son menores a 0 (la licencia está vencida)
+            if ($diasRestantesLicencia < 0) {
+                // Si los días restantes son menores a 0, significa que la licencia está vencida
+                $diasVencida = abs($diasRestantesLicencia); // Obtener el valor absoluto para mostrar el número positivo
+                $alertas[] = [
+                    'mensaje' => 'La licencia del conductor venció. Hace ' . $diasVencida . ' días.',
+                    'color' => 'red', // Podemos asignar un color rojo para indicar que está vencida
+                ];
+            
+                // Poner el estado del camión en "Fuera de servicio" ya que la licencia está vencida
+                $camion->est_cam = 'fuera de servicio';
+                $camion->save();
+            } elseif ($diasRestantesLicencia <= 30) {
+                // Si los días restantes son mayores o iguales a 0 y menores o iguales a 30
                 // Verificar si la licencia está próxima a vencerse (30 días o menos)
                 if ($diasRestantesLicencia <= 9) {
                     $colorAlertaLicencia = 'red';
-                    // Poner el estado del camión en "Fuera de servicio" si la licencia está vencida
-                    $camion->est_cam = 'fuera de servicio';
-                    $camion->save();
                 } elseif ($diasRestantesLicencia <= 16) {
                     $colorAlertaLicencia = 'orange';
                 } elseif ($diasRestantesLicencia <= 23) {
@@ -165,18 +174,10 @@ class ViajeController extends Controller
                         'mensaje' => 'La licencia del conductor vence hoy.',
                         'color' => 'red',
                     ];
+                    // Poner el estado del camión en "Fuera de servicio" si la licencia está vencida
+                    $camion->est_cam = 'fuera de servicio';
+                    $camion->save();
                 }
-            } else {
-                // Si los días restantes son menores a 0, significa que la licencia está vencida
-                $diasVencida = abs($diasRestantesLicencia); // Obtener el valor absoluto para mostrar el número positivo
-                $alertas[] = [
-                    'mensaje' => 'La licencia del conductor venció. Hace ' . $diasVencida . ' días.',
-                    'color' => 'red', // Podemos asignar un color rojo para indicar que está vencida
-                ];
-            
-                // Poner el estado del camión en "Fuera de servicio" ya que la licencia está vencida
-                $camion->est_cam = 'fuera de servicio';
-                $camion->save();
             }
         }
         
@@ -206,11 +207,11 @@ class ViajeController extends Controller
                         // Poner el estado del documento del camion en "vencido"
                         $documento->est_doc_cam = 'vencido';
                         $documento->save();
-                    } elseif ($diasRestantes <= 9) {
-                        $colorAlertaDocumento = 'red';
                         // Poner el estado del camión en "Fuera de servicio" si el documento está vencido
                         $camion->est_cam = 'fuera de servicio';
                         $camion->save();
+                    } elseif ($diasRestantes <= 9) {
+                        $colorAlertaDocumento = 'red';
                     } elseif ($diasRestantes <= 16) {
                         $colorAlertaDocumento = 'orange';
                     } elseif ($diasRestantes <= 23) {

@@ -57,7 +57,7 @@ class Almacene extends Model
      */
     public function componente()
     {
-        return $this->hasOne('App\Models\Componente', 'num_ser_com', 'com_alm');
+        return $this->belongsTo(Componente::class, 'com_alm', 'num_ser_com');
     }
     
     /**

@@ -51,7 +51,7 @@ class Componente extends Model
      */
     public function almacenes()
     {
-        return $this->hasMany('App\Models\Almacene', 'com_alm', 'num_ser_com');
+        return $this->hasMany(Almacene::class, 'num_ser_com', 'com_alm');
     }
     
     /**

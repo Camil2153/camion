@@ -63,7 +63,7 @@ class ServicioController extends Controller
         $fallasFiltrados = $fallasDisponibles->except($fallasRegistrados);
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
-        $almacenes = Almacene::where('est_alm', 'disponible')->pluck('com_alm', 'cod_alm');
+        $almacenes = Almacene::where('est_alm', 'disponible')->with('componente')->get();
         return view('servicio.create', compact('servicio', 'sistemas', 'actividades', 'fallasFiltrados', 'talleres', 'camiones', 'almacenes'));
     }
 
@@ -125,7 +125,7 @@ class ServicioController extends Controller
         $fallasFiltrados = $servicio->falla ? $servicio->falla->desc_fal : null;
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
-        $almacenes = Almacene::where('est_alm', 'disponible')->pluck('com_alm', 'cod_alm');
+        $almacenes = Almacene::where('est_alm', 'disponible')->with('componente')->get();
         return view('servicio.edit', compact('servicio', 'sistemas', 'actividades', 'fallasFiltrados', 'talleres', 'camiones', 'almacenes'));
     }
 

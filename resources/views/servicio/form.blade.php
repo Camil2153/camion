@@ -122,7 +122,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Almacen') }}
-            {{ Form::select('alm_ser', $almacenes, $servicio->alm_ser, ['class' => 'form-control' . ($errors->has('alm_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar componente']) }}
+            {{ Form::select('alm_ser', $almacenes->pluck('componente.nom_com', 'cod_alm'), $servicio->alm_ser, ['class' => 'form-control' . ($errors->has('alm_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar componente']) }}
             {!! $errors->first('alm_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
