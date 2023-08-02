@@ -64,7 +64,8 @@
         <div class="form-group" id="falla-field">
             {{ Form::label('Falla') }}
             @if (Route::currentRouteName() === 'servicios.edit') <!-- Verificar si es una ruta de edición -->
-            {{ Form::select('fal_ser', [$servicio->fal_ser => $servicio->falla->desc_fal], $servicio->fal_ser, ['class' => 'form-control' . ($errors->has('fal_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar falla', 'disabled' => 'disabled']) }}
+            {{-- Verificar si $servicio->falla no es nulo antes de acceder a desc_fal --}}
+            {{ Form::select('fal_ser', [$servicio->fal_ser => $servicio->falla?->desc_fal], $servicio->fal_ser, ['class' => 'form-control' . ($errors->has('fal_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar falla', 'disabled' => 'disabled']) }}
             @else <!-- Modo creación -->
             {{ Form::select('fal_ser', $fallasFiltrados, $servicio->fal_ser ?? null, ['class' => 'form-control' . ($errors->has('fal_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar falla']) }}
             @endif
@@ -81,14 +82,28 @@
             {!! $errors->first('res_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Intervalo de Tiempo (días)') }}
-            {{ Form::text('int_tie_tip_ser', $servicio->int_tie_tip_ser, ['class' => 'form-control' . ($errors->has('int_tie_tip_ser') ? ' is-invalid' : '')]) }}
-            {!! $errors->first('int_tie_tip_ser', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::label('Tipo de intervalo') }}
+            <div class="radio-container">
+                <label class="radio-custom">
+                    {{ Form::radio('tip_int_ser', 'dias', $servicio->tip_int_ser === 'dias', ['required', 'id' => 'tipo-dias']) }}
+                    Días
+                </label>
+
+                <label class="radio-custom">
+                    {{ Form::radio('tip_int_ser', 'kilometros', $servicio->tip_int_ser === 'kilometros', ['required', 'id' => 'tipo-kilometros']) }}
+                    Kilómetros
+                </label>
+            </div>
         </div>
         <div class="form-group">
-            {{ Form::label('Intervalo de Kilometraje') }}
-            {{ Form::text('int_kil_tip_ser', $servicio->int_kil_tip_ser, ['class' => 'form-control' . ($errors->has('int_kil_tip_ser') ? ' is-invalid' : '')]) }}
-            {!! $errors->first('int_kil_tip_ser', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::label('Intervalo') }}
+            {{ Form::text('int_ser', $servicio->int_ser, ['class' => 'form-control' . ($errors->has('int_ser') ? ' is-invalid' : ''), 'placeholder' => 'días/kilómetros']) }}
+            {!! $errors->first('int_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group-inline">
+            <label for="int_ale_ser">Avisar</label>
+            {{ Form::text('int_ale_ser', $servicio->int_ale_ser, ['class' => 'form-control custom-input']) }}
+            <span>antes de cumplirse el intervalo para mantenimiento.</span>
         </div>
     </div>
         <div class="form-group">
@@ -110,10 +125,8 @@
             {{ Form::select('alm_ser', $almacenes, $servicio->alm_ser, ['class' => 'form-control' . ($errors->has('alm_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar componente']) }}
             {!! $errors->first('alm_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-</div>
-
-
     </div>
+    
     <div class="box-footer mt20 text-center">
         <button type="submit" class="btn btn-outline-success btn-sm custom-btn">{{ __('Guardar') }}</button>
         <a href="  {{ route('servicios.index') }}" class="btn  btn-outline-danger btn-sm custom-btn">Cancelar</a>
@@ -125,25 +138,38 @@
     .form-grid {
         display: grid;
         grid-template-columns: 1fr 1fr; /* Dos columnas con el mismo ancho */
-        gap: 10px; /* Espacio del 10% entre las columnas */
+        gap: 10px; /* Espacio de 10px entre las columnas */
     }
 
     /* Estilos adicionales para los campos y etiquetas */
-    .form-group {
+    .form-group-column {
         display: flex;
         flex-direction: column;
     }
 
+    .form-group-inline {
+        display: flex;
+        align-items: center;
+    }
+
     /* Estilos para el label */
     .form-group label {
-        margin-bottom: 5px;
+        margin-right: 5px;
     }
 
     /* Estilo cuando el mouse no está encima */
     .custom-btn {
-  font-weight: bold; /* Ajusta el grosor del texto */
-}
+        font-weight: bold; /* Ajusta el grosor del texto */
+    }
 
+    .form-group input[type="text"] {
+        flex: 1;
+    }
+
+    /* Cambiar el ancho del campo input */
+    .custom-input {
+        width: 80px; /* Cambia el valor según el ancho que desees */
+    }
 </style>
 
 <script>

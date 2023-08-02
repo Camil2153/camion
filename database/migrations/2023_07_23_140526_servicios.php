@@ -23,8 +23,9 @@ return new class extends Migration
             $table->string('cam_ser', 7); // camion servicio
             $table->string('tal_ser', 15)->nullable();
             $table->string('res_ser', 45); // responsable servicio
-            $table->integer('int_tie_tip_ser'); // intervalo de tiempo recomendado o programado en dias para realizar el mantenimiento
-            $table->integer('int_kil_tip_ser'); // intervalo de kilometraje recomendado o programado para realizar el mantenimiento
+            $table->string('tip_int_ser'); // tipo de intervalo tiempo/kilometraje recomendado para realizar el mantenimiento
+            $table->integer('int_ser'); // intervalo de tiempo/kilometraje recomendado para realizar el mantenimiento
+            $table->integer('int_ale_ser'); // intervalo dias/kilometros previos para mostrar la alerta
             $table->string('ale_ser', 500); // alerta servicio
             $table->decimal('cos_ser', 10, 2); // costo servicio
             $table->string('alm_ser', 4)->nullable(); // almacen servicio

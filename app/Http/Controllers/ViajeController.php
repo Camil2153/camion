@@ -116,8 +116,8 @@ class ViajeController extends Controller
         // Obtener todos los servicios asociados al camión
         $servicios = $camion->servicios;
 
-        // Convertir la fecha de salida del viaje a un objeto Carbon
-        $fechaSalida = Carbon::parse($viaje->fec_sal_via);
+        // Convertir la fecha de llegada del viaje a un objeto Carbon
+        $fechaLlegada = Carbon::parse($viaje->fec_lle_via);
 
         // Variable para almacenar las alertas
         $alertas = [];
@@ -193,39 +193,58 @@ class ViajeController extends Controller
     
         // Iterar sobre los servicios y verificar los días restantes y el kilometraje
         foreach ($servicios as $servicio) {
-            
             // Convertir la fecha del servicio a un objeto Carbon
             $fechaServicio = Carbon::parse($servicio->fec_ser);
 
-            // Calcular la fecha límite (fecha del servicio + intervalo de tiempo en días)
-            $fechaLimite = $fechaServicio->copy()->addDays($servicio->int_tie_tip_ser);
-
-            // Calcular el kilometraje límite (kilometraje del camión + intervalo de kilometraje del servicio)
-            $kilometrajeLimite = $camion->kil_cam + $servicio->int_kil_tip_ser;
+            // Verificar el tipo de intervalo seleccionado (días o kilómetros)
+            if ($servicio->tip_int_ser === 'dias') {
+                // Calcular la fecha límite (fecha del servicio + intervalo de tiempo en días)
+                $intervalo = $servicio->int_ser;
+                $fechaLimite = $fechaServicio->copy()->addDays($intervalo);
+            } elseif ($servicio->tip_int_ser === 'kilometros') {
+                // Calcular el kilometraje límite (kilometraje del camión + intervalo de kilometraje del servicio)
+                $intervalo = $servicio->int_ser;
+                $kilometrajeLimite = $camion->kil_cam + $intervalo;
+            }
 
             // Calcular el kilometraje esperado (kilometraje del camión + distancia de la ruta)
             $kilometrajeEsperado = $camion->kil_cam + $viaje->ruta->dis_rut;
 
+            // intervalo dias/kilometros previos para mostrar la alerta
+            $intervaloPrevio = $servicio->int_ale_ser;
+
             // Verificar si se cumple el intervalo de tiempo y no se ha asignado una alerta para el servicio actual
-            if ($fechaLimite->lte($fechaSalida) && !$alertaAsignada) {
-                // Rojo si la fecha límite ya excedió la fecha de salida
+            if (isset($fechaLimite) && $fechaLimite->lte($fechaLlegada) && !$alertaAsignada) {
+                // Rojo si la fecha de llegada excede la fecha limite
                 $colorAlerta = 'red';
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
-            } elseif ($fechaLimite->diffInDays($fechaSalida) <= 2 && !$alertaAsignada) {
-                // Naranja si la fecha límite está a 2 días o menos de la fecha de salida
+            } elseif (isset($fechaLimite) && $fechaLimite->diffInDays($fechaLlegada) <= round($intervaloPrevio * 0.33) && !$alertaAsignada) {
+                // Naranja si la fecha de llegada está al 33% o menos dias de la fecha limite
                 $colorAlerta = 'orange';
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
-            } elseif ($fechaLimite->diffInDays($fechaSalida) <= 5 && !$alertaAsignada) {
-                // Amarillo si la fecha límite está a 5 días o menos de la fecha de salida
+            } elseif (isset($fechaLimite) && $fechaLimite->diffInDays($fechaLlegada) <= round($intervaloPrevio * 0.66) && !$alertaAsignada) {
+                // Amarillo si la fecha de llegada está al 66% o menos dias de la fecha limite
                 $colorAlerta = 'yellow';
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
-            } elseif ($fechaLimite->diffInDays($fechaSalida) <= 7 && !$alertaAsignada) {
-                // Verde si la fecha límite está a 7 días o menos de la fecha de salida
+            } elseif (isset($fechaLimite) && $fechaLimite->diffInDays($fechaLlegada) <= round($intervaloPrevio * 0.99) && !$alertaAsignada) {
+                // Verde si la fecha de llegada está al 66% o menos dias de la fecha limite
                 $colorAlerta = 'green';
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
-            } elseif ($kilometrajeEsperado >= $kilometrajeLimite - 300 && !$alertaAsignada) {
-                // Rojo si el kilometraje esperado está a menos de 300 km del límite
+            } elseif (isset($kilometrajeLimite) && $kilometrajeLimite <= $kilometrajeEsperado && !$alertaAsignada) {
+                // Rojo si el kilometraje esperado excede el kilometraje límite
                 $colorAlerta = 'red';
+                $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
+            } elseif (isset($kilometrajeLimite) && ($kilometrajeLimite - $kilometrajeEsperado) <= round($intervaloPrevio * 0.33) && !$alertaAsignada) {
+                // Naranja si el kilometraje esperado está al 33% o menos kilometros del kilometraje límite
+                $colorAlerta = 'orange';
+                $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
+            } elseif (isset($kilometrajeLimite) && ($kilometrajeLimite - $kilometrajeEsperado) <= round($intervaloPrevio * 0.66) && !$alertaAsignada) {
+                // Amarillo si el kilometraje esperado está al 66% o menos kilometros del kilometraje límite
+                $colorAlerta = 'yellow';
+                $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
+            } elseif (isset($kilometrajeLimite) && ($kilometrajeLimite - $kilometrajeEsperado) <= round($intervaloPrevio * 0.99) && !$alertaAsignada) {
+                // Verde si el kilometraje esperado está al 99% o menos kilometros del kilometraje límite
+                $colorAlerta = 'green';
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
             } else {
                 // Si no se cumple ninguna condición, resetear el valor de $alertaAsignada para el siguiente servicio
@@ -242,7 +261,7 @@ class ViajeController extends Controller
                 // Verificar si el servicio actual está en alerta y agregarlo a la lista de servicios en alerta
                 $serviciosEnAlerta[] = [
                     'codigo' => $servicio->cod_ser,
-                    'fecha' => $fechaLimite->format('Y-m-d'),
+                    'fecha' => isset($fechaLimite) ? $fechaLimite->format('Y-m-d') : null,
                     'categoria' => $servicio->tip_ser,
                     'monto' => $servicio->cos_ser,
                 ];
@@ -252,7 +271,7 @@ class ViajeController extends Controller
         // Retornar la vista con los datos del viaje y las alertas
         return view('viaje.show', compact('viaje', 'alertas', 'serviciosEnAlerta'));
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *

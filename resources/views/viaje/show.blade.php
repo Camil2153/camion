@@ -106,7 +106,7 @@
                                 <a class="nav-link" data-bs-toggle="tab" href="#gastos">Gastos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#alertas">Alertas</a>
+                                <a class="nav-link" data-bs-toggle="tab" href="#prediccionFallas">Predicción de Fallas</a>
                             </li>
                         </ul>
                     </div>
@@ -188,7 +188,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div id="alertas" class="tab-pane fade">
+                        <div id="prediccionFallas" class="tab-pane fade">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="container">
@@ -221,6 +221,13 @@
                                                     {{ $alerta['mensaje'] }}
                                                 </div>
                                             @endforeach
+                                            @else
+                                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                                <h5>
+                                                    <i class="fas fa-info-circle"></i> No hay predicciones de fallas.
+                                                </h5>
+                                                No se encontraron alertas activas para este viaje.
+                                            </div>
                                         @endif
                                     </div>
                                 </div>

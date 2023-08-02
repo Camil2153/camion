@@ -28,8 +28,9 @@
                 <th>Camion</th>
                 <th>Taller</th>
                 <th>Responsable</th>
-                <th>Intervalo de Tiempo</th>
-                <th>Intervalo de Kilometraje</th>
+                <th>Tipo de Intervalo</th>
+                <th>Intervalo</th>
+                <th>Avisar</th>
                 <th>Alerta</th>
                 <th>Costo</th>
                 <th>Almacen</th>
@@ -65,8 +66,9 @@
                     <td>{{ $servicio->camione->pla_cam }}</td>
                     <td>{{ $servicio->tallere->nom_tal ?? 'N/A' }}</td>		
                     <td>{{ $servicio->res_ser }}</td>
-                    <td>{{ $servicio->int_tie_tip_ser }}</td>
-                    <td>{{ $servicio->int_kil_tip_ser }}</td>
+                    <td>{{ $servicio->tip_int_ser }}</td>
+                    <td>{{ $servicio->int_ser }}</td>
+                    <td>{{ $servicio->int_ale_ser }}</td>
                     <td>{{ $servicio->ale_ser }}</td>
                     <td>{{ number_format($servicio->cos_ser, 2, ',', '.') }}</td>
 

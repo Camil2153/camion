@@ -18,8 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property $cam_ser
  * @property $tal_ser
  * @property $res_ser
- * @property $int_tie_tip_ser
- * @property $int_kil_tip_ser
+ * @property $tip_int_ser
+ * @property $int_ser
+ * @property $int_ale_ser
  * @property $ale_ser
  * @property $cos_ser
  * @property $alm_ser
@@ -51,8 +52,9 @@ class Servicio extends Model
 		'det_ser' => 'required',
 		'cam_ser' => 'required',
 		'res_ser' => 'required',
-		'int_tie_tip_ser' => 'required',
-		'int_kil_tip_ser' => 'required',
+		'tip_int_ser' => 'required|in:dias,kilometros',
+		'int_ser' => 'required',
+		'int_ale_ser' => 'required',
 		'ale_ser' => 'required',
 		'cos_ser' => 'required',
     ];
@@ -64,7 +66,7 @@ class Servicio extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_ser','fec_ser','sis_ser','act_ser','est_ser','tip_ser','fal_ser','det_ser','cam_ser','tal_ser','res_ser','int_tie_tip_ser','int_kil_tip_ser','ale_ser','cos_ser','alm_ser'];
+    protected $fillable = ['cod_ser','fec_ser','sis_ser','act_ser','est_ser','tip_ser','fal_ser','det_ser','cam_ser','tal_ser','res_ser','tip_int_ser','int_ser','int_ale_ser','ale_ser','cos_ser','alm_ser'];
 
 
     /**

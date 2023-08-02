@@ -64,12 +64,16 @@
                             {{ $servicio->res_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Intervalo de Tiempo:</strong>
-                            {{ $servicio->int_tie_tip_ser }}
+                            <strong>Tipo de Intervalo:</strong>
+                            {{ $servicio->tip_int_ser }}
                         </div>
                         <div class="form-group">
-                            <strong>Intervalo de Kilometraje:</strong>
-                            {{ $servicio->int_kil_tip_ser }}
+                            <strong>Intervalo:</strong>
+                            {{ $servicio->int_ser }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Avisar:</strong>
+                            {{ $servicio->int_ale_ser }}
                         </div>
                         <div class="form-group">
                             <strong>Alerta:</strong>

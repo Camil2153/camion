@@ -17,7 +17,7 @@
         {!! $errors->first('fec_nac_con', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="form-group">
-        {{ Form::label('Dirrección') }}
+        {{ Form::label('Dirección') }}
         {{ Form::text('dir_con', $conductore->dir_con, ['class' => 'form-control' . ($errors->has('dir_con') ? ' is-invalid' : '')]) }}
         {!! $errors->first('dir_con', '<div class="invalid-feedback">:message</div>') !!}
     </div>
