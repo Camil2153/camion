@@ -28,6 +28,22 @@
                             {{ $conductore->nom_con }}
                         </div>
                         <div class="form-group">
+                            <strong>Número de licencia:</strong>
+                            {{ $conductore->num_lic_con }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Fecha de vencimiento licencia:</strong>
+                            {{ $conductore->fec_ven_lic_con }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Fecha de Contratación:</strong>
+                            {{ $conductore->fec_con_con }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Estado:</strong>
+                            {{ $conductore->est_con }}
+                        </div>
+                        <div class="form-group">
                             <strong>Fecha de nacimiento:</strong>
                             {{ $conductore->fec_nac_con }}
                         </div>
@@ -44,20 +60,8 @@
                             {{ $conductore->cor_ele_con }}
                         </div>
                         <div class="form-group">
-                            <strong>Número de licencia:</strong>
-                            {{ $conductore->num_lic_con }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Fecha de expedición licencia:</strong>
-                            {{ $conductore->fec_exp_lic_con }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Fecha de vencimiento licencia:</strong>
-                            {{ $conductore->fec_ven_lic_con }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Categoria licencia:</strong>
-                            {{ $conductore->cat_lic_con }}
+                            <strong>Años de Experiencia:</strong>
+                            {{ $conductore->año_exp_con }}
                         </div>
                         <div class="form-group">
                             <strong>EPS:</strong>

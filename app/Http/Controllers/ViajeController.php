@@ -146,9 +146,9 @@ class ViajeController extends Controller
                     'color' => 'red', // Podemos asignar un color rojo para indicar que está vencida
                 ];
             
-                // Poner el estado del camión en "Fuera de servicio" ya que la licencia está vencida
-                $camion->est_cam = 'fuera de servicio';
-                $camion->save();
+                // Poner el estado del conductor en "Bloqueado" ya que la licencia está vencida
+                $conductor->est_con = 'bloqueado';
+                $conductor->save();
             } elseif ($diasRestantesLicencia <= 30) {
                 // Si los días restantes son mayores o iguales a 0 y menores o iguales a 30
                 // Verificar si la licencia está próxima a vencerse (30 días o menos)
@@ -159,7 +159,7 @@ class ViajeController extends Controller
                 } elseif ($diasRestantesLicencia <= 23) {
                     $colorAlertaLicencia = 'yellow';
                 } else {
-                    $colorAlertaLicencia = 'green';
+                    $colorAlertaLicencia = 'blue';
                 }
             
                 // Agregar la alerta de licencia al array de alertas, pero solo si la licencia no vence hoy
@@ -174,9 +174,9 @@ class ViajeController extends Controller
                         'mensaje' => 'La licencia del conductor vence hoy.',
                         'color' => 'red',
                     ];
-                    // Poner el estado del camión en "Fuera de servicio" si la licencia está vencida
-                    $camion->est_cam = 'fuera de servicio';
-                    $camion->save();
+                    // Poner el estado del conductor en "Bloqueado" ya que la licencia está vencida
+                    $conductor->est_con = 'bloqueado';
+                    $conductor->save();
                 }
             }
         }
@@ -217,7 +217,7 @@ class ViajeController extends Controller
                     } elseif ($diasRestantes <= 23) {
                         $colorAlertaDocumento = 'yellow';
                     } else {
-                        $colorAlertaDocumento = 'green';
+                        $colorAlertaDocumento = 'blue';
                     }
         
                     // Agregar la alerta del documento al array de alertas, pero solo si el documento no vence hoy
@@ -285,7 +285,7 @@ class ViajeController extends Controller
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
             } elseif (isset($fechaLimite) && $fechaLimite->diffInDays($fechaLlegada) <= round($intervaloPrevio * 0.99) && !$alertaAsignada) {
                 // Verde si la fecha de llegada está al 66% o menos dias de la fecha limite
-                $colorAlerta = 'green';
+                $colorAlerta = 'blue';
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
             } elseif (isset($kilometrajeLimite) && $kilometrajeLimite <= $kilometrajeEsperado && !$alertaAsignada) {
                 // Rojo si el kilometraje esperado excede el kilometraje límite
@@ -304,7 +304,7 @@ class ViajeController extends Controller
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
             } elseif (isset($kilometrajeLimite) && ($kilometrajeLimite - $kilometrajeEsperado) <= round($intervaloPrevio * 0.99) && !$alertaAsignada) {
                 // Verde si el kilometraje esperado está al 99% o menos kilometros del kilometraje límite
-                $colorAlerta = 'green';
+                $colorAlerta = 'blue';
                 $alertaAsignada = true; // Se asigna la alerta y se marca como asignada
             } else {
                 // Si no se cumple ninguna condición, resetear el valor de $alertaAsignada para el siguiente servicio

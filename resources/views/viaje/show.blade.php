@@ -206,7 +206,7 @@
                                                         case 'yellow':
                                                             $iconClass = 'fas fa-exclamation-triangle';
                                                             break;
-                                                        case 'green':
+                                                        case 'blue':
                                                             $iconClass = 'fas fa-check';
                                                             break;
                                                         default:
@@ -222,7 +222,7 @@
                                                 </div>
                                             @endforeach
                                             @else
-                                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
                                                 <h5>
                                                     <i class="fas fa-info-circle"></i> No hay predicciones de fallas.
                                                 </h5>
@@ -260,8 +260,8 @@
         color: #000000;
     }
 
-    .alert-green {
-        background-color: #28a745;
+    .alert-blue {
+        background-color: #17a2b8;
         color: #FFFFFF;
     }
     </style>

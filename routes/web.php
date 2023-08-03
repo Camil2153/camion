@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('camiones/fuera-de-servicio', [HomeController::class, 'mostrarCamionesFueraDeServicio'])->name('mostrar_camiones_fuera_de_servicio');
 
 Auth::routes();
 Route::post('/actualizar-estado/{codigoServicio}', 'ServicioController@actualizarEstado')->name('servicios.actualizarEstado');
@@ -37,8 +41,3 @@ Route::resource('conductores', App\Http\Controllers\ConductoreController::class)
 Route::resource('empresas', App\Http\Controllers\EmpresaController::class);
 Route::resource('roles', App\Http\Controllers\RoleController::class);
 Route::resource('users', App\Http\Controllers\UserController::class)->only(['index', 'edit', 'update']);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

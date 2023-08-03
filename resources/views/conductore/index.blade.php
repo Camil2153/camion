@@ -19,14 +19,15 @@
   
                 <th>DNI</th>
                 <th>Nombre</th>
+                <th>Número de licencia</th>
+                <th>Fecha de vencimiento licencia</th>
+                <th>Fecha de Contratación</th>
+                <th>Estado</th>
                 <th>Fecha de nacimiento</th>
                 <th>Dirección</th>
                 <th>Número de teléfono</th>
                 <th>Correo electrónico</th>
-                <th>Número de licencia</th>
-                <th>Fecha de expedición licencia</th>
-                <th>Fecha de vencimiento licencia</th>
-                <th>Categoria licencia</th>
+                <th>Años de Experiencia</th>
                 <th>EPS</th>
                 <th>Acciones</th>
 
@@ -38,14 +39,15 @@
               
                     <td>{{ $conductore->dni_con }}</td>
                     <td>{{ $conductore->nom_con }}</td>
+                    <td>{{ $conductore->num_lic_con }}</td>
+                    <td>{{ $conductore->fec_ven_lic_con }}</td>
+                    <td>{{ $conductore->fec_con_con }}</td>
+                    <td>{{ $conductore->est_con }}</td>
                     <td>{{ $conductore->fec_nac_con }}</td>
                     <td>{{ $conductore->dir_con }}</td>
                     <td>{{ $conductore->num_tel_con }}</td>
                     <td>{{ $conductore->cor_ele_con }}</td>
-                    <td>{{ $conductore->num_lic_con }}</td>
-                    <td>{{ $conductore->fec_exp_lic_con }}</td>
-                    <td>{{ $conductore->fec_ven_lic_con }}</td>
-                    <td>{{ $conductore->cat_lic_con }}</td>
+                    <td>{{ $conductore->año_exp_con }}</td>
                     <td>{{ $conductore->eps_con }}</td>
 
                     <td>
