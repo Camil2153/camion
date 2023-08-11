@@ -28,8 +28,8 @@
         </div>
 
     </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>
-        <a href="  {{ route('documentos-camiones.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
+     <div class="box-footer mt20 text-center">
+        <button type="submit" class="btn btn-outline-success btn-sm custom-btn">{{ __('Guardar') }}</button>
+        <a href="  {{ route('documentos-camiones.index') }}" class="btn  btn-outline-danger btn-sm custom-btn">Cancelar</a>
     </div>
 </div>

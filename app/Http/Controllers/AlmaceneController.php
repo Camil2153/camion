@@ -89,15 +89,11 @@ class AlmaceneController extends Controller
     public function edit($cod_alm)
     {
         $almacene = Almacene::find($cod_alm);
-        $componentesDisponibles = Componente::pluck('nom_com', 'num_ser_com');
-    // Obtener los componentes ya registrados en el almacén
-    $componentesRegistrados = $almacene->pluck('com_alm');
-
-    // Combinar los componentes disponibles con los registrados para asegurarse de mostrar el componente actualmente seleccionado (si está registrado)
-    $componentesFiltrados = $componentesDisponibles->except($componentesRegistrados);
-
+        $componentesFiltrados = Componente::where('num_ser_com', $almacene->com_alm)->first(); // Obtén el componente asociado
+        
         return view('almacene.edit', compact('almacene', 'componentesFiltrados'));
     }
+    
 
     /**
      * Update the specified resource in storage.

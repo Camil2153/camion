@@ -6,7 +6,7 @@
     <h1>Lista de servicios</h1>
 
     <div class="float-right">
-                                <a href="{{ route('servicios.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('servicios.create') }}" class="btn btn-block btn-outline-secondary btn-sm float-right"  data-placement="left">
                                   {{ __('Nuevo') }}
                                 </a>
                               </div>
@@ -34,6 +34,7 @@
                 <th>Alerta</th>
                 <th>Costo</th>
                 <th>Almacen</th>
+                <th>Cantidad</th>
                 <th>Acciones</th>
 
             </tr>
@@ -67,13 +68,13 @@
                     <td>{{ $servicio->tallere->nom_tal ?? 'N/A' }}</td>		
                     <td>{{ $servicio->res_ser }}</td>
                     <td>{{ $servicio->tip_int_ser }}</td>
-                    <td>{{ $servicio->int_ser }}</td>
-                    <td>{{ $servicio->int_ale_ser }}</td>
+                    <td>{{ number_format($servicio->int_ser, 0, ',', '.') }}</td>
+                    <td>{{ number_format($servicio->int_ale_ser, 0, ',', '.') }}</td>
                     <td>{{ $servicio->ale_ser }}</td>
                     <td>{{ number_format($servicio->cos_ser, 2, ',', '.') }}</td>
 
                     <td>{{ $servicio->almacene->com_alm ?? 'N/A' }}</td>
-
+                    <td>{{ $servicio->can_ser }}</td>
                     <td>
                         <form action="{{ route('servicios.destroy',$servicio->cod_ser) }}" method="POST">
                             <a class="btn btn-sm btn-secundary" href="{{ route('servicios.show',$servicio->cod_ser) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>
@@ -121,3 +122,9 @@
         });
     </script>
 @stop
+@if(session('alert'))
+    <script>
+        alert("{{ session('alert') }}");
+    </script>
+@endif
+

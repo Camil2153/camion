@@ -66,7 +66,7 @@ class Servicio extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_ser','fec_ser','sis_ser','act_ser','est_ser','tip_ser','fal_ser','det_ser','cam_ser','tal_ser','res_ser','tip_int_ser','int_ser','int_ale_ser','ale_ser','cos_ser','alm_ser'];
+    protected $fillable = ['cod_ser','fec_ser','sis_ser','act_ser','est_ser','tip_ser','fal_ser','det_ser','cam_ser','tal_ser','res_ser','tip_int_ser','int_ser','int_ale_ser','ale_ser','cos_ser','alm_ser','can_ser'];
 
 
     /**

@@ -8,10 +8,8 @@
         </div>
         <div class="form-group">
             {{ Form::label('Monto') }}
-             <?php
-              $mon_gas_formatted = number_format($gasto->mon_gas, 2, ',', '.');
-             ?>
-           {{ Form::text('mon_gas', $mon_gas_formatted, ['id' => 'mon_gas', 'class' => 'form-control' . ($errors->has('mon_gas') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
+             
+           {{ Form::text('mon_gas', '', ['id' => 'mon_gas', 'class' => 'form-control' . ($errors->has('mon_gas') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
            {!! $errors->first('mon_gas', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -31,9 +29,9 @@
         </div>
 
     </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>
-        <a href="  {{ route('gastos.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
+    <div class="box-footer mt20 text-center">
+        <button type="submit" class="btn btn-outline-success btn-sm custom-btn">{{ __('Guardar') }}</button>
+        <a href="  {{ route('gastos.index') }}" class="btn  btn-outline-danger btn-sm custom-btn">Cancelar</a>
     </div>
 </div>
 

@@ -9,7 +9,7 @@
 @section('content')
 <section class="content">
     <div class="container-fluid">
-        <div class="row">
+    <div class="row">
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
@@ -62,6 +62,24 @@
                 </div>
             </div><br>
         </div>
+        <section class="col-lg-7 connectedSortable ui-sortable">
+            <div class="card">
+                <div class="card-header ui-sortable-handle" style="cursor: move;">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-pie mr-1"></i>
+                        Numero de fallas por mes
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content p-0">
+                        <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 305px;">
+                            <canvas id="fallas-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
     </div>
 </section>
 @stop
@@ -73,6 +91,57 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @stop
 
+<!-- ... (código previo) ... -->
+
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script>
+        var fallasPorMes = @json($fallasPorMes);
+
+        var months = [];
+        var data = [];
+
+        var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+        fallasPorMes.forEach(function(item) {
+            months.push(monthNames[item.mes - 1]);
+            data.push(item.total);
+        });
+
+        var ctx = document.getElementById('fallas-chart').getContext('2d');
+
+        var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: months,
+        datasets: [{
+            label: 'Número de Fallas por Mes',
+            data: data,
+            backgroundColor: 'rgba(192, 42, 75, 0.2)',
+            borderColor: 'rgba(192, 42, 75, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                ticks: {
+                    stepSize: 1,
+                    precision: 0,
+                    max: 20,
+                    min: 1
+                }
+            },
+            x: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+        window.addEventListener('resize', function() {
+            chart.resize();
+        });
+    </script>
 @stop

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->string('cod_alm', 4)->primary(); // codigo almacen
             $table->string('com_alm', 15); // componente del almacen
             $table->string('cat_alm', 25); // categoria del componente en el almacen
-            $table->string('can_alm', 10); // cantidad existente en el almacen
+            $table->bigInteger('can_alm'); // cantidad existente en el almacen
             $table->string('ubi_alm', 15); // ubicacion fisica del componente en el almacen
-            $table->string('pro_alm', 15); // proveedor del componente
+            $table->string('pro_alm', 30); // proveedor del componente
             $table->date('fec_adq_alm'); // fecha de adquisición del componente
             $table->date('fec_ven_alm'); // fecha de vencimiento del componente
             $table->string('est_alm', 20); // estado del componente dentro del almacen

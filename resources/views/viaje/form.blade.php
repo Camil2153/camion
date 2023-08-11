@@ -13,7 +13,7 @@
             </div>
             <div class="form-group">
                 {{ Form::label('Ruta') }}
-                {{ Form::select('rut_via', $rutas, $viaje->rut_via, ['class' => 'form-control' . ($errors->has('rut_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar ruta']) }}
+                {{ Form::select('rut_via', $rutas, $viaje->rut_via, ['class' => 'form-control', 'onchange' => 'getDuracionRuta(this.value)']) }}
                 {!! $errors->first('rut_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="form-group">
@@ -50,7 +50,11 @@
             </div>
             <div class="form-group">
                 {{ Form::label('Estado') }}
-                {{ Form::select('est_via', ['programado' => 'Programado', 'en progreso' => 'En progreso', 'completado' => 'Completado', 'cancelado' => 'Cancelado'], $viaje->est_via, ['class' => 'form-control' . ($errors->has('est_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
+                @if (Route::currentRouteName() === 'viajes.edit') <!-- Verificar si es una ruta de edición -->
+                 {{ Form::select('est_via', ['programado' => 'Programado', 'en progreso' => 'En progreso', 'completado' => 'Completado', 'cancelado' => 'Cancelado'], $viaje->est_via, ['class' => 'form-control' . ($errors->has('est_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
+                @else
+                {{ Form::select('est_via', ['programado' => 'Programado', 'en progreso' => 'En progreso', 'completado' => 'Completado', 'cancelado' => 'Cancelado'], 'programado', ['class' => 'form-control' . ($errors->has('est_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado', 'disabled' => 'disabled']) }}
+                @endif
                 {!! $errors->first('est_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="form-group">

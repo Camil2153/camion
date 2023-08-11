@@ -51,10 +51,11 @@ class ConductoreController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge(['est_con' => 'activo']);
         request()->validate(Conductore::$rules);
 
         $conductore = Conductore::create($request->all());
-
+        
         return redirect()->route('conductores.index')
             ->with('success', 'Conductor creado exitosamente');
     }

@@ -87,7 +87,10 @@
                             <strong>Almacen:</strong>
                             {{ $servicio->almacene->com_alm ?? 'N/A' }}
                         </div>
-
+                        <div class="form-group">
+                            <strong>Cantidad:</strong>
+                            {{ $servicio->can_ser }}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -66,6 +66,7 @@ class ViajeController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge(['est_via' => 'programado']);
         $request->validate([
             'cod_via' => 'required',
             'car_via' => 'required',
@@ -400,7 +401,7 @@ class ViajeController extends Controller
 
         if ($estadoViaje === 'programado' || $estadoViaje === 'en progreso') {
             $camione = Camione::findOrFail($request->input('cam_via'));
-            $camione->est_cam = 'fuera de servicio';
+            $camione->est_cam = 'en viaje';
             $camione->save();
         } elseif ($estadoViaje === 'completado' || $estadoViaje === 'cancelado') {
             $camione = Camione::findOrFail($request->input('cam_via'));

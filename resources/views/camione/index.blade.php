@@ -6,7 +6,7 @@
     <h1>Lista de camiones</h1>
 
     <div class="float-right">
-                                <a href="{{ route('camiones.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('camiones.create') }}" class="btn btn-block btn-outline-secondary btn-sm float-right"  data-placement="left">
                                 {{ __('Nuevo') }}
                                 </a>
                             </div>
@@ -48,6 +48,8 @@
                         <span class="badge badge-danger">{{ $camione->est_cam }}</span>
                     @elseif ($camione->est_cam == 'en mantenimiento')
                         <span class="badge badge-warning">{{ $camione->est_cam }}</span>
+                        @elseif ($camione->est_cam == 'en viaje')
+                        <span class="badge badge-info">{{ $camione->est_cam }}</span>
                     @else
                         {{ $camione->est_cam }}
                     @endif

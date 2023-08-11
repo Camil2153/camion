@@ -97,12 +97,12 @@
         </div>
         <div class="form-group">
             {{ Form::label('Intervalo') }}
-            {{ Form::text('int_ser', $servicio->int_ser, ['class' => 'form-control' . ($errors->has('int_ser') ? ' is-invalid' : ''), 'placeholder' => 'días/kilómetros']) }}
+            {{ Form::text('int_ser', $servicio->int_ser, ['id' => 'int_ser', 'class' => 'form-control' . ($errors->has('int_ser') ? ' is-invalid' : ''), 'placeholder' => 'días/kilómetros']) }}
             {!! $errors->first('int_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group-inline">
             <label for="int_ale_ser">Avisar</label>
-            {{ Form::text('int_ale_ser', $servicio->int_ale_ser, ['class' => 'form-control custom-input']) }}
+            {{ Form::text('int_ale_ser', $servicio->int_ale_ser, ['id' => 'int_ale_ser', 'class' => 'form-control custom-input']) }}
             <span>antes de cumplirse el intervalo para mantenimiento.</span>
         </div>
     </div>
@@ -111,19 +111,21 @@
             {{ Form::text('ale_ser', $servicio->ale_ser, ['class' => 'form-control' . ($errors->has('ale_ser') ? ' is-invalid' : '')]) }}
             {!! $errors->first('ale_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-    <div class="box-body form-grid">
         <div class="form-group">
         {{ Form::label('Costo') }}
-             <?php
-              $cos_ser_formatted = number_format($servicio->cos_ser, 0, ',', '.');
-             ?>
-            {{ Form::text('cos_ser', $cos_ser_formatted, ['id' => 'cos_ser', 'class' => 'form-control' . ($errors->has('cos_ser') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
+            {{ Form::text('cos_ser','', ['id' => 'cos_ser', 'class' => 'form-control' . ($errors->has('cos_ser') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
             {!! $errors->first('cos_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+    <div class="box-body form-grid">
         <div class="form-group">
             {{ Form::label('Almacen') }}
             {{ Form::select('alm_ser', $almacenes->pluck('componente.nom_com', 'cod_alm'), $servicio->alm_ser, ['class' => 'form-control' . ($errors->has('alm_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar componente']) }}
             {!! $errors->first('alm_ser', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('Cantidad') }}
+            {{ Form::number('can_ser', $servicio->can_ser, ['class' => 'form-control' . ($errors->has('can_ser') ? ' is-invalid' : ''), 'placeholder' => '']) }}
+            {!! $errors->first('can_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
     
@@ -238,7 +240,6 @@
 <script>
     // Obtener el campo de input del costo
     var cosComInput = document.getElementById('cos_ser');
-
     // Escuchar el evento de entrada en el campo de input
     cosComInput.addEventListener('input', function(event) {
         // Obtener el valor sin separadores de miles
@@ -269,5 +270,75 @@
         // Eliminar los separadores de miles antes de enviar el formulario
         var rawValue = cosComInput.value.replace(/\./g, '');
         cosComInput.value = rawValue;
+    });
+
+
+
+    var intSerInput = document.getElementById('int_ser');
+    // Escuchar el evento de entrada en el campo de input
+    intSerInput.addEventListener('input', function(event) {
+        // Obtener el valor sin separadores de miles
+        var rawValue = event.target.value.replace(/\./g, '');
+
+        // Formatear el valor con separadores de miles y decimales
+        var formattedValue = addThousandSeparators(rawValue, 2);
+
+        // Mostrar el valor formateado en el campo de input
+        event.target.value = formattedValue;
+    });
+
+    // Función para agregar separadores de miles y decimales
+    function addThousandSeparators(value, decimalPlaces) {
+        var parts = value.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        var formattedValue = parts.join(".");
+        
+        if (decimalPlaces && parts.length > 1) {
+            formattedValue += '.' + parts[1].slice(0, decimalPlaces);
+        }
+
+        return formattedValue;
+    }
+
+    // Escuchar el evento de envío del formulario
+    intSerInput.closest('form').addEventListener('submit', function(event) {
+        // Eliminar los separadores de miles antes de enviar el formulario
+        var rawValue = intSerInput.value.replace(/\./g, '');
+        intSerInput.value = rawValue;
+    });
+
+
+    
+    var intAleSerInput = document.getElementById('int_ale_ser');
+        // Escuchar el evento de entrada en el campo de input
+        intAleSerInput.addEventListener('input', function(event) {
+        // Obtener el valor sin separadores de miles
+        var rawValue = event.target.value.replace(/\./g, '');
+
+        // Formatear el valor con separadores de miles y decimales
+        var formattedValue = addThousandSeparators(rawValue, 2);
+
+        // Mostrar el valor formateado en el campo de input
+        event.target.value = formattedValue;
+    });
+
+    // Función para agregar separadores de miles y decimales
+    function addThousandSeparators(value, decimalPlaces) {
+        var parts = value.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        var formattedValue = parts.join(".");
+        
+        if (decimalPlaces && parts.length > 1) {
+            formattedValue += '.' + parts[1].slice(0, decimalPlaces);
+        }
+
+        return formattedValue;
+    }
+
+    // Escuchar el evento de envío del formulario
+    intAleSerInput.closest('form').addEventListener('submit', function(event) {
+        // Eliminar los separadores de miles antes de enviar el formulario
+        var rawValue = intAleSerInput.value.replace(/\./g, '');
+        intAleSerInput.value = rawValue;
     });
 </script>

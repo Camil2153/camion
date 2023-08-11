@@ -75,6 +75,35 @@ class ServicioController extends Controller
      */
     public function store(Request $request)
     {
+        $cod_ser = $request->input('cod_ser');
+        $primerosCuatroDigitos = substr($cod_ser, 0, 4);
+    
+        // Verificar si existe un registro con los mismos 4 primeros dígitos y estado no completado
+        $registroExistente = Servicio::where('cod_ser', 'LIKE', $primerosCuatroDigitos . '%')
+            ->where('est_ser', '<>', 'Completada')
+            ->first();
+    
+        if ($registroExistente) {
+            return redirect()->route('servicios.index')
+               ->with('alert', 'No se puede crear un nuevo registro.');
+        }
+
+        $estadoServicio = $request->input('est_ser');
+
+        if ($estadoServicio === 'No comenzada' || $estadoServicio === 'En curso') {
+            $camione = Camione::findOrFail($request->input('cam_ser'));
+            $camione->est_cam = 'en mantenimiento';
+            $camione->save();
+        } elseif ($estadoServicio === 'Completada') {
+            $camione = Camione::findOrFail($request->input('cam_ser'));
+            $camione->est_cam = 'disponible';
+            $camione->save();
+        } else{
+            $camione = Camione::findOrFail($request->input('cam_ser'));
+            $camione->est_cam = 'fuera de servicio';
+            $camione->save();
+        }
+
         if ($request->has('fal_ser') && $request->get('fal_ser') !== null) {
             // Obtener el ID de la falla seleccionada
             $fallaId = $request->get('fal_ser');
@@ -89,7 +118,15 @@ class ServicioController extends Controller
                 $falla->save();
             }
         }
-        
+
+        $componenteSeleccionado = $request->input('alm_ser');
+        $cantidadUtilizada = $request->input('can_ser');
+    
+        // Actualizar la cantidad en la tabla almacenes
+        $almacene = Almacene::findOrFail($componenteSeleccionado);
+        $almacene->can_alm -= $cantidadUtilizada;
+        $almacene->save();
+
         request()->validate(Servicio::$rules);
         $servicio = Servicio::create($request->all());
 
@@ -146,17 +183,53 @@ class ServicioController extends Controller
                 $falla->save();
             }
         }
-        $servicio->update($request->all());
+      // Lógica para obtener el servicio existente
+      $cantidadAnterior = $servicio->can_ser;
 
+      if ($request->has('est_ser') && $request->est_ser === 'Completada') {
+          if ($servicio->fal_ser) {
+              $falla = Falla::findOrFail($servicio->fal_ser);
+              $falla->est_act_fal = 'reparada';
+              $falla->save();
+          }
+      }
+      
+      // Actualizar el servicio
+      $servicio->update($request->all());
+  
+      // Lógica para actualizar la cantidad en la tabla almacenes
+      $componenteSeleccionado = $request->input('alm_ser');
+      $cantidadNueva = $request->input('can_ser');
+  
+      // Calcular la diferencia entre la cantidad anterior y la nueva
+      $diferencia = $cantidadNueva - $cantidadAnterior;
+  
+      // Actualizar la cantidad en la tabla almacenes solo si hay una diferencia
+      if ($diferencia !== 0) {
+          $almacene = Almacene::findOrFail($componenteSeleccionado);
+  
+          // Realizar la operación según la diferencia
+          if ($diferencia > 0) {
+              $almacene->can_alm -= $diferencia;
+          } else {
+              $almacene->can_alm += abs($diferencia);
+          }
+  
+          $almacene->save();
+      }
         $estadoServicio = $request->input('est_ser');
 
         if ($estadoServicio === 'No comenzada' || $estadoServicio === 'En curso') {
             $camione = Camione::findOrFail($request->input('cam_ser'));
             $camione->est_cam = 'en mantenimiento';
             $camione->save();
-        } elseif ($estadoServicio === 'Completada' || $estadoServicio === 'Cancelada' || $estadoServicio === 'Aplazada') {
+        } elseif ($estadoServicio === 'Completada') {
             $camione = Camione::findOrFail($request->input('cam_ser'));
             $camione->est_cam = 'disponible';
+            $camione->save();
+        } else{
+            $camione = Camione::findOrFail($request->input('cam_ser'));
+            $camione->est_cam = 'fuera de servicio';
             $camione->save();
         }
 

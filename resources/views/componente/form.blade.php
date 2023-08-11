@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('Número de serie') }}
-            {{ Form::text('num_ser_com', $componente->num_ser_com, ['class' => 'form-control' . ($errors->has('num_ser_com') ? ' is-invalid' : '')]) }}
+            {{ Form::text('num_ser_com', $componente->num_ser_com, ['class' => 'form-control' . ($errors->has('num_ser_com') ? ' is-invalid' : ''), 'maxlength' => '15']) }}
             {!! $errors->first('num_ser_com', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -26,7 +26,7 @@
              <?php
               $cos_com_formatted = number_format($componente->cos_com, 2, ',', '.');
              ?>
-           {{ Form::text('cos_com', $cos_com_formatted, ['id' => 'cos_com', 'class' => 'form-control' . ($errors->has('cos_com') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
+           {{ Form::text('cos_com', '', ['id' => 'cos_com', 'class' => 'form-control' . ($errors->has('cos_com') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
            {!! $errors->first('cos_com', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -36,9 +36,9 @@
         </div>
 
         </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-secundary border border-secondary btn-sm ">{{ __('Guardar') }}</button>
-        <a href="  {{ route('componentes.index') }}" class="btn btn-secundary border border-secondary btn-sm ">Cancelar</a>
+        <div class="box-footer mt20 text-center">
+        <button type="submit" class="btn btn-outline-success btn-sm custom-btn">{{ __('Guardar') }}</button>
+        <a href="  {{ route('componentes.index') }}" class="btn  btn-outline-danger btn-sm custom-btn">Cancelar</a>
     </div>
 </div>
 

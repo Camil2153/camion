@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Camione;
 use App\Models\Ruta;
 use App\Models\Falla;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -37,9 +38,14 @@ class HomeController extends Controller
     
         // Obtener el número de registros en la tabla "fallas"
         $totalFallas = Falla::count();
-    
+
+        $fallasPorMes = Falla::select(DB::raw('MONTH(fec_fal) as mes'), DB::raw('COUNT(*) as total'))
+        ->groupBy('mes')
+        ->get();
+        
         // Pasar los valores a la vista
         return view('home', [
+            'fallasPorMes' => $fallasPorMes,
             'totalCamiones' => $totalCamiones,
             'camionesFueraDeServicio' => $camionesFueraDeServicio,
             'totalRutas' => $totalRutas,

@@ -6,7 +6,7 @@
     <h1>Lista de conductores</h1>
 
     <div class="float-right">
-                                <a href="{{ route('conductores.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('conductores.create') }}" class="btn btn-block btn-outline-secondary btn-sm float-right"  data-placement="left">
                                 {{ __('Nuevo') }}
                                 </a>
                             </div>
@@ -42,7 +42,17 @@
                     <td>{{ $conductore->num_lic_con }}</td>
                     <td>{{ $conductore->fec_ven_lic_con }}</td>
                     <td>{{ $conductore->fec_con_con }}</td>
-                    <td>{{ $conductore->est_con }}</td>
+                    <td>
+                    @if ($conductore->est_con == 'activo')
+                        <span class="badge badge-success">{{ $conductore->est_con }}</span>
+                    @elseif ($conductore->est_con == 'asignado')
+                        <span class="badge badge-warning">{{ $conductore->est_con }}</span>
+                        @elseif ($conductore->est_con == 'bloqueado')
+                        <span class="badge badge-danger">{{ $conductore->est_con }}</span>
+                    @else
+                        {{ $conductore->est_con }}
+                    @endif
+                    </td>
                     <td>{{ $conductore->fec_nac_con }}</td>
                     <td>{{ $conductore->dir_con }}</td>
                     <td>{{ $conductore->num_tel_con }}</td>

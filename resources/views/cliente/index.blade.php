@@ -6,7 +6,7 @@
     <h1>Lista de clientes</h1>
 
     <div class="float-right">
-                                <a href="{{ route('clientes.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('clientes.create') }}" class="btn btn-block btn-outline-secondary btn-sm float-right"  data-placement="left">
                                 {{ __('Nuevo') }}
                                 </a>
                             </div>

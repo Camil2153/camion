@@ -6,7 +6,7 @@
     <h1>Lista de componentes</h1>
 
     <div class="float-right">
-                                <a href="{{ route('componentes.create') }}" class="btn btn-secundary border border-secondary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('componentes.create') }}" class="btn btn-block btn-outline-secondary btn-sm float-right"  data-placement="left">
                                 {{ __('Nuevo') }}
                                 </a>
                             </div>
@@ -35,7 +35,7 @@
                     <td>{{ $componente->nom_com }}</td>
                     <td>{{ $componente->mar_com }}</td>
                     <td>{{ $componente->desc_com }}</td>
-                    <td>{{ $componente->cos_com }}</td>
+                    <td>{{ number_format($componente->cos_com, 2, ',', '.') }}</td>
                     <td>{{ $componente->sistema->nom_sis }}</td>
 
                     <td>

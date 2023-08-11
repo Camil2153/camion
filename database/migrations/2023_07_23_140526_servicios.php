@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('ale_ser', 500); // alerta servicio
             $table->decimal('cos_ser', 10, 2); // costo servicio
             $table->string('alm_ser', 4)->nullable(); // almacen servicio
+            $table->bigInteger('can_ser')->nullable(); // cantidad almacen servicio
 
             $table->foreign('sis_ser')->references('cod_sis')->on('sistemas');  
             $table->foreign('act_ser')->references('cod_act')->on('actividades');
