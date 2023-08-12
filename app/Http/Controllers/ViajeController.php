@@ -159,8 +159,12 @@ class ViajeController extends Controller
                     $colorAlertaLicencia = 'orange';
                 } elseif ($diasRestantesLicencia <= 23) {
                     $colorAlertaLicencia = 'yellow';
-                } else {
+                } elseif ($diasRestantesLicencia <= 30) {
                     $colorAlertaLicencia = 'blue';
+                } else {
+                    // Los días restantes son mayores a 30, por lo que la licencia esta activa
+                    $conductor->est_con = 'activo';
+                    $conductor->save();
                 }
             
                 // Agregar la alerta de licencia al array de alertas, pero solo si la licencia no vence hoy
@@ -193,6 +197,12 @@ class ViajeController extends Controller
         
                 // Verificar si los días restantes son mayores a 30
                 if ($diasRestantes > 30) {
+                    // Poner el estado del documento del camion en "válido"
+                    $documento->est_doc_cam = 'valido';
+                    $documento->save();
+                    // Poner el estado del camión en "Disponible" ya que el documento es válido
+                    $camion->est_cam = 'disponible';
+                    $camion->save();
                     continue; // No se cumple la condición, no se agrega alerta y se pasa al siguiente documento
                 }
         
@@ -246,19 +256,39 @@ class ViajeController extends Controller
             }   
         }                
     
-        // Iterar sobre los servicios y verificar los días restantes y el kilometraje
+        // Agrupar los servicios por los primeros 4 dígitos del código
+        $gruposServicios = [];
         foreach ($servicios as $servicio) {
+            $codigoGrupo = substr($servicio->cod_ser, 0, 4);
+            if (!isset($gruposServicios[$codigoGrupo])) {
+                $gruposServicios[$codigoGrupo] = [];
+            }
+            $gruposServicios[$codigoGrupo][] = $servicio;
+        }
+
+        // Iterar sobre los grupos de servicios
+        foreach ($gruposServicios as $grupo) {
+            // Encontrar el servicio más reciente dentro del grupo
+            $servicioReciente = null;
+            foreach ($grupo as $servicio) {
+                if ($servicioReciente === null || $servicio->fec_ser > $servicioReciente->fec_ser) {
+                    $servicioReciente = $servicio;
+                }
+            }
+            
+            // Reestablecer la variable $alertaAsignada para el nuevo servicio
+            $alertaAsignada = false;
             // Convertir la fecha del servicio a un objeto Carbon
-            $fechaServicio = Carbon::parse($servicio->fec_ser);
+            $fechaServicio = Carbon::parse($servicioReciente->fec_ser);
 
             // Verificar el tipo de intervalo seleccionado (días o kilómetros)
-            if ($servicio->tip_int_ser === 'dias') {
+            if ($servicioReciente->tip_int_ser === 'dias') {
                 // Calcular la fecha límite (fecha del servicio + intervalo de tiempo en días)
-                $intervalo = $servicio->int_ser;
+                $intervalo = $servicioReciente->int_ser;
                 $fechaLimite = $fechaServicio->copy()->addDays($intervalo);
-            } elseif ($servicio->tip_int_ser === 'kilometros') {
+            } elseif ($servicioReciente->tip_int_ser === 'kilometros') {
                 // Calcular el kilometraje límite (kilometraje del camión + intervalo de kilometraje del servicio)
-                $intervalo = $servicio->int_ser;
+                $intervalo = $servicioReciente->int_ser;
                 $kilometrajeLimite = $camion->kil_cam + $intervalo;
             }
 
@@ -266,7 +296,7 @@ class ViajeController extends Controller
             $kilometrajeEsperado = $camion->kil_cam + $viaje->ruta->dis_rut;
 
             // intervalo dias/kilometros previos para mostrar la alerta
-            $intervaloPrevio = $servicio->int_ale_ser;
+            $intervaloPrevio = $servicioReciente->int_ale_ser;
 
             // Verificar si se cumple el intervalo de tiempo y no se ha asignado una alerta para el servicio actual
             if (isset($fechaLimite) && $fechaLimite->lte($fechaLlegada) && !$alertaAsignada) {
@@ -315,16 +345,16 @@ class ViajeController extends Controller
             // Verificar si se cumple alguna de las condiciones, agregar la alerta al array de alertas con su color
             if ($alertaAsignada) {
                 $alertas[] = [
-                    'mensaje' => $servicio->ale_ser,
+                    'mensaje' => $servicioReciente->ale_ser,
                     'color' => $colorAlerta,
                 ];
 
                 // Verificar si el servicio actual está en alerta y agregarlo a la lista de servicios en alerta
                 $serviciosEnAlerta[] = [
-                    'codigo' => $servicio->cod_ser,
+                    'codigo' => $servicioReciente->cod_ser,
                     'fecha' => isset($fechaLimite) ? $fechaLimite->format('Y-m-d') : null,
-                    'categoria' => $servicio->tip_ser,
-                    'monto' => $servicio->cos_ser,
+                    'categoria' => $servicioReciente->tip_ser,
+                    'monto' => $servicioReciente->cos_ser,
                 ];
             }
         }
@@ -420,10 +450,37 @@ class ViajeController extends Controller
      */
     public function destroy($cod_via)
     {
-        $viaje = Viaje::find($cod_via)->delete();
-
-        return redirect()->route('viajes.index')
-            ->with('success', 'Viaje eliminado exitosamente');
-    }
+        try {
+            // Intenta eliminar el registro del camión
+            $viaje = Viaje::find($cod_via);
+            if (!$viaje) {
+                return redirect()->route('viajes.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      El viaje no existe.
+                                    </div>');
+            }
     
+            $viaje->delete();
+    
+            return redirect()->route('viajes.index')
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Viaje eliminado exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar el viaje: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('viajes.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
+    }
 }

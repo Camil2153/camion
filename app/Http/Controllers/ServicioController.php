@@ -10,6 +10,8 @@ use App\Models\Falla;
 use App\Models\Tallere;
 use App\Models\Camione;
 use App\Models\Almacene;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class ServicioController
@@ -32,9 +34,34 @@ class ServicioController extends Controller
      */
     public function index()
     {
-        // Obtener los servicios paginados desde la base de datos
-        $servicios = Servicio::paginate(10);
-    
+        $user = Auth::user();
+        
+        if (!$user) {
+            // El usuario no está autenticado, redirigir o mostrar un mensaje de error.
+            return "No estás autenticado.";
+        }
+        
+        $conductorEmail = $user->email;
+        
+        // Verificar si el correo del usuario coincide con el correo en la tabla de conductores
+        $conductor = DB::table('conductores')
+            ->where('cor_ele_con', $conductorEmail)
+            ->first();
+
+        if ($conductor) {
+            // El usuario es un conductor, obtener los servicios asociados a su camión.
+            $camion = Camione::where('con_cam', $conductor->dni_con)->first();
+
+            if ($camion) {
+                $servicios = $camion->servicios()->paginate(10);
+            } else {
+                $servicios = collect(); // No hay camión asociado, devolver una colección vacía.
+            }
+        } else {
+            // El usuario no es un conductor, obtener todos los servicios.
+            $servicios = Servicio::paginate(10);
+        }
+        
         // Definimos el mapeo de estados a colores
         $statusColors = [
             'No comenzada' => 'badge-dark',
@@ -43,10 +70,9 @@ class ServicioController extends Controller
             'Cancelada' => 'badge-danger',
             'Completada' => 'badge-success',
         ];
-    
+
         return view('servicio.index', compact('servicios', 'statusColors'));
-    }
-    
+    }   
 
     /**
      * Show the form for creating a new resource.
@@ -119,13 +145,18 @@ class ServicioController extends Controller
             }
         }
 
-        $componenteSeleccionado = $request->input('alm_ser');
-        $cantidadUtilizada = $request->input('can_ser');
-    
-        // Actualizar la cantidad en la tabla almacenes
-        $almacene = Almacene::findOrFail($componenteSeleccionado);
-        $almacene->can_alm -= $cantidadUtilizada;
-        $almacene->save();
+        // Obtén el valor de alm_ser si está presente en la solicitud
+        $componenteSeleccionado = $request->input('alm_ser', null);
+
+        // Obtén el valor de can_ser si está presente en la solicitud
+        $cantidadUtilizada = $request->input('can_ser', null);
+
+        if ($componenteSeleccionado !== null && $cantidadUtilizada !== null) {
+            // Actualizar la cantidad en la tabla almacenes
+            $almacene = Almacene::findOrFail($componenteSeleccionado);
+            $almacene->can_alm -= $cantidadUtilizada;
+            $almacene->save();
+        }
 
         request()->validate(Servicio::$rules);
         $servicio = Servicio::create($request->all());
@@ -195,9 +226,9 @@ class ServicioController extends Controller
       }
       
       // Actualizar el servicio
-      $servicio->update($request->all());
-  
-      // Lógica para actualizar la cantidad en la tabla almacenes
+        $servicio->update($request->all());
+
+    // Lógica para actualizar la cantidad en la tabla almacenes
       $componenteSeleccionado = $request->input('alm_ser');
       $cantidadNueva = $request->input('can_ser');
   
@@ -244,26 +275,53 @@ class ServicioController extends Controller
      */
     public function destroy($cod_ser)
     {
-        $servicio = Servicio::find($cod_ser)->delete();
-
-        return redirect()->route('servicios.index')
-            ->with('success', 'Servicio eliminado exitosamente');
+        try {
+            // Intenta eliminar el registro del camión
+            $servicio = Servicio::find($cod_ser);
+            if (!$servicio) {
+                return redirect()->route('servicios.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      El servicio no existe.
+                                    </div>');
+            }
+    
+            $servicio->delete();
+    
+            return redirect()->route('servicios.index')
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Servicio eliminado exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar el servicio: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('servicios.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
     }
-   
  
-public function actualizarEstado(Request $request, $codigoServicio)
-{
-    // Valida el nuevo estado (opcional, si es necesario)
-    $request->validate([
-        'estado' => 'required|in:No comenzada,En curso,Aplazada,Cancelada,Completada'
-    ]);
+    public function actualizarEstado(Request $request, $codigoServicio)
+    {
+        // Valida el nuevo estado (opcional, si es necesario)
+        $request->validate([
+            'estado' => 'required|in:No comenzada,En curso,Aplazada,Cancelada,Completada'
+        ]);
 
-    // Encuentra el servicio por el código y actualiza su estado
-    $servicio = Servicio::find($codigoServicio);
-    $servicio->est_ser = $request->input('estado');
-    $servicio->save();
+        // Encuentra el servicio por el código y actualiza su estado
+        $servicio = Servicio::find($codigoServicio);
+        $servicio->est_ser = $request->input('estado');
+        $servicio->save();
 
-    // Devuelve una respuesta JSON (opcional, para informar el resultado)
-    return response()->json(['success' => true, 'message' => 'Estado actualizado exitosamente']);
-}
+        // Devuelve una respuesta JSON (opcional, para informar el resultado)
+        return response()->json(['success' => true, 'message' => 'Estado actualizado exitosamente']);
+    }
 }

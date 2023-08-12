@@ -103,6 +103,9 @@
                                 <a class="nav-link" data-bs-toggle="tab" href="#informacionCamion">Información del Camión</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#listadoServicios">Listado de servicios</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#gastos">Gastos</a>
                             </li>
                             <li class="nav-item">
@@ -136,6 +139,38 @@
                                     </div>
                                 </div>
 
+                            </div>
+                        </div>
+                        <div id="listadoServicios" class="tab-pane fade">
+                            <div class="card-body">
+                                <div class="row">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Código</th>
+                                                <th>Fecha</th>
+                                                <th>Sistema</th>
+                                                <th>Actividad</th>
+                                                <th>Tipo de servicio</th>
+                                                <th>Falla</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if ($viaje && $viaje->camione)
+                                                @foreach ($viaje->camione->servicios as $servicio)   
+                                                    <tr>
+                                                        <td>{{ $servicio->cod_ser }}</td>
+                                                        <td>{{ $servicio->fec_ser }}</td>
+                                                        <td>{{ $servicio->sistema->nom_sis }}</td>
+                                                        <td>{{ $servicio->actividade->nom_act }}</td>
+                                                        <td>{{ $servicio->tip_ser }}</td>
+                                                        <td>{{ $servicio->falla->desc_fal ?? 'N/A' }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div id="gastos" class="tab-pane fade">

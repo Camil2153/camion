@@ -51,7 +51,7 @@ class ActividadeController extends Controller
         $actividade = Actividade::create($request->all());
 
         return redirect()->route('actividades.index')
-            ->with('success', 'Actividade created successfully.');
+            ->with('success', 'Actividad creada exitosamente');
     }
 
     /**
@@ -94,7 +94,7 @@ class ActividadeController extends Controller
         $actividade->update($request->all());
 
         return redirect()->route('actividades.index')
-            ->with('success', 'Actividade updated successfully');
+            ->with('success', 'Actividad actualizada exitosamente');
     }
 
     /**
@@ -104,9 +104,37 @@ class ActividadeController extends Controller
      */
     public function destroy($cod_act)
     {
-        $actividade = Actividade::find($cod_act)->delete();
-
-        return redirect()->route('actividades.index')
-            ->with('success', 'Actividade deleted successfully');
+        try {
+            // Intenta eliminar el registro del camión
+            $actividade = Actividade::find($cod_act);
+            if (!$actividade) {
+                return redirect()->route('actividades.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      La actividad no existe.
+                                    </div>');
+            }
+    
+            $actividade->delete();
+    
+            return redirect()->route('actividades.index')
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Actividad eliminada exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar la actividad: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('actividades.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
     }
 }

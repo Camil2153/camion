@@ -422,7 +422,7 @@ return [
             ],
         ],
         [
-            'text'    => 'Predicción',
+            'text'    => 'Simulación',
             'url'  => 'viajes',
             'icon' => 'fa fa-suitcase',
             'can' => 'users.index',

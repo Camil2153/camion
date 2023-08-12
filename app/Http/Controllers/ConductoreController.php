@@ -130,15 +130,37 @@ class ConductoreController extends Controller
      */
     public function destroy($dni_con)
     {
-        $conductore = Conductore::where('dni_con', $dni_con)->first();
-
-        if ($conductore) {
+        try {
+            // Intenta eliminar el registro del camión
+            $conductore = Conductore::find($dni_con);
+            if (!$conductore) {
+                return redirect()->route('conductores.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      El conductor no existe.
+                                    </div>');
+            }
+    
             $conductore->delete();
+    
             return redirect()->route('conductores.index')
-                ->with('success', 'Conductor eliminado exitosamente');
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Conductor eliminado exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar el conductor: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('conductores.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
         }
-
-        return redirect()->route('conductores.index')
-            ->with('error', 'No se encontró el conductor');
     }
 }

@@ -58,7 +58,7 @@ class DocumentosCamioneController extends Controller
         $documentosCamione = DocumentosCamione::create($request->all());
 
         return redirect()->route('documentos-camiones.index')
-            ->with('success', 'DocumentosCamione creado exitosamente');
+            ->with('success', 'Documento del camión creado exitosamente');
     }
 
     /**
@@ -110,7 +110,7 @@ class DocumentosCamioneController extends Controller
         // Actualizar los atributos del modelo documentosCamione
         $documentosCamione->update($request->all());
     
-        return redirect()->route('documentos-camiones.index')->with('success', 'documentosCamione actualizado exitosamente');
+        return redirect()->route('documentos-camiones.index')->with('success', 'Documento del camión actualizado exitosamente');
     }
 
     /**
@@ -120,9 +120,37 @@ class DocumentosCamioneController extends Controller
      */
     public function destroy($cod_doc_cam)
     {
-        $documentosCamione = DocumentosCamione::find($cod_doc_cam)->delete();
-
-        return redirect()->route('documentos-camiones.index')
-            ->with('success', 'DocumentosCamione eliminado exitosamente');
+        try {
+            // Intenta eliminar el registro del camión
+            $documentosCamione = DocumentosCamione::find($cod_doc_cam);
+            if (!$documentosCamione) {
+                return redirect()->route('DocumentosCamione.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      El documento del camión no existe.
+                                    </div>');
+            }
+    
+            $documentosCamione->delete();
+    
+            return redirect()->route('DocumentosCamione.index')
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Documento del camión eliminado exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar el documento del camión: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('DocumentosCamione.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
     }
 }

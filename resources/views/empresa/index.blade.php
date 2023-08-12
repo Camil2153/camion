@@ -6,10 +6,21 @@
     <h1>Lista de empresas</h1>
 
     <div class="float-right">
-                                <a href="{{ route('empresas.create') }}" class="btn btn-block btn-outline-secondary btn-sm float-right"  data-placement="left">
-                                {{ __('Nuevo') }}
-                                </a>
-                            </div>
+        <a href="{{ route('empresas.create') }}" class="btn btn-block btn-outline-secondary btn-sm float-right"  data-placement="left">
+            {{ __('Nuevo') }}
+        </a>
+    </div>
+    <div class="row">
+        <div class="col-md-7,1">
+            @if (session('success'))
+                {!! session('success') !!}
+            @endif
+
+            @if (session('error'))
+                {!! session('error') !!}
+            @endif
+        </div>
+    </div>
 @stop
 
 @section('content')

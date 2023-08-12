@@ -118,9 +118,37 @@ class ClienteController extends Controller
      */
     public function destroy($cod_cli)
     {
-        $cliente = Cliente::find($cod_cli)->delete();
-
-        return redirect()->route('clientes.index')
-            ->with('success', 'Cliente eliminado exitosamente');
+        try {
+            // Intenta eliminar el registro del camión
+            $cliente = Cliente::find($cod_cli);
+            if (!$cliente) {
+                return redirect()->route('clientes.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      El cliente no existe.
+                                    </div>');
+            }
+    
+            $cliente->delete();
+    
+            return redirect()->route('clientes.index')
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Cliente eliminado exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar el cliente: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('clientes.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
     }
 }

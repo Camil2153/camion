@@ -56,7 +56,7 @@ class SistemaController extends Controller
         $sistema = Sistema::create($request->all());
 
         return redirect()->route('sistemas.index')
-            ->with('success', 'Sistema created successfully.');
+            ->with('success', 'Sistema creado exitosamente');
     }
 
     /**
@@ -108,7 +108,7 @@ class SistemaController extends Controller
         // Actualizar los atributos del modelo sistema
         $sistema->update($request->all());
     
-        return redirect()->route('sistemas.index')->with('success', 'sistema updated successfully');
+        return redirect()->route('sistemas.index')->with('success', 'Sistema actualizado exitosamente');
     }
 
     /**
@@ -118,9 +118,37 @@ class SistemaController extends Controller
      */
     public function destroy($cod_sis)
     {
-        $sistema = Sistema::find($cod_sis)->delete();
-
-        return redirect()->route('sistemas.index')
-            ->with('success', 'Sistema deleted successfully');
+        try {
+            // Intenta eliminar el registro del camión
+            $sistema = Sistema::find($cod_sis);
+            if (!$sistema) {
+                return redirect()->route('sistemas.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      El sistema no existe.
+                                    </div>');
+            }
+    
+            $sistema->delete();
+    
+            return redirect()->route('sistemas.index')
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Sistema eliminado exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar el sistema: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('sistemas.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
     }
 }

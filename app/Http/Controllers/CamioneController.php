@@ -97,7 +97,7 @@ class CamioneController extends Controller
         $camione = Camione::find($pla_cam);
         $conductores = Conductore::pluck('nom_con', 'dni_con');
         $conductoresDisponibles = $camione->conductore->nom_con;
-        
+
         return view('camione.edit', compact('camione','conductores', 'conductoresDisponibles'));
     }
 
@@ -120,29 +120,29 @@ class CamioneController extends Controller
                 'pla_cam' => 'required|unique:camiones,pla_cam',
             ]);
         }
-        
-    // Obtener el DNI del conductor asignado actualmente al camión
-    $conductorActual = $camione->con_cam;
+                
+        // Obtener el DNI del conductor asignado actualmente al camión
+        $conductorActual = $camione->con_cam;
 
-    // Verificar si se ha asignado un conductor al camión
-    if ($request->has('con_cam')) {
-        $nuevoConductorDni = $request->input('con_cam');
+        // Verificar si se ha asignado un conductor al camión
+        if ($request->has('con_cam')) {
+            $nuevoConductorDni = $request->input('con_cam');
 
-        // Si el conductor asignado cambió, actualizar el estado del conductor anterior
-        if ($conductorActual !== $nuevoConductorDni) {
-            $conductorAnterior = Conductore::where('dni_con', $conductorActual)->first();
-            if ($conductorAnterior) {
-                $conductorAnterior->update(['est_con' => 'activo']);
+            // Si el conductor asignado cambió, actualizar el estado del conductor anterior
+            if ($conductorActual !== $nuevoConductorDni) {
+                $conductorAnterior = Conductore::where('dni_con', $conductorActual)->first();
+                if ($conductorAnterior) {
+                    $conductorAnterior->update(['est_con' => 'activo']);
+                }
+            }
+
+            // Actualizar el estado del nuevo conductor a 'asignado'
+            $nuevoConductor = Conductore::where('dni_con', $nuevoConductorDni)->first();
+            if ($nuevoConductor) {
+                $nuevoConductor->update(['est_con' => 'asignado']);
             }
         }
-
-        // Actualizar el estado del nuevo conductor a 'asignado'
-        $nuevoConductor = Conductore::where('dni_con', $nuevoConductorDni)->first();
-        if ($nuevoConductor) {
-            $nuevoConductor->update(['est_con' => 'asignado']);
-        }
-    }
-        
+    
         // Actualizar los atributos del modelo camione
         $camione->update($request->all());
     
@@ -156,28 +156,51 @@ class CamioneController extends Controller
      */
     public function destroy($pla_cam)
     {
-        $camione = Camione::find($pla_cam);
+        try {
+            // Intenta eliminar el registro del camión
+            $camione = Camione::find($pla_cam);
+            if (!$camione) {
+                return redirect()->route('camiones.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      El camión no existe.
+                                    </div>');
+            }
     
-        if ($camione) {
-            // Obtener el DNI del conductor asignado al camión antes de eliminarlo
-            $conductorAsignado = $camione->con_cam;
-    
-            // Eliminar el camión
-            $camione->delete();
-    
-            // Verificar si había un conductor asignado y actualizar su estado a 'activo'
-            if ($conductorAsignado) {
-                $conductor = Conductore::where('dni_con', $conductorAsignado)->first();
-                if ($conductor) {
-                    $conductor->update(['est_con' => 'activo']);
+            if ($camione) {
+                // Obtener el DNI del conductor asignado al camión antes de eliminarlo
+                $conductorAsignado = $camione->con_cam;
+        
+                // Eliminar el camión
+                $camione->delete();
+        
+                // Verificar si había un conductor asignado y actualizar su estado a 'activo'
+                if ($conductorAsignado) {
+                    $conductor = Conductore::where('dni_con', $conductorAsignado)->first();
+                    if ($conductor) {
+                        $conductor->update(['est_con' => 'activo']);
+                    }
                 }
             }
     
             return redirect()->route('camiones.index')
-                ->with('success', 'Camion eliminado exitosamente');
-        }
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Camión eliminado exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar el camión: ' . $e->getMessage();
+            }
     
-        return redirect()->route('camiones.index')
-            ->with('error', 'No se encontró el camión');
-    }
+            return redirect()->route('camiones.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
+    }    
 }

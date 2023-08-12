@@ -6,6 +6,8 @@ use App\Models\Falla;
 use Illuminate\Http\Request;
 use App\Models\Sistema;
 use App\Models\Camione;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class FallaController
@@ -28,10 +30,36 @@ class FallaController extends Controller
      */
     public function index()
     {
-        $fallas = Falla::paginate();
-
+        $user = Auth::user();
+        
+        if (!$user) {
+            // El usuario no está autenticado, redirigir o mostrar un mensaje de error.
+            return "No estás autenticado.";
+        }
+        
+        $conductorEmail = $user->email;
+        
+        // Verificar si el correo del usuario coincide con el correo en la tabla de conductores
+        $conductor = DB::table('conductores')
+            ->where('cor_ele_con', $conductorEmail)
+            ->first();
+    
+        if ($conductor) {
+            // El usuario es un conductor, obtener las fallas asociadas a su camión.
+            $camion = Camione::where('con_cam', $conductor->dni_con)->first();
+    
+            if ($camion) {
+                $fallas = $camion->fallas()->paginate();
+            } else {
+                $fallas = collect(); // No hay camión asociado, devolver una colección vacía.
+            }
+        } else {
+            // El usuario no es un conductor, obtener todas las fallas.
+            $fallas = Falla::paginate();
+        }
+    
         return view('falla.index', compact('fallas'))
-            ->with('i', (request()->input('page', 1) - 1) * $fallas->perPage());
+            ->with('i', $fallas->isEmpty() ? 0 : (request()->input('page', 1) - 1) * $fallas->perPage());    
     }
 
     /**
@@ -138,9 +166,37 @@ class FallaController extends Controller
      */
     public function destroy($cod_fal)
     {
-        $falla = Falla::find($cod_fal)->delete();
-
-        return redirect()->route('fallas.index')
-            ->with('success', 'Falla eliminada exitosamente');
+        try {
+            // Intenta eliminar el registro del camión
+            $falla = Falla::find($cod_fal);
+            if (!$falla) {
+                return redirect()->route('fallas.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      La falla no existe.
+                                    </div>');
+            }
+    
+            $falla->delete();
+    
+            return redirect()->route('fallas.index')
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Falla eliminada exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar la falla: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('fallas.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
     }
 }

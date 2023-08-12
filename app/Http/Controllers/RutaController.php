@@ -117,9 +117,37 @@ class RutaController extends Controller
      */
     public function destroy($cod_rut)
     {
-        $ruta = Ruta::find($cod_rut)->delete();
-
-        return redirect()->route('rutas.index')
-            ->with('success', 'Ruta eliminada exitosamente');
+        try {
+            // Intenta eliminar el registro del camión
+            $ruta = Ruta::find($cod_rut);
+            if (!$ruta) {
+                return redirect()->route('rutas.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      La ruta no existe.
+                                    </div>');
+            }
+    
+            $ruta->delete();
+    
+            return redirect()->route('rutas.index')
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Ruta eliminada exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar la ruta: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('rutas.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
     }
 }

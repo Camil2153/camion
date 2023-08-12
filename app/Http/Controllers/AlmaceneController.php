@@ -128,9 +128,37 @@ class AlmaceneController extends Controller
      */
     public function destroy($cod_alm)
     {
-        $almacene = Almacene::find($cod_alm)->delete();
-
-        return redirect()->route('almacenes.index')
-            ->with('success', 'Almacene eliminado exitosamente');
+        try {
+            // Intenta eliminar el registro del camión
+            $almacene = Almacene::find($cod_alm);
+            if (!$almacene) {
+                return redirect()->route('almacenes.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      El almacén no existe.
+                                    </div>');
+            }
+    
+            $almacene->delete();
+    
+            return redirect()->route('almacenes.index')
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Almacén eliminado exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar el almacén: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('almacenes.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
     }
 }

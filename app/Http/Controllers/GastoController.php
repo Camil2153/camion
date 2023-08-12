@@ -6,6 +6,9 @@ use App\Models\Gasto;
 use Illuminate\Http\Request;
 use App\Models\CategoriasGasto;
 use App\Models\Viaje;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\Camione;
 
 /**
  * Class GastoController
@@ -28,10 +31,42 @@ class GastoController extends Controller
      */
     public function index()
     {
-        $gastos = Gasto::paginate();
+        $user = Auth::user();
+        
+        if (!$user) {
+            // El usuario no está autenticado, redirigir o mostrar un mensaje de error.
+            return "No estás autenticado.";
+        }
+        
+        $conductorEmail = $user->email;
+        
+        // Verificar si el correo del usuario coincide con el correo en la tabla de conductores
+        $conductor = DB::table('conductores')
+            ->where('cor_ele_con', $conductorEmail)
+            ->first();
+
+        if ($conductor) {
+            // El usuario es un conductor, obtener los gastos asociados al viaje de su camión.
+            $camion = Camione::where('con_cam', $conductor->dni_con)->first();
+
+            if ($camion) {
+                $viaje = $camion->viajes()->latest()->first();
+
+                if ($viaje) {
+                    $gastos = $viaje->gastos()->paginate();
+                } else {
+                    $gastos = collect(); // No hay viaje asociado, devolver una colección vacía.
+                }
+            } else {
+                $gastos = collect(); // No hay camión asociado, devolver una colección vacía.
+            }
+        } else {
+            // El usuario no es un conductor, obtener todos los gastos.
+            $gastos = Gasto::paginate();
+        }
 
         return view('gasto.index', compact('gastos'))
-            ->with('i', (request()->input('page', 1) - 1) * $gastos->perPage());
+            ->with('i', $gastos->isEmpty() ? 0 : (request()->input('page', 1) - 1) * $gastos->perPage());    
     }
 
     /**
@@ -123,9 +158,37 @@ public function update(Request $request, gasto $gasto)
      */
     public function destroy($cod_gas)
     {
-        $gasto = Gasto::find($cod_gas)->delete();
-
-        return redirect()->route('gastos.index')
-            ->with('success', 'Gasto eliminado exitosamente');
+        try {
+            // Intenta eliminar el registro del camión
+            $gasto = Gasto::find($cod_gas);
+            if (!$gasto) {
+                return redirect()->route('gastos.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      El gasto no existe.
+                                    </div>');
+            }
+    
+            $gasto->delete();
+    
+            return redirect()->route('gastos.index')
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Gasto eliminado exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar el gasto: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('gastos.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
     }
 }

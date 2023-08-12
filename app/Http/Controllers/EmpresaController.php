@@ -118,9 +118,37 @@ class EmpresaController extends Controller
      */
     public function destroy($nit_emp)
     {
-        $empresa = Empresa::find($nit_emp)->delete();
-
-        return redirect()->route('empresas.index')
-            ->with('success', 'Empresa eliminada exitosamente');
+        try {
+            // Intenta eliminar el registro del camión
+            $empresa = Empresa::find($nit_emp);
+            if (!$empresa) {
+                return redirect()->route('empresas.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      La empresa no existe.
+                                    </div>');
+            }
+    
+            $empresa->delete();
+    
+            return redirect()->route('empresas.index')
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Empresa eliminada exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar la empresa: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('empresas.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
     }
 }

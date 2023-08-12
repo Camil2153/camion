@@ -118,9 +118,37 @@ class CategoriasGastoController extends Controller
      */
     public function destroy($cod_cat_gas)
     {
-        $categoriasGasto = CategoriasGasto::find($cod_cat_gas)->delete();
-
-        return redirect()->route('categorias-gastos.index')
-            ->with('success', 'CategoriasGasto eliminada exitosamnete');
+        try {
+            // Intenta eliminar el registro del camión
+            $categoriasGasto = CategoriasGasto::find($cod_cat_gas);
+            if (!$categoriasGasto) {
+                return redirect()->route('categorias-gastos.index')
+                    ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                      <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                      La categoria de gasto no existe.
+                                    </div>');
+            }
+    
+            $categoriasGasto->delete();
+    
+            return redirect()->route('categorias-gastos.index')
+                ->with('success', '<div class="alert alert-success alert-dismissible">
+                                      <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                      Categoria de gasto eliminada exitosamente.
+                                    </div>');
+        } catch (\PDOException $e) {
+            $errorMessage = '';
+            if ($e->getCode() == "23000" && strpos($e->getMessage(), "Cannot delete or update a parent row") !== false) {
+                $errorMessage = 'Estás tratando de realizar una acción que viola las restricciones de integridad referencial.';
+            } else {
+                $errorMessage = 'Ha ocurrido un error al intentar eliminar la categoria de gasto: ' . $e->getMessage();
+            }
+    
+            return redirect()->route('categorias-gastos.index')
+                ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                  <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                  ' . $errorMessage . '
+                                </div>');
+        }
     }
 }
