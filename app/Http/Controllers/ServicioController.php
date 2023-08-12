@@ -111,7 +111,10 @@ class ServicioController extends Controller
     
         if ($registroExistente) {
             return redirect()->route('servicios.index')
-               ->with('alert', 'No se puede crear un nuevo registro.');
+                ->with('error', '<div class="alert alert-info alert-dismissible">
+                                    <h5><i class="fas fa-info"></i> Alerta!</h5>
+                                    No se puede crear un nuevo registro, ya que existe un servicio previo sin completar.
+                                </div>');
         }
 
         $estadoServicio = $request->input('est_ser');

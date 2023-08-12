@@ -19,6 +19,10 @@
             @if (session('error'))
                 {!! session('error') !!}
             @endif
+
+            @if (session('info'))
+                {!! session('info') !!}
+            @endif
         </div>
     </div>
 @stop
