@@ -54,7 +54,10 @@ class UserController extends Controller
         $user = User::create($request->all());
 
         return redirect()->route('users.index')
-            ->with('success', 'Usuario creado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                Usuario creado exitosamente.
+                            </div>');
     }
 
     /**
@@ -94,7 +97,10 @@ class UserController extends Controller
     {
         $user->roles()->sync($request->roles);
 
-        return redirect()->route('users.edit', $user)->with('info', 'Se asignó los roles correctamente');
+        return redirect()->route('users.index', $user)->with('success', '<div class="alert alert-success alert-dismissible">
+                                                                            <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                                                            Se asignó los roles correctamente.
+                                                                        </div>');
     }
 
     /**
@@ -107,6 +113,9 @@ class UserController extends Controller
         $user = User::find($id)->delete();
 
         return redirect()->route('users.index')
-            ->with('success', 'Usuario eliminado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                Usuario eliminado exitosamente.
+                            </div>');
     }
 }

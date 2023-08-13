@@ -91,7 +91,7 @@ class GastoController extends Controller
     public function store(Request $request)
     {
         request()->validate(Gasto::$rules);
-
+        $request->merge(['est_gas' => 'pendiente']);
         $gasto = Gasto::create($request->all());
 
         return redirect()->route('gastos.index')

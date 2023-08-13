@@ -14,7 +14,6 @@
                 @include('role.partials.form')
 
                 {!! Form::submit('Guardar', ['class' => 'btn btn-secundary border border-secondary btn-sm']) !!}
-                <a href="{{ route('roles.index') }}" class="btn btn-secundary border border-secondary btn-sm">Volver</a>
                 {!! Form::close() !!}
             </div>      
         </div>

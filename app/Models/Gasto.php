@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $fec_gas
  * @property $cat_gas
  * @property $via_gas
+ * @property $est_gas
  * @property $created_at
  * @property $updated_at
  *
@@ -32,6 +33,7 @@ class Gasto extends Model
 		'fec_gas' => 'required',
 		'cat_gas' => 'required',
 		'via_gas' => 'required',
+		'est_gas' => 'sometimes',
     ];
 
     protected $perPage = 20;
@@ -41,7 +43,7 @@ class Gasto extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_gas','mon_gas','fec_gas','cat_gas','via_gas'];
+    protected $fillable = ['cod_gas','mon_gas','fec_gas','cat_gas','via_gas','est_gas'];
 
 
     /**

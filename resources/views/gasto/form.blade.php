@@ -27,6 +27,15 @@
             {{ Form::select('via_gas', $viajes, $gasto->via_gas, ['class' => 'form-control' . ($errors->has('via_gas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar viaje']) }}
             {!! $errors->first('via_gas', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        <div class="form-group">
+            {{ Form::label('est_gas', 'Estado') }}
+            @if (Route::currentRouteName() === 'gastos.edit')
+            {{ Form::select('est_gas', ['pendiente' => 'Pendiente', 'aprobado' => 'Aprobado'], $gasto->est_gas, ['class' => 'form-control' . ($errors->has('est_gas') ? ' is-invalid' : '')]) }}
+            @else
+            {{ Form::select('est_gas', ['pendiente' => 'Pendiente', 'aprobado' => 'Aprobado'], 'pendiente', ['class' => 'form-control' . ($errors->has('est_gas') ? ' is-invalid' : ''), 'disabled' => 'disabled']) }}
+            @endif
+            {!! $errors->first('est_gas', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
 
     </div>
     <div class="box-footer mt20 text-center">

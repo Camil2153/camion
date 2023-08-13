@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('fec_gas'); // fecha gasto
             $table->string('cat_gas', 4); // categoria gasto
             $table->string('via_gas', 4); // viaje gasto
+            $table->string('est_gas', 20); // estado gasto
 
             $table->foreign('cat_gas')->references('cod_cat_gas')->on('categorias_gastos'); 
             $table->foreign('via_gas')->references('cod_via')->on('viajes');

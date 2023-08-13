@@ -4,6 +4,14 @@
 
 @section('content_header')
     <h1>Lista de usuarios</h1>
+    
+    <div class="row">
+        <div class="col-md-7,1">
+            @if (session('success'))
+                {!! session('success') !!}
+            @endif
+        </div>
+    </div>
 @stop
 
 @section('content')
@@ -13,6 +21,7 @@
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Correo electrónico</th>
+                <th>Rol</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -23,9 +32,19 @@
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
+                                        <td>
+                                            @foreach ($user->roles as $role)
+                                                {{ $role->name }}<br>
+                                            @endforeach
+                                        </td>
 
                                         <td width="10px">
-                                            <a class="btn btn-sm btn-secundary" href="{{ route('users.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
+                                            <form action="{{ route('users.destroy',$user->id) }}" method="POST">
+                                                <a class="btn btn-sm btn-secundary" href="{{ route('users.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-secundary btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('') }}</button>
+                                            </form>
                                         </td>
                                     </tr>
                             @endforeach

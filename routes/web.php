@@ -40,4 +40,4 @@ Route::resource('camiones', App\Http\Controllers\CamioneController::class);
 Route::resource('conductores', App\Http\Controllers\ConductoreController::class);
 Route::resource('empresas', App\Http\Controllers\EmpresaController::class);
 Route::resource('roles', App\Http\Controllers\RoleController::class);
-Route::resource('users', App\Http\Controllers\UserController::class)->only(['index', 'edit', 'update']);
+Route::resource('users', App\Http\Controllers\UserController::class)->only(['index', 'edit', 'update', 'destroy']);

@@ -7,13 +7,6 @@
 @stop
 
 @section('content')
-
-    @if (session('info'))
-        <div class="alert alert-success">
-            {{ session('info') }}
-        </div>
-    @endif
-
     <div class="card">
         <div class="card-body">
             {!! Form::model($role, ['route' => ['roles.update', $role], 'method' => 'put']) !!}
@@ -21,7 +14,6 @@
             @include('role.partials.form')
 
             {!! Form::submit('Actualizar', ['class' => 'btn btn-secundary border border-secondary btn-sm']) !!}
-            <a href="{{ route('roles.index') }}" class="btn btn-secundary border border-secondary btn-sm">Volver</a>
             {!! Form::close() !!}
         </div>
     </div>

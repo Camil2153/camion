@@ -33,6 +33,7 @@
                 <th>Fecha</th>
                 <th>Categoria</th>
                 <th>Viaje</th>
+                <th>Estado</th>
                 <th>Acciones</th>
 
             </tr>
@@ -40,12 +41,13 @@
         <tbody>
             @foreach ($gastos as $gasto)
                 <tr>
-  
+
                     <td>{{ $gasto->cod_gas }}</td>
                     <td>{{ number_format($gasto->mon_gas, 2, ',', '.') }}</td>
                     <td>{{ $gasto->fec_gas }}</td>
                     <td>{{ $gasto->categoriasGasto->nom_cat_gas }}</td>
                     <td>{{ $gasto->via_gas }}</td>
+                    <td>{{ $gasto->est_gas }}</td>
 
                     <td>
                         <form action="{{ route('gastos.destroy',$gasto->cod_gas) }}" method="POST">

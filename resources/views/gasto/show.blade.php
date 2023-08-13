@@ -39,8 +39,12 @@
                             <strong>Viaje:</strong>
                             {{ $gasto->via_gas }}
                         </div>
+                        <div class="form-group">
+                            <strong>Estado:</strong>
+                            {{ $gasto->est_gas }}
+                        </div>
 
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
