@@ -51,7 +51,10 @@ class ActividadeController extends Controller
         $actividade = Actividade::create($request->all());
 
         return redirect()->route('actividades.index')
-            ->with('success', 'Actividad creada exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Actividad creada exitosamente.
+                                </div>');
     }
 
     /**
@@ -94,7 +97,10 @@ class ActividadeController extends Controller
         $actividade->update($request->all());
 
         return redirect()->route('actividades.index')
-            ->with('success', 'Actividad actualizada exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Actividad actualizada exitosamente.
+                                </div>');
     }
 
     /**

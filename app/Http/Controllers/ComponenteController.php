@@ -58,7 +58,10 @@ class ComponenteController extends Controller
         $componente = Componente::create($request->all());
 
         return redirect()->route('componentes.index')
-            ->with('success', 'Componente creado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Componente creado exitosamente.
+                                </div>');
     }
 
     /**
@@ -110,7 +113,11 @@ class ComponenteController extends Controller
         // Actualizar los atributos del modelo componente
         $componente->update($request->all());
     
-        return redirect()->route('componentes.index')->with('success', 'Componente actualizado existosamente');
+        return redirect()->route('componentes.index')
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Componente actualizado existosamente.
+                                </div>');
     }
 
     /**

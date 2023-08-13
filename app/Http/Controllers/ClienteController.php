@@ -56,7 +56,10 @@ class ClienteController extends Controller
         $cliente = Cliente::create($request->all());
 
         return redirect()->route('clientes.index')
-            ->with('success', 'Cliente creado exactamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Cliente creado exactamente.
+                                </div>');
     }
 
     /**
@@ -108,7 +111,11 @@ class ClienteController extends Controller
         // Actualizar los atributos del modelo cliente
         $cliente->update($request->all());
     
-        return redirect()->route('clientes.index')->with('success', 'Cliente actualizado exitosamente');
+        return redirect()->route('clientes.index')
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Cliente actualizado exitosamente.
+                                </div>');
     }
 
     /**

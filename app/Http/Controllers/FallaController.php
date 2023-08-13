@@ -103,8 +103,10 @@ class FallaController extends Controller
         $falla = Falla::create($request->all());
 
         return redirect()->route('fallas.index')
-            ->with('success', 'Falla creada exitosamente');
-    
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Falla creada exitosamente.
+                                </div>');
     }
     /**
      * Display the specified resource.
@@ -156,7 +158,11 @@ class FallaController extends Controller
         // Actualizar los atributos del modelo falla
         $falla->update($request->all());
         $falla->update($request->except('est_act_fal'));
-        return redirect()->route('fallas.index')->with('success', 'Falla actualizada exitosamente');
+        return redirect()->route('fallas.index')
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Falla actualizada exitosamente.
+                                </div>');
     }
 
     /**

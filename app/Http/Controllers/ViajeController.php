@@ -98,7 +98,10 @@ class ViajeController extends Controller
         }
 
         return redirect()->route('viajes.index')
-            ->with('success', 'Viaje creado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Viaje creado exitosamente.
+                                </div>');
     }
 
     /**
@@ -440,7 +443,10 @@ class ViajeController extends Controller
         }
 
         return redirect()->route('viajes.index')
-            ->with('success', 'Viaje actualizado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Viaje actualizado exitosamente.
+                                </div>');
     }
 
     /**

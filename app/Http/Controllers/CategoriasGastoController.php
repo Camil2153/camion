@@ -56,7 +56,10 @@ class CategoriasGastoController extends Controller
         $categoriasGasto = CategoriasGasto::create($request->all());
 
         return redirect()->route('categorias-gastos.index')
-            ->with('success', 'CategoriasGasto creada exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Categoria de gasto creada exitosamente.
+                                </div>');
     }
 
     /**
@@ -108,7 +111,11 @@ class CategoriasGastoController extends Controller
         // Actualizar los atributos del modelo categoriasGasto
         $categoriasGasto->update($request->all());
     
-        return redirect()->route('categorias-gastos.index')->with('success', 'categoriasGasto actualizada exitosamente');
+        return redirect()->route('categorias-gastos.index')
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Categoria de gasto actualizada exitosamente.
+                                </div>');
     }
 
     /**

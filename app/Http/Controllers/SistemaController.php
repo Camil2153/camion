@@ -56,7 +56,10 @@ class SistemaController extends Controller
         $sistema = Sistema::create($request->all());
 
         return redirect()->route('sistemas.index')
-            ->with('success', 'Sistema creado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Sistema creado exitosamente.
+                                </div>');
     }
 
     /**
@@ -108,7 +111,11 @@ class SistemaController extends Controller
         // Actualizar los atributos del modelo sistema
         $sistema->update($request->all());
     
-        return redirect()->route('sistemas.index')->with('success', 'Sistema actualizado exitosamente');
+        return redirect()->route('sistemas.index')
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Sistema actualizado exitosamente.
+                                </div>');
     }
 
     /**

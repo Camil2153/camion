@@ -56,7 +56,10 @@ class EmpresaController extends Controller
         $empresa = Empresa::create($request->all());
 
         return redirect()->route('empresas.index')
-            ->with('success', 'Empresa creada exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Empresa creada exitosamente.
+                                </div>');
     }
 
     /**
@@ -108,7 +111,11 @@ class EmpresaController extends Controller
         // Actualizar los atributos del modelo empresa
         $empresa->update($request->all());
     
-        return redirect()->route('empresas.index')->with('success', 'Empresa actualizada exitosamente');
+        return redirect()->route('empresas.index')
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Empresa actualizada exitosamente.
+                                </div>');
     }
 
     /**

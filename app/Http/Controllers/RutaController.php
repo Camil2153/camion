@@ -56,7 +56,10 @@ class RutaController extends Controller
         $ruta = Ruta::create($request->all());
 
         return redirect()->route('rutas.index')
-            ->with('success', 'Ruta creada exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Ruta creada exitosamente.
+                                </div>');
     }
 
     /**
@@ -107,7 +110,11 @@ class RutaController extends Controller
         // Actualizar los atributos del modelo ruta
         $ruta->update($request->all());
     
-        return redirect()->route('rutas.index')->with('success', 'Ruta actualizada exitosamente');
+        return redirect()->route('rutas.index')
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Ruta actualizada exitosamente.
+                                </div>');
     }
 
     /**

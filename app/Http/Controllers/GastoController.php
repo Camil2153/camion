@@ -95,7 +95,10 @@ class GastoController extends Controller
         $gasto = Gasto::create($request->all());
 
         return redirect()->route('gastos.index')
-            ->with('success', 'Gasto creado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Gasto creado exitosamente.
+                                </div>');
     }
 
     /**
@@ -132,24 +135,28 @@ class GastoController extends Controller
      * @param  Gasto $gasto
      * @return \Illuminate\Http\Response
      */
-public function update(Request $request, gasto $gasto)
-{
-    // Validar los campos del formulario, excepto 'cod_via'
-    $request->validate(Arr::except(gasto::$rules, 'cod_gas'));
+    public function update(Request $request, gasto $gasto)
+    {
+        // Validar los campos del formulario, excepto 'cod_via'
+        $request->validate(Arr::except(gasto::$rules, 'cod_gas'));
 
-    // Verificar si el valor de 'cod_gas' ha cambiado
-    if ($request->input('cod_gas') !== $gasto->cod_gas) {
-        // Validar 'cod_gas' como único en la tabla 'gastos'
-        $request->validate([
-            'cod_gas' => 'required|unique:gastos,cod_gas',
-        ]);
+        // Verificar si el valor de 'cod_gas' ha cambiado
+        if ($request->input('cod_gas') !== $gasto->cod_gas) {
+            // Validar 'cod_gas' como único en la tabla 'gastos'
+            $request->validate([
+                'cod_gas' => 'required|unique:gastos,cod_gas',
+            ]);
+        }
+
+        // Actualizar los atributos del modelo gasto
+        $gasto->update($request->all());
+
+        return redirect()->route('gastos.index')
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Gasto actualizado exitosamente.
+                                </div>');
     }
-
-    // Actualizar los atributos del modelo gasto
-    $gasto->update($request->all());
-
-    return redirect()->route('gastos.index')->with('success', 'Gasto actualizado exitosamente');
-}
 
     /**katherin <3
      * @param string $cod_gas

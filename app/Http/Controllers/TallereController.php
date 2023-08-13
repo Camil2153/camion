@@ -99,7 +99,10 @@ class TallereController extends Controller
         $tallere = Tallere::create($request->all());
 
         return redirect()->route('talleres.index')
-            ->with('success', 'Taller creado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Taller creado exitosamente.
+                                </div>');
     }
 
     /**
@@ -151,7 +154,11 @@ class TallereController extends Controller
         // Actualizar los atributos del modelo tallere
         $tallere->update($request->all());
     
-        return redirect()->route('talleres.index')->with('success', 'Taller actualizado exitosamente');
+        return redirect()->route('talleres.index')
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Taller actualizado exitosamente.
+                                </div>');
     }
 
     /**

@@ -165,7 +165,10 @@ class ServicioController extends Controller
         $servicio = Servicio::create($request->all());
 
         return redirect()->route('servicios.index')
-            ->with('success', 'Servicio creado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Servicio creado exitosamente.
+                                </div>');
     }
 
     /**
@@ -268,7 +271,10 @@ class ServicioController extends Controller
         }
 
         return redirect()->route('servicios.index')
-            ->with('success', 'Servicio actualizado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Servicio actualizado exitosamente.
+                                </div>');
     }
 
     /**

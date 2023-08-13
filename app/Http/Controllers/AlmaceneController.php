@@ -64,7 +64,10 @@ class AlmaceneController extends Controller
         $almacene = Almacene::create($request->all());
 
         return redirect()->route('almacenes.index')
-            ->with('success', 'Almacen creado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Almacen creado exitosamente.
+                                </div>');
     }
 
     /**
@@ -118,14 +121,17 @@ class AlmaceneController extends Controller
         $almacene->update($request->all());
 
         return redirect()->route('almacenes.index')
-            ->with('success', 'Almacen actualizado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Almacen actualizado exitosamente.
+                                </div>');
     }
 
     /**
      * @param string $cod_alm
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
-     */
+    */
     public function destroy($cod_alm)
     {
         try {

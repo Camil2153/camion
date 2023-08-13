@@ -57,7 +57,10 @@ class ConductoreController extends Controller
         $conductore = Conductore::create($request->all());
         
         return redirect()->route('conductores.index')
-            ->with('success', 'Conductor creado exitosamente');
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Conductor creado exitosamente.
+                                </div>');
     }
 
     /**
@@ -75,7 +78,10 @@ class ConductoreController extends Controller
         }
 
         return redirect()->route('conductores.index')
-            ->with('error', 'No se encontró el conductor');
+            ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                No se encontró el conductor.
+                            </div>');
     }
 
     /**
@@ -93,7 +99,10 @@ class ConductoreController extends Controller
         }
 
         return redirect()->route('conductores.index')
-            ->with('error', 'No se encontró el conductor');
+            ->with('error', '<div class="alert alert-danger alert-dismissible">
+                                    <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                                    No se encontró el conductor.
+                                </div>');
     }
 
     /**
@@ -119,7 +128,11 @@ class ConductoreController extends Controller
         // Actualizar los atributos del modelo conductore
         $conductore->update($request->all());
     
-        return redirect()->route('conductores.index')->with('success', 'Conductor actualizado exitosamente');
+        return redirect()->route('conductores.index')
+            ->with('success', '<div class="alert alert-success alert-dismissible">
+                                    <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
+                                    Conductor actualizado exitosamente.
+                                </div>');
     }
 
     /**
