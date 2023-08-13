@@ -131,7 +131,7 @@ class DocumentosCamioneController extends Controller
             // Intenta eliminar el registro del camión
             $documentosCamione = DocumentosCamione::find($cod_doc_cam);
             if (!$documentosCamione) {
-                return redirect()->route('DocumentosCamione.index')
+                return redirect()->route('documentos-camiones.index')
                     ->with('error', '<div class="alert alert-danger alert-dismissible">
                                       <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
                                       El documento del camión no existe.
@@ -140,7 +140,7 @@ class DocumentosCamioneController extends Controller
     
             $documentosCamione->delete();
     
-            return redirect()->route('DocumentosCamione.index')
+            return redirect()->route('documentos-camiones.index')
                 ->with('success', '<div class="alert alert-success alert-dismissible">
                                       <h5><i class="icon fas fa-check"></i> ¡Éxito!</h5>
                                       Documento del camión eliminado exitosamente.
@@ -153,7 +153,7 @@ class DocumentosCamioneController extends Controller
                 $errorMessage = 'Ha ocurrido un error al intentar eliminar el documento del camión: ' . $e->getMessage();
             }
     
-            return redirect()->route('DocumentosCamione.index')
+            return redirect()->route('documentos-camiones.index')
                 ->with('error', '<div class="alert alert-danger alert-dismissible">
                                   <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
                                   ' . $errorMessage . '
