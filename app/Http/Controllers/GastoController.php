@@ -50,7 +50,10 @@ class GastoController extends Controller
             $camion = Camione::where('con_cam', $conductor->dni_con)->first();
 
             if ($camion) {
-                $viaje = $camion->viajes()->latest()->first();
+                $viaje = $camion->viajes()
+                    ->where('est_via', 'en progreso')
+                    ->latest()
+                    ->first();
 
                 if ($viaje) {
                     $gastos = $viaje->gastos()->paginate();
