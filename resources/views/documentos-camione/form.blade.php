@@ -13,7 +13,11 @@
         </div>
         <div class="form-group">
             {{ Form::label('Estado') }}
-            {{ Form::select('est_doc_cam', ['válido' => 'Válido', 'vencido' => 'Vencido'], $documentosCamione->est_doc_cam, ['class' => 'form-control' . ($errors->has('est_doc_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
+            @if (Route::currentRouteName() === 'documentos-camiones.edit')
+            {{ Form::select('est_doc_cam', ['válido' => 'Válido', 'vencido' => 'Vencido'], $documentosCamione->est_doc_cam, ['class' => 'form-control' . ($errors->has('est_doc_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado', 'disabled' => 'disabled']) }}
+            @else           
+            {{ Form::select('est_doc_cam', ['válido' => 'Válido', 'vencido' => 'Vencido'], 'válido', ['class' => 'form-control' . ($errors->has('est_doc_cam') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado', 'disabled' => 'disabled']) }}
+            @endif
             {!! $errors->first('est_doc_cam', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

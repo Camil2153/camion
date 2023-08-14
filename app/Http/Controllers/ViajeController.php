@@ -201,7 +201,7 @@ class ViajeController extends Controller
                 // Verificar si los días restantes son mayores a 30
                 if ($diasRestantes > 30) {
                     // Poner el estado del documento del camion en "válido"
-                    $documento->est_doc_cam = 'valido';
+                    $documento->est_doc_cam = 'válido';
                     $documento->save();
                     // Poner el estado del camión en "Disponible" ya que el documento es válido
                     $camion->est_cam = 'disponible';

@@ -54,7 +54,7 @@ class DocumentosCamioneController extends Controller
     public function store(Request $request)
     {
         request()->validate(DocumentosCamione::$rules);
-
+        $request->merge(['est_doc_cam' => 'válido']);
         $documentosCamione = DocumentosCamione::create($request->all());
 
         return redirect()->route('documentos-camiones.index')
