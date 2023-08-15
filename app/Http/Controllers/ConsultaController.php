@@ -7,6 +7,11 @@ use App\Models\Viaje;
 
 class ConsultaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:consultas.index')->only('index');
+    }
+
     public function index(Request $request)
     {
         if ($request->has('date_range')) {

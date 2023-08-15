@@ -7,81 +7,91 @@
 @stop
 
 @section('content')
-<section class="content">
-    <div class="container-fluid">
-    <div class="row">
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>{{ $totalCamiones }}</h3>
-                        <p>Camiones</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa-solid fa-truck"></i>
-                    </div>
-                    <a href="camiones" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div><br>
+    @if($esAdmin)
+        <section class="content">
+            <div class="container-fluid">
 
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-warning">
-                    <div class="inner">
-                        <h3>{{ $camionesFueraDeServicio }}</h3>
-                        <p>Fuera de servicio</p>
+                @if($gastosPendientes)
+                    <div class="alert alert-info alert-dismissible">
+                        <h5><i class="icon fas fa-info"></i> Alerta!</h5>
+                        Hay gastos pendientes por aprobación en la tabla de gastos.
                     </div>
-                    <div class="icon">
-                        <i class="fa-solid fa-truck-ramp-box"></i>
-                    </div>
-                    <a href="{{ route('mostrar_camiones_fuera_de_servicio') }}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div><br>
+                @endif
+                
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{ $totalCamiones }}</h3>
+                                <p>Camiones</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa-solid fa-truck"></i>
+                            </div>
+                            <a href="camiones" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div><br>
 
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>{{ $totalRutas }}</h3>
-                        <p>Rutas</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa-solid fa-route"></i>
-                    </div>
-                    <a href="rutas" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div><br>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3>{{ $camionesFueraDeServicio }}</h3>
+                                <p>Fuera de servicio</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa-solid fa-truck-ramp-box"></i>
+                            </div>
+                            <a href="{{ route('mostrar_camiones_fuera_de_servicio') }}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div><br>
 
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        <h3>{{ $totalFallas }}</h3>
-                        <p>Fallas</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa-solid fa-bug"></i>
-                    </div>
-                    <a href="fallas" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>{{ $totalRutas }}</h3>
+                                <p>Rutas</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa-solid fa-route"></i>
+                            </div>
+                            <a href="rutas" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div><br>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>{{ $totalFallas }}</h3>
+                                <p>Fallas</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa-solid fa-bug"></i>
+                            </div>
+                            <a href="fallas" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div><br>
                 </div>
-            </div><br>
-        </div>
-        <section class="col-lg-7 connectedSortable ui-sortable">
-            <div class="card">
-                <div class="card-header ui-sortable-handle" style="cursor: move;">
-                    <h3 class="card-title">
-                        <i class="fas fa-chart-pie mr-1"></i>
-                        Numero de fallas por mes
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <div class="tab-content p-0">
-                        <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 305px;">
-                            <canvas id="fallas-chart"></canvas>
+                <section class="col-lg-7 connectedSortable ui-sortable">
+                    <div class="card">
+                        <div class="card-header ui-sortable-handle" style="cursor: move;">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-pie mr-1"></i>
+                                Numero de fallas por mes
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content p-0">
+                                <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 305px;">
+                                    <canvas id="fallas-chart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </section>
+            
             </div>
         </section>
-    
-    </div>
-</section>
+    @endif
 @stop
 
 @section('css')

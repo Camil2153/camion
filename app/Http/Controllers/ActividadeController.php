@@ -13,6 +13,14 @@ use App\Models\Sistema;
  */
 class ActividadeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:actividades.index')->only('index');
+        $this->middleware('can:actividades.create')->only('create', 'store');
+        $this->middleware('can:actividades.show')->only('show');
+        $this->middleware('can:actividades.edit')->only('edit', 'update');
+        $this->middleware('can:actividades.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

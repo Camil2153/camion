@@ -24,6 +24,7 @@ class RoleSeeder extends Seeder
         
         Permission::create(['name' => 'users.index', 'description' => 'Ver listado de usuarios'])->syncRoles([$role1,$role2]); 
         Permission::create(['name' => 'users.edit', 'description' => 'Asignar un rol'])->syncRoles([$role1,$role2]);
+        Permission::create(['name' => 'users.destroy', 'description' => 'Eliminar usuario'])->syncRoles([$role1,$role2]);
 
         Permission::create(['name' => 'roles.index', 'description' => 'Ver listado de roles'])->syncRoles([$role1,$role2]); 
         Permission::create(['name' => 'roles.create', 'description' => 'Registrar nuevo rol'])->syncRoles([$role1,$role2]); 
@@ -126,5 +127,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'documentos-camiones.show', 'description' => 'Ver documento de camion'])->syncRoles([$role1,$role2,$role3]);
         Permission::create(['name' => 'documentos-camiones.edit', 'description' => 'Editar documento de camion'])->syncRoles([$role1,$role2,$role3]);
         Permission::create(['name' => 'documentos-camiones.destroy', 'description' => 'Eliminar documento de camion'])->syncRoles([$role1,$role2,$role3]);
+
+        Permission::create(['name' => 'consultas.index', 'description' => 'Ver consultas'])->syncRoles([$role1,$role2]);
     }
 }
