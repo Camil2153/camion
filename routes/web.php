@@ -22,6 +22,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('camiones/fuera-de-servicio', [HomeController::class, 'mostrarCamionesFueraDeServicio'])->name('mostrar_camiones_fuera_de_servicio');
 
 Auth::routes();
+Route::resource('consultas', App\Http\Controllers\ConsultaController::class);
 Route::post('/actualizar-estado/{codigoServicio}', 'ServicioController@actualizarEstado')->name('servicios.actualizarEstado');
 Route::resource('viajes', App\Http\Controllers\ViajeController::class);
 Route::resource('gastos', App\Http\Controllers\GastoController::class);

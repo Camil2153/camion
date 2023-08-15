@@ -432,6 +432,11 @@ return [
             'icon'    => 'fas fa-fw fa-share',
             'can' => 'users.index',
             'submenu' => [
+                [
+                    'text' => 'Consultas',
+                    'url'  => 'consultas',
+                    'icon' => 'fa fa-credit-card',
+                ],
             ],
         ],
         [

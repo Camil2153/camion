@@ -28,15 +28,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property Empresa $empresa
  * @property Gasto[] $gastos
  * @property Ruta $ruta
+ * @property Trazabilidad[] $trazabilidads
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Viaje extends Model
 {
-    
-    protected $primaryKey = 'cod_via';
-    public $incrementing = false;
 
+    protected $primaryKey = 'cod_via';
+    public $incrementing = false;    
+    
     static $rules = [
 		'cod_via' => 'required|unique:viajes,cod_via',
 		'car_via' => 'required',
@@ -101,6 +102,14 @@ class Viaje extends Model
     public function ruta()
     {
         return $this->hasOne('App\Models\Ruta', 'cod_rut', 'rut_via');
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function trazabilidad()
+    {
+        return $this->hasMany('App\Models\Trazabilidad', 'via_tra', 'cod_via');
     }
     
 

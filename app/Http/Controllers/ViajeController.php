@@ -10,6 +10,7 @@ use App\Models\Cliente;
 use App\Models\Ruta;
 use App\Models\Empresa;
 use App\Models\Servicio;
+use App\Models\Trazabilidad;
 
 /**
  * Class ViajeController
@@ -84,12 +85,18 @@ class ViajeController extends Controller
         ]);
 
         $viaje = Viaje::create($request->all());
+        $trazabilidad = new Trazabilidad();
+        $trazabilidad->cod_tra = $viaje->cod_via; // Incrementar el código autoincremental
+        $trazabilidad->dat_pro_tra = now()->format('Y-m-d'); // Fecha de creación del viaje
+        $trazabilidad->tim_pro_tra = now()->format('H:i:s'); // Hora de creación del viaje
+        $trazabilidad->via_tra = $viaje->cod_via; // Código del viaje recién creado
+        $trazabilidad->save();
 
         $estadoViaje = $request->input('est_via');
 
         if ($estadoViaje === 'programado' || $estadoViaje === 'en progreso') {
             $camione = Camione::findOrFail($request->input('cam_via'));
-            $camione->est_cam = 'fuera de servicio';
+            $camione->est_cam = 'en viaje';
             $camione->save();
         } elseif ($estadoViaje === 'completado' || $estadoViaje === 'cancelado') {
             $camione = Camione::findOrFail($request->input('cam_via'));
@@ -429,9 +436,44 @@ class ViajeController extends Controller
 
         // Actualizar los atributos del modelo Viaje
         $viaje->update($request->all());
+        
 
         $estadoViaje = $request->input('est_via');
 
+        if ($estadoViaje === 'en progreso') {
+            // Buscar la trazabilidad asociada al viaje
+            $trazabilidad = Trazabilidad::where('via_tra', $viaje->cod_via)->first();
+    
+            // Verificar si se encontró la trazabilidad
+            if ($trazabilidad) {
+                // Actualizar la fecha y hora en campos dat_enp_tra y tim_enp_tra
+                $trazabilidad->dat_enp_tra = now()->toDateString();
+                $trazabilidad->tim_enp_tra = now()->toTimeString();
+                $trazabilidad->save();
+            }
+        } elseif($estadoViaje === 'completado'){
+                // Buscar la trazabilidad asociada al viaje
+                $trazabilidad = Trazabilidad::where('via_tra', $viaje->cod_via)->first();
+                    
+                // Verificar si se encontró la trazabilidad
+                if ($trazabilidad) {
+                    // Actualizar la fecha y hora en campos dat_enp_tra y tim_enp_tra
+                    $trazabilidad->dat_com_tra = now()->toDateString();
+                    $trazabilidad->tim_com_tra = now()->toTimeString();
+                    $trazabilidad->save();
+                }
+        } else{
+              // Buscar la trazabilidad asociada al viaje
+              $trazabilidad = Trazabilidad::where('via_tra', $viaje->cod_via)->first();
+                    
+              // Verificar si se encontró la trazabilidad
+              if ($trazabilidad) {
+                  // Actualizar la fecha y hora en campos dat_enp_tra y tim_enp_tra
+                  $trazabilidad->dat_can_tra = now()->toDateString();
+                  $trazabilidad->tim_can_tra = now()->toTimeString();
+                  $trazabilidad->save();
+              }
+        }
         if ($estadoViaje === 'programado' || $estadoViaje === 'en progreso') {
             $camione = Camione::findOrFail($request->input('cam_via'));
             $camione->est_cam = 'en viaje';
