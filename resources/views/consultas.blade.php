@@ -8,12 +8,9 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Selecciona un Intervalo de Fechas</h3>
-        </div>
         <div class="card-body">
             <form>
-                <div class="form-group text-center">
+                <div class="form-group">
                     <label for="date_range">Intervalo de Fechas:</label>
                     <input type="text" name="date_range" id="date_range" class="form-control" />
                 </div>
