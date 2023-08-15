@@ -452,16 +452,29 @@ class ViajeController extends Controller
                 $trazabilidad->save();
             }
         } elseif($estadoViaje === 'completado'){
-                // Buscar la trazabilidad asociada al viaje
-                $trazabilidad = Trazabilidad::where('via_tra', $viaje->cod_via)->first();
-                    
-                // Verificar si se encontró la trazabilidad
-                if ($trazabilidad) {
-                    // Actualizar la fecha y hora en campos dat_enp_tra y tim_enp_tra
-                    $trazabilidad->dat_com_tra = now()->toDateString();
-                    $trazabilidad->tim_com_tra = now()->toTimeString();
-                    $trazabilidad->save();
-                }
+
+            // Obtener la distancia de la ruta asociada al viaje
+            $distanciaRuta = $viaje->ruta->dis_rut;
+            
+            // Obtener el camión asociado al viaje
+            $camion = Camione::findOrFail($viaje->cam_via);
+            
+            // Sumar la distancia de la ruta al kilometraje del camión
+            $camion->kil_cam += $distanciaRuta;
+            
+            // Guardar los cambios en el camión
+            $camion->save();
+        
+            // Buscar la trazabilidad asociada al viaje
+            $trazabilidad = Trazabilidad::where('via_tra', $viaje->cod_via)->first();
+                
+            // Verificar si se encontró la trazabilidad
+            if ($trazabilidad) {
+                // Actualizar la fecha y hora en campos dat_enp_tra y tim_enp_tra
+                $trazabilidad->dat_com_tra = now()->toDateString();
+                $trazabilidad->tim_com_tra = now()->toTimeString();
+                $trazabilidad->save();
+            }
         } else{
               // Buscar la trazabilidad asociada al viaje
               $trazabilidad = Trazabilidad::where('via_tra', $viaje->cod_via)->first();

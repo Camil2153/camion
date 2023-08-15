@@ -425,12 +425,13 @@ return [
             'text'    => 'Simulación',
             'url'  => 'viajes',
             'icon' => 'fa fa-suitcase',
-            'can' => 'users.index',
+            'can' => 'viajes.index',
         ],
         [
             'text' => 'Consultas',
             'url'  => 'consultas',
             'icon' => 'fa fa-search',
+            'can' => 'consultas.index',
         ],
         [
             'text'    => 'Reportes',
