@@ -428,16 +428,9 @@ return [
             'can' => 'users.index',
         ],
         [
-            'text'    => 'Consultas',
-            'icon'    => 'fas fa-fw fa-share',
-            'can' => 'users.index',
-            'submenu' => [
-                [
-                    'text' => 'Consultas',
-                    'url'  => 'consultas',
-                    'icon' => 'fa fa-credit-card',
-                ],
-            ],
+            'text' => 'Consultas',
+            'url'  => 'consultas',
+            'icon' => 'fa fa-search',
         ],
         [
             'text'    => 'Reportes',

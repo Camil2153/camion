@@ -47,8 +47,15 @@
                     <td>{{ $gasto->fec_gas }}</td>
                     <td>{{ $gasto->categoriasGasto->nom_cat_gas }}</td>
                     <td>{{ $gasto->via_gas }}</td>
-                    <td>{{ $gasto->est_gas }}</td>
-
+                    <td>
+                    @if ($gasto->est_gas == 'aprobado')
+                        <span class="badge badge-success">{{ $gasto->est_gas }}</span>
+                    @elseif ($gasto->est_gas == 'pendiente')
+                        <span class="badge badge-info">{{ $gasto->est_gas }}</span>
+                    @else
+                        {{ $gasto->est_gas }}
+                    @endif
+                    </td>
                     <td>
                         <form action="{{ route('gastos.destroy',$gasto->cod_gas) }}" method="POST">
                             <a class="btn btn-sm btn-secundary" href="{{ route('gastos.show',$gasto->cod_gas) }}"><i class="fa fa-fw fa-eye"></i> {{ __('') }}</a>

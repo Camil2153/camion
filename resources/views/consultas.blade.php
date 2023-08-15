@@ -31,30 +31,22 @@
                         <th>Código</th>
                         <th>Origen</th>
                         <th>Destino</th>
-                        <th>Fecha Programado</th>
-                        <th>Hora Programado</th>
-                        <th>Fecha En progreso</th>
-                        <th>Hora En progreso</th>
-                        <th>Fecha Completado</th>
-                        <th>Hora Completado</th>
-                        <th>Fecha Cancelado</th>
-                        <th>Hora Cancelado</th>
+                        <th>Programado</th>
+                        <th>En progreso</th>
+                        <th>Completado</th>
+                        <th>Cancelado</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach($viajes as $viaje)
     <tr>
-        <td>{{ $viaje->cod_via }}</td>
+        <td style="color: red;">{{ $viaje->cod_via }}</td>
         <td>{{ $viaje->ruta->ori_rut }}</td>
         <td>{{ $viaje->ruta->des_rut }}</td>
-        <td>{{ $viaje->dat_pro_tra }}</td>
-        <td>{{ $viaje->tim_pro_tra }}</td>
-        <td>{{ $viaje->dat_enp_tra }}</td>
-        <td>{{ $viaje->tim_enp_tra }}</td>
-        <td>{{ $viaje->dat_com_tra }}</td>
-        <td>{{ $viaje->tim_com_tra }}</td>
-        <td>{{ $viaje->dat_can_tra }}</td>
-        <td>{{ $viaje->tim_can_tra }}</td>
+        <td>{{ $viaje->dat_pro_tra }}, {{ $viaje->tim_pro_tra }}</td>
+        <td>{{ $viaje->dat_enp_tra }}, {{ $viaje->tim_enp_tra }}</td>
+        <td>{{ $viaje->dat_com_tra }}, {{ $viaje->tim_com_tra }}</td>
+        <td>{{ $viaje->dat_can_tra }}, {{ $viaje->tim_can_tra }}</td>
     </tr>
 @endforeach
                 </tbody>
