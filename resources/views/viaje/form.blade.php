@@ -35,12 +35,12 @@
             </div>
             <div class="form-group">
                 {{ Form::label('Fecha de Llegada') }}
-                {{ Form::date('fec_lle_via', $viaje->fec_lle_via, ['class' => 'form-control' . ($errors->has('fec_lle_via') ? ' is-invalid' : ''), 'id' => 'fec_lle_via']) }}
+                {{ Form::date('fec_lle_via', $viaje->fec_lle_via, ['class' => 'form-control' . ($errors->has('fec_lle_via') ? ' is-invalid' : ''), 'id' => 'fec_lle_via', 'disabled' => 'disabled']) }}
                 {!! $errors->first('fec_lle_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="form-group">
                 {{ Form::label('Hora de Llegada') }}
-                {{ Form::time('hor_lle_via', $viaje->hor_lle_via, ['class' => 'form-control' . ($errors->has('hor_lle_via') ? ' is-invalid' : ''), 'id' => 'hor_lle_via']) }}
+                {{ Form::time('hor_lle_via', $viaje->hor_lle_via, ['class' => 'form-control' . ($errors->has('hor_lle_via') ? ' is-invalid' : ''), 'id' => 'hor_lle_via', 'disabled' => 'disabled']) }}
                 {!! $errors->first('hor_lle_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             </div>
