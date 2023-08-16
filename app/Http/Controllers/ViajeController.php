@@ -54,9 +54,10 @@ class ViajeController extends Controller
         $camiones = $camionesDisponibles->pluck('pla_cam', 'pla_cam');
         $clientes = Cliente::pluck('nom_cli', 'cod_cli');
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
+        $rutasDuraciones = Ruta::pluck('dur_rut', 'cod_rut')->toArray();
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
 
-        return view('viaje.create', compact('viaje', 'camiones', 'clientes', 'rutas', 'empresas', 'camionesDisponibles'));
+        return view('viaje.create', compact('viaje', 'camiones', 'clientes', 'rutas', 'empresas', 'camionesDisponibles', 'rutasDuraciones'));
     }
 
     /**
@@ -385,6 +386,7 @@ class ViajeController extends Controller
         $camiones = Camione::where('est_cam', 'disponible')->pluck('pla_cam', 'pla_cam');
         $clientes = Cliente::pluck('nom_cli', 'cod_cli');
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
+        $rutasDuraciones = Ruta::pluck('dur_rut', 'cod_rut')->toArray();
         $empresas = Empresa::pluck('nom_emp', 'nit_emp');
     
         // Obtén todos los camiones disponibles
@@ -399,7 +401,7 @@ class ViajeController extends Controller
             $camiones[$viaje->cam_via] = $viaje->cam_via;
         }
     
-        return view('viaje.edit', compact('viaje', 'camiones', 'clientes', 'rutas', 'empresas'));
+        return view('viaje.edit', compact('viaje', 'camiones', 'clientes', 'rutas', 'empresas', 'rutasDuraciones'));
     }
 
     /**

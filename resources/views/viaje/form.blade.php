@@ -12,28 +12,32 @@
                 {!! $errors->first('pes_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="form-group">
-                {{ Form::label('Ruta') }}
-                {{ Form::select('rut_via', $rutas, $viaje->rut_via, ['class' => 'form-control', 'onchange' => 'getDuracionRuta(this.value)']) }}
-                {!! $errors->first('rut_via', '<div class="invalid-feedback">:message</div>') !!}
+                <label for="rut_via">Ruta</label>
+                <select class="form-control" id="rut_via" name="rut_via" required>
+                    <option value="">Seleccionar ruta</option>
+                    @foreach ($rutas as $cod_rut => $nom_rut)
+                        <option value="{{ $cod_rut }}" data-duracion="{{ $rutasDuraciones[$cod_rut] }}">{{ $nom_rut }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 {{ Form::label('Fecha de salida') }}
-                {{ Form::date('fec_sal_via', $viaje->fec_sal_via, ['class' => 'form-control' . ($errors->has('fec_sal_via') ? ' is-invalid' : '')]) }}
+                {{ Form::date('fec_sal_via', $viaje->fec_sal_via, ['class' => 'form-control' . ($errors->has('fec_sal_via') ? ' is-invalid' : ''), 'id' => 'fec_sal_via']) }}
                 {!! $errors->first('fec_sal_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="form-group">
                 {{ Form::label('Hora de Salida') }}
-                {{ Form::time('hor_sal_via', $viaje->hor_sal_via, ['class' => 'form-control' . ($errors->has('hor_sal_via') ? ' is-invalid' : '')]) }}
+                {{ Form::time('hor_sal_via', $viaje->hor_sal_via, ['class' => 'form-control' . ($errors->has('hor_sal_via') ? ' is-invalid' : ''), 'id' => 'hor_sal_via']) }}
                 {!! $errors->first('hor_sal_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="form-group">
                 {{ Form::label('Fecha de Llegada') }}
-                {{ Form::date('fec_lle_via', $viaje->fec_lle_via, ['class' => 'form-control' . ($errors->has('fec_lle_via') ? ' is-invalid' : '')]) }}
+                {{ Form::date('fec_lle_via', $viaje->fec_lle_via, ['class' => 'form-control' . ($errors->has('fec_lle_via') ? ' is-invalid' : ''), 'id' => 'fec_lle_via']) }}
                 {!! $errors->first('fec_lle_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="form-group">
                 {{ Form::label('Hora de Llegada') }}
-                {{ Form::time('hor_lle_via', $viaje->hor_lle_via, ['class' => 'form-control' . ($errors->has('hor_lle_via') ? ' is-invalid' : '')]) }}
+                {{ Form::time('hor_lle_via', $viaje->hor_lle_via, ['class' => 'form-control' . ($errors->has('hor_lle_via') ? ' is-invalid' : ''), 'id' => 'hor_lle_via']) }}
                 {!! $errors->first('hor_lle_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             </div>
@@ -71,6 +75,9 @@
                 {{ Form::label('Empresa') }}
                 {{ Form::select('emp_via', $empresas, $viaje->emp_via, ['class' => 'form-control' . ($errors->has('emp_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar empresa']) }}
                 {!! $errors->first('emp_via', '<div class="invalid-feedback">:message</div>') !!}
+            </div>
+            <div class="form-group" style="display: none;">
+                {{ Form::hidden('dur_rut', null, ['id' => 'dur_rut']) }}
             </div>
         </div>
     </div>
@@ -110,3 +117,45 @@
         flex-direction: column;
     }
 </style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function parseDurationText(durationText) {
+        var regex = /(\d+)\s+hora\(s\)\s+(\d+)\s+minuto\(s\)/;
+        var match = durationText.match(regex);
+
+        if (match) {
+            var hours = parseInt(match[1]);
+            var minutes = parseInt(match[2]);
+            return hours * 60 + minutes; // Convertir a minutos
+        }
+
+        return 0;
+    }
+
+    function calculateArrivalDateTime() {
+        var duracionRutaText = $('#rut_via option:selected').attr('data-duracion');
+        var duracionRuta = parseDurationText(duracionRutaText);
+
+        var fechaSalida = new Date($('#fec_sal_via').val() + 'T' + $('#hor_sal_via').val());
+        var tiempoDuracion = duracionRuta;
+        var fechaLlegada = new Date(fechaSalida.getTime() + tiempoDuracion * 60000); // Convertir minutos a milisegundos
+
+        // Ajustar la hora de llegada para la zona horaria local
+        var localFechaLlegada = new Date(fechaLlegada.getTime() - fechaLlegada.getTimezoneOffset() * 60000);
+        var formattedFechaLlegada = localFechaLlegada.toISOString().slice(0, 16);
+
+        $('#fec_lle_via').val(formattedFechaLlegada.slice(0, 10));
+        $('#hor_lle_via').val(formattedFechaLlegada.slice(11, 16));
+    }
+
+    // Llama a la función de cálculo al seleccionar una opción de ruta
+    $('#rut_via').on('change', function() {
+        calculateArrivalDateTime();
+    });
+
+    // Llama a la función de cálculo al cambiar la fecha de salida
+    $('#fec_sal_via, #hor_sal_via').on('change', function() {
+        calculateArrivalDateTime();
+    });
+</script>
