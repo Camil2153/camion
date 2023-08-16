@@ -112,8 +112,8 @@
             {!! $errors->first('ale_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-        {{ Form::label('Costo') }}
-            {{ Form::text('cos_ser','', ['id' => 'cos_ser', 'class' => 'form-control' . ($errors->has('cos_ser') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
+            {{ Form::label('Costo') }}
+            {{ Form::text('cos_ser', $servicio->cos_ser, ['id' => 'cos_ser', 'class' => 'form-control' . ($errors->has('cos_ser') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese el costo de mano de obra']) }}
             {!! $errors->first('cos_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     <div class="box-body form-grid">
@@ -236,109 +236,20 @@
     });
     </script>
 
-    
-<script>
-    // Obtener el campo de input del costo
+    <script>
     var cosComInput = document.getElementById('cos_ser');
-    // Escuchar el evento de entrada en el campo de input
-    cosComInput.addEventListener('input', function(event) {
-        // Obtener el valor sin separadores de miles
-        var rawValue = event.target.value.replace(/\./g, '');
 
-        // Formatear el valor con separadores de miles y decimales
-        var formattedValue = addThousandSeparators(rawValue, 2);
-
-        // Mostrar el valor formateado en el campo de input
-        event.target.value = formattedValue;
-    });
-
-    // Función para agregar separadores de miles y decimales
-    function addThousandSeparators(value, decimalPlaces) {
-        var parts = value.toString().split(".");
-        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        var formattedValue = parts.join(".");
-        
-        if (decimalPlaces && parts.length > 1) {
-            formattedValue += '.' + parts[1].slice(0, decimalPlaces);
-        }
-
-        return formattedValue;
-    }
-
-    // Escuchar el evento de envío del formulario
     cosComInput.closest('form').addEventListener('submit', function(event) {
-        // Eliminar los separadores de miles antes de enviar el formulario
+        // Obtener el valor del campo de costo sin los separadores de miles
         var rawValue = cosComInput.value.replace(/\./g, '');
-        cosComInput.value = rawValue;
-    });
 
+        // Eliminar los dos ceros innecesarios del final
+        var sanitizedValue = rawValue.replace(/\.00$/, '');
 
-
-    var intSerInput = document.getElementById('int_ser');
-    // Escuchar el evento de entrada en el campo de input
-    intSerInput.addEventListener('input', function(event) {
-        // Obtener el valor sin separadores de miles
-        var rawValue = event.target.value.replace(/\./g, '');
-
-        // Formatear el valor con separadores de miles y decimales
-        var formattedValue = addThousandSeparators(rawValue, 2);
-
-        // Mostrar el valor formateado en el campo de input
-        event.target.value = formattedValue;
-    });
-
-    // Función para agregar separadores de miles y decimales
-    function addThousandSeparators(value, decimalPlaces) {
-        var parts = value.toString().split(".");
-        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        var formattedValue = parts.join(".");
+        // Agregar separadores de miles
+        var formattedValue = addThousandSeparators(sanitizedValue, 2);
         
-        if (decimalPlaces && parts.length > 1) {
-            formattedValue += '.' + parts[1].slice(0, decimalPlaces);
-        }
-
-        return formattedValue;
-    }
-
-    // Escuchar el evento de envío del formulario
-    intSerInput.closest('form').addEventListener('submit', function(event) {
-        // Eliminar los separadores de miles antes de enviar el formulario
-        var rawValue = intSerInput.value.replace(/\./g, '');
-        intSerInput.value = rawValue;
+        // Asignar el valor formateado al campo de costo antes de enviar el formulario
+        cosComInput.value = formattedValue;
     });
-
-
-    
-    var intAleSerInput = document.getElementById('int_ale_ser');
-        // Escuchar el evento de entrada en el campo de input
-        intAleSerInput.addEventListener('input', function(event) {
-        // Obtener el valor sin separadores de miles
-        var rawValue = event.target.value.replace(/\./g, '');
-
-        // Formatear el valor con separadores de miles y decimales
-        var formattedValue = addThousandSeparators(rawValue, 2);
-
-        // Mostrar el valor formateado en el campo de input
-        event.target.value = formattedValue;
-    });
-
-    // Función para agregar separadores de miles y decimales
-    function addThousandSeparators(value, decimalPlaces) {
-        var parts = value.toString().split(".");
-        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        var formattedValue = parts.join(".");
-        
-        if (decimalPlaces && parts.length > 1) {
-            formattedValue += '.' + parts[1].slice(0, decimalPlaces);
-        }
-
-        return formattedValue;
-    }
-
-    // Escuchar el evento de envío del formulario
-    intAleSerInput.closest('form').addEventListener('submit', function(event) {
-        // Eliminar los separadores de miles antes de enviar el formulario
-        var rawValue = intAleSerInput.value.replace(/\./g, '');
-        intAleSerInput.value = rawValue;
-    });
-</script>
+    </script>

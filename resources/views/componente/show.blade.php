@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group">
                             <strong>Costo:</strong>
-                            {{ $componente->cos_com }}
+                            {{ number_format($componente->cos_com, 2, ',', '.') }}
                         </div>
                         <div class="form-group">
                             <strong>Sistema:</strong>

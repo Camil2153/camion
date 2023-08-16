@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <strong>Monto:</strong>
-                            {{ $gasto->mon_gas }}
+                            {{ number_format($gasto->mon_gas, 2, ',', '.') }}
                         </div>
                         <div class="form-group">
                             <strong>Fecha:</strong>

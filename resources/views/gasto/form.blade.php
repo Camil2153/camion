@@ -8,9 +8,8 @@
         </div>
         <div class="form-group">
             {{ Form::label('Monto') }}
-             
-           {{ Form::text('mon_gas', '', ['id' => 'mon_gas', 'class' => 'form-control' . ($errors->has('mon_gas') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
-           {!! $errors->first('mon_gas', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::text('mon_gas', $gasto->mon_gas, ['id' => 'mon_gas', 'class' => 'form-control' . ($errors->has('mon_gas') ? ' is-invalid' : '')]) }}
+            {!! $errors->first('mon_gas', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Fecha') }}
@@ -44,39 +43,20 @@
     </div>
 </div>
 
-<script>
-    // Obtener el campo de input del costo
+    <script>
     var cosComInput = document.getElementById('mon_gas');
 
-    // Escuchar el evento de entrada en el campo de input
-    cosComInput.addEventListener('input', function(event) {
-        // Obtener el valor sin separadores de miles
-        var rawValue = event.target.value.replace(/\./g, '');
-
-        // Formatear el valor con separadores de miles y decimales
-        var formattedValue = addThousandSeparators(rawValue, 2);
-
-        // Mostrar el valor formateado en el campo de input
-        event.target.value = formattedValue;
-    });
-
-    // Función para agregar separadores de miles y decimales
-    function addThousandSeparators(value, decimalPlaces) {
-        var parts = value.toString().split(".");
-        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        var formattedValue = parts.join(".");
-        
-        if (decimalPlaces && parts.length > 1) {
-            formattedValue += '.' + parts[1].slice(0, decimalPlaces);
-        }
-
-        return formattedValue;
-    }
-
-    // Escuchar el evento de envío del formulario
     cosComInput.closest('form').addEventListener('submit', function(event) {
-        // Eliminar los separadores de miles antes de enviar el formulario
+        // Obtener el valor del campo de costo sin los separadores de miles
         var rawValue = cosComInput.value.replace(/\./g, '');
-        cosComInput.value = rawValue;
+
+        // Eliminar los dos ceros innecesarios del final
+        var sanitizedValue = rawValue.replace(/\.00$/, '');
+
+        // Agregar separadores de miles
+        var formattedValue = addThousandSeparators(sanitizedValue, 2);
+        
+        // Asignar el valor formateado al campo de costo antes de enviar el formulario
+        cosComInput.value = formattedValue;
     });
-</script>
+    </script>

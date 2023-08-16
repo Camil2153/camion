@@ -16,7 +16,10 @@
                 <select class="form-control" id="rut_via" name="rut_via" required>
                     <option value="">Seleccionar ruta</option>
                     @foreach ($rutas as $cod_rut => $nom_rut)
-                        <option value="{{ $cod_rut }}" data-duracion="{{ $rutasDuraciones[$cod_rut] }}">{{ $nom_rut }}</option>
+                        @php
+                            $selected = ($viaje->ruta && $viaje->ruta->cod_rut == $cod_rut) ? 'selected' : '';
+                        @endphp
+                        <option value="{{ $cod_rut }}" data-duracion="{{ $rutasDuraciones[$cod_rut] }}" {{ $selected }}>{{ $nom_rut }}</option>
                     @endforeach
                 </select>
             </div>

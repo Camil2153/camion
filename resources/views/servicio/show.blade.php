@@ -81,7 +81,7 @@
                         </div>
                         <div class="form-group">
                             <strong>Costo:</strong>
-                            {{ $servicio->cos_ser }}
+                            {{ number_format($servicio->cos_ser, 2, ',', '.') }}
                         </div>
                         <div class="form-group">
                             <strong>Almacen:</strong>
