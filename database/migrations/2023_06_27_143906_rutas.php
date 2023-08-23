@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('ori_rut', 40); // ciudad de origen de la ruta
             $table->string('des_rut', 40); // ciudad de destino de la ruta
             $table->string('dis_rut', 15); // distancia ruta
-            $table->string('dur_rut', 30); // duracion ruta
+            $table->string('dur_rut', 40); // duracion ruta
             $table->string('est_rut', 25); // estado ruta
             $table->timestamps();
         }); 
