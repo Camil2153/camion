@@ -26,25 +26,62 @@
                     <thead>
                         <tr>
                             <th>Código</th>
+                            <th>Carga</th>
                             <th>Origen</th>
                             <th>Destino</th>
-                            <th>Programado</th>
-                            <th>En progreso</th>
-                            <th>Completado</th>
-                            <th>Cancelado</th>
+                            <th>Estado</th>
+                            <th>Fecha y Hora</th>
+                            <th>Camión</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($viajes as $viaje)
-                        <tr>
-                            <td style="color: red;">{{ $viaje->cod_via }}</td>
-                            <td>{{ $viaje->ruta->ori_rut }}</td>
-                            <td>{{ $viaje->ruta->des_rut }}</td>
-                            <td>{{ $viaje->dat_pro_tra }}, {{ $viaje->tim_pro_tra }}</td>
-                            <td>{{ $viaje->dat_enp_tra }}, {{ $viaje->tim_enp_tra }}</td>
-                            <td>{{ $viaje->dat_com_tra }}, {{ $viaje->tim_com_tra }}</td>
-                            <td>{{ $viaje->dat_can_tra }}, {{ $viaje->tim_can_tra }}</td>
-                        </tr>
+                        @php
+                            $estadoViajes = [];
+
+                            foreach ($viajes as $viaje) {
+                                $estados = [
+                                    'programado' => $viaje->dat_pro_tra ? strtotime($viaje->dat_pro_tra . ' ' . $viaje->tim_pro_tra) : null,
+                                    'en progreso' => $viaje->dat_enp_tra ? strtotime($viaje->dat_enp_tra . ' ' . $viaje->tim_enp_tra) : null,
+                                    'completado' => $viaje->dat_com_tra ? strtotime($viaje->dat_com_tra . ' ' . $viaje->tim_com_tra) : null,
+                                    'cancelado' => $viaje->dat_can_tra ? strtotime($viaje->dat_can_tra . ' ' . $viaje->tim_can_tra) : null,
+                                ];
+
+                                foreach ($estados as $estado => $fechaHora) {
+                                    if ($fechaHora) {
+                                        $estadoViajes[] = [
+                                            'viaje' => $viaje,
+                                            'estado' => $estado,
+                                            'fechaHora' => $fechaHora,
+                                        ];
+                                    }
+                                }
+                            }
+
+                            usort($estadoViajes, function ($a, $b) {
+                                return $b['fechaHora'] - $a['fechaHora'];
+                            });
+                        @endphp
+
+                        @foreach($estadoViajes as $estadoViaje)
+                            <tr>
+                                <td style="color: red;"><strong>{{ $estadoViaje['viaje']->cod_via }}</strong></td>
+                                <td>{{ $estadoViaje['viaje']->car_via }}</td>
+                                <td>{{ $estadoViaje['viaje']->ruta->ori_rut }}</td>
+                                <td>{{ $estadoViaje['viaje']->ruta->des_rut }}</td>
+                                <td>
+                                    @if ($estadoViaje['estado'] === 'completado')
+                                        <span class="badge badge-success">{{ $estadoViaje['estado'] }}</span>
+                                    @elseif ($estadoViaje['estado'] === 'cancelado')
+                                        <span class="badge badge-danger">{{ $estadoViaje['estado'] }}</span>
+                                    @elseif ($estadoViaje['estado'] === 'en progreso')
+                                        <span class="badge badge-warning">{{ $estadoViaje['estado'] }}</span>
+                                    @elseif ($estadoViaje['estado'] === 'programado')
+                                        <span class="badge badge-primary">{{ $estadoViaje['estado'] }}</span>
+                                    @endif
+                                </td>
+                                <td>{{ date('Y-m-d, H:i:s', $estadoViaje['fechaHora']) }}</td>
+                                <td>{{ $estadoViaje['viaje']->cam_via }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

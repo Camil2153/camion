@@ -141,5 +141,15 @@ class HomeController extends Controller
             'estadosFallaPorSistema' => $estadosFallaPorSistema,
             'porcentajesServicios' => $porcentajes
         ]);
-    }    
+    }  
+    
+    public function mostrarCamionesFueraDeServicio()
+    {
+        // Obtener los camiones con estado "fuera de servicio"
+        $camionesFueraDeServicio = Camione::where('est_cam', 'fuera de servicio')->get();
+
+        // Pasar los camiones a la vista
+        return view('camione.index', ['camiones' => $camionesFueraDeServicio]);
+    }  
+    
 }
