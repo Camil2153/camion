@@ -29,8 +29,8 @@
                 </div>
                 <div class="form-group">
                     {{ Form::label('Estado') }}
-                    @if (Route::currentRouteName() === 'conductores.edit') <!-- Verificar si es una ruta de edición -->
-                    {{ Form::select('est_con', ['bloqueado' => 'Bloqueado'], $conductore->est_con, ['class' => 'form-control' . ($errors->has('est_con') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado']) }}
+                    @if (Route::currentRouteName() === 'conductores.edit')
+                    {{ Form::select('est_con', ['activo' => 'Activo', 'asignado' => 'Asignado', 'bloqueado' => 'Bloqueado'], $conductore->est_con, ['class' => 'form-control' . ($errors->has('est_con') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado', 'disabled' => 'disabled']) }}
                     @else
                     {{ Form::select('est_con', ['activo' => 'Activo', 'asignado' => 'Asignado', 'bloqueado' => 'Bloqueado'], 'activo', ['class' => 'form-control' . ($errors->has('est_con') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar estado', 'disabled' => 'disabled']) }}
                     @endif

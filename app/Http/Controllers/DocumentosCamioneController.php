@@ -29,6 +29,27 @@ class DocumentosCamioneController extends Controller
     {
         $documentosCamiones = DocumentosCamione::paginate();
 
+        foreach ($documentosCamiones as $documentoCamion) {
+            $est_doc_cam = 'válido';
+    
+            if ($documentoCamion->vig_doc_cam < now()) {
+                $est_doc_cam = 'vencido';
+            }
+    
+            $camion = $documentoCamion->camione;
+    
+            if ($est_doc_cam === 'vencido') {
+                $camion->est_cam = 'fuera de servicio';
+            } else {
+                $camion->est_cam = 'disponible';
+            }
+    
+            $documentoCamion->est_doc_cam = $est_doc_cam;
+    
+            $camion->save();
+            $documentoCamion->save();
+        }
+
         return view('documentos-camione.index', compact('documentosCamiones'))
             ->with('i', (request()->input('page', 1) - 1) * $documentosCamiones->perPage());
     }

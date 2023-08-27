@@ -35,7 +35,12 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>{{ $camionesFueraDeServicio }}</h3>
+                        <h3>
+                            @if($cantidadNuevosCamionesFueraDeServicio > 0)
+                                <i class="fas fa-exclamation-triangle" id="icono-camiones"></i>
+                            @endif
+                            {{ $camionesFueraDeServicio }}
+                        </h3>
                         <p>Fuera de servicio</p>
                     </div>
                     <div class="icon">

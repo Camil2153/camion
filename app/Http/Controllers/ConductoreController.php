@@ -27,10 +27,45 @@ class ConductoreController extends Controller
     public function index()
     {
         $conductores = Conductore::paginate();
-
+    
+        foreach ($conductores as $conductor) {
+            if ($conductor->fec_ven_lic_con < now()) {
+                $conductor->est_con = 'bloqueado';
+    
+                if ($conductor->camiones->isNotEmpty()) {
+                    foreach ($conductor->camiones as $camion) {
+                        $camion->est_cam = 'fuera de servicio';
+                        $camion->save();
+                    }
+                }
+            } elseif ($conductor->est_con === 'asignado') {
+                $camiones_asignados = $conductor->camiones;
+    
+                foreach ($camiones_asignados as $camion) {
+                    if ($conductor->fec_ven_lic_con < now()) {
+                        $camion->est_cam = 'fuera de servicio';
+                        $camion->save();
+                        $conductor->est_con = 'bloqueado';
+                        break;
+                    }
+                }
+            } elseif ($conductor->camiones->isNotEmpty()) {
+                $conductor->est_con = 'asignado';
+                foreach ($conductor->camiones as $camion) {
+                    $camion->est_cam = 'disponible';
+                    $camion->save();
+                }
+            } else {
+                $conductor->est_con = 'activo';
+            }
+    
+            $conductor->save();
+        }
+    
         return view('conductore.index', compact('conductores'))
             ->with('i', (request()->input('page', 1) - 1) * $conductores->perPage());
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -51,9 +86,8 @@ class ConductoreController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge(['est_con' => 'activo']);
         request()->validate(Conductore::$rules);
-
+        $request->merge(['est_con' => 'activo']);
         $conductore = Conductore::create($request->all());
         
         return redirect()->route('conductores.index')

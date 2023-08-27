@@ -355,18 +355,64 @@ class ViajeController extends Controller
 
             // Verificar si se cumple alguna de las condiciones, agregar la alerta al array de alertas con su color
             if ($alertaAsignada) {
-                $alertas[] = [
-                    'mensaje' => $servicioReciente->ale_ser,
-                    'color' => $colorAlerta,
-                ];
+                $diasRestantesAlerta = isset($fechaLimite) ? now()->diffInDays($fechaLimite, false) : null;
+                $diasVencidosAlerta = isset($fechaLimite) ? abs($diasRestantesAlerta) : null;
 
-                // Verificar si el servicio actual está en alerta y agregarlo a la lista de servicios en alerta
-                $serviciosEnAlerta[] = [
-                    'codigo' => $servicioReciente->cod_ser,
-                    'fecha' => isset($fechaLimite) ? $fechaLimite->format('Y-m-d') : null,
-                    'categoria' => $servicioReciente->tip_ser,
-                    'monto' => $servicioReciente->cos_ser,
+                // Calcular los kilómetros restantes o excedidos para la alerta
+                $kilometrosRestantesAlerta = isset($kilometrajeLimite) ? $kilometrajeLimite - $kilometrajeEsperado : null;
+                $kilometrosExcedidosAlerta = isset($kilometrajeLimite) && $kilometrajeEsperado > $kilometrajeLimite ? $kilometrajeEsperado - $kilometrajeLimite : null;
+
+                $mensajePrincipal = $servicioReciente->ale_ser;
+                $mensajeAdicional = '';
+
+                if ($servicioReciente->tip_int_ser === 'dias') {
+                    if ($diasRestantesAlerta !== null) {
+                        if ($diasRestantesAlerta > 0) {
+                            $mensajeAdicional = 'Quedan ' . $diasRestantesAlerta . ' días.';
+                        } elseif ($diasRestantesAlerta === 0) {
+                            $mensajeAdicional = 'Vence hoy.';
+                        } else {
+                            $mensajeAdicional = 'Se excedió hace ' . abs($diasVencidosAlerta) . ' días.';
+                        }
+                    } elseif ($diasVencidosAlerta !== null) {
+                        $mensajeAdicional = 'Se excedió hace ' . $diasVencidosAlerta . ' días.';
+                    }
+                } elseif ($servicioReciente->tip_int_ser === 'kilometros') {
+                    if ($kilometrosRestantesAlerta !== null) {
+                        if ($kilometrosRestantesAlerta >= 0) {
+                            $mensajeAdicional = 'Quedan ' . number_format($kilometrosRestantesAlerta, 2) . ' kilómetros.';
+                        } else {
+                            $mensajeAdicional = 'Se excedió hace ' . number_format(abs($kilometrosRestantesAlerta), 2) . ' kilómetros.';
+                        }
+                    } elseif ($kilometrosExcedidosAlerta !== null) {
+                        $mensajeAdicional = 'Se excedió hace ' . number_format($kilometrosExcedidosAlerta, 2) . ' kilómetros.';
+                    }
+                }
+                
+                // Agregar la condición para vencimiento hoy solo si no hay otro mensaje adicional
+                if (isset($fechaLimite) && $fechaLimite->isToday() && $mensajeAdicional === '') {
+                    $mensajeAdicional = 'Vence hoy.';
+                }
+                
+                // Agregar los enunciados al arreglo de la alerta
+                $alerta = [
+                    'mensaje' => $mensajePrincipal,
+                    'color' => $colorAlerta,
+                    'mensaje_adicional' => $mensajeAdicional,
                 ];
+                
+                $alertas[] = $alerta;
+
+            // Verificar si el servicio actual está en alerta y agregarlo a la lista de servicios en alerta
+            $servicioEnAlerta = [
+                'codigo' => $servicioReciente->cod_ser,
+                'fecha' => isset($fechaLimite) ? $fechaLimite->format('Y-m-d') : null,
+                'categoria' => $servicioReciente->tip_ser,
+                'monto' => $servicioReciente->cos_ser,
+            ];
+
+            $serviciosEnAlerta[] = $servicioEnAlerta;
+        
             }
         }
 

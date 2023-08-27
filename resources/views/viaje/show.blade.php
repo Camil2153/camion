@@ -200,8 +200,6 @@
                                                     $totalMonto += $gasto->mon_gas;
                                                 @endphp
                                             @endforeach
-
-                                            <!-- Filas para la información adicional de los servicios asociados al camión en alerta -->
                                             @foreach ($serviciosEnAlerta as $infoServicio)
                                                 <tr>
                                                     <td>{{ $infoServicio['codigo'] }}</td>
@@ -213,7 +211,6 @@
                                                     $totalMonto += $infoServicio['monto'];
                                                 @endphp
                                             @endforeach
-                                            <!-- Fila para el total -->
                                             <tr>
                                                 <td colspan="3"><strong>Total</strong></td>
                                                 <td>{{ number_format($totalMonto, 2, '.', ',') }}</td>
@@ -248,15 +245,19 @@
                                                             $iconClass = 'fas fa-question'; // Ícono por defecto si el color no coincide
                                                             break;
                                                     }
+                                                    $mensajeCompleto = $alerta['mensaje'];
+                                                    if (isset($alerta['mensaje_adicional']) && $alerta['mensaje_adicional']) {
+                                                        $mensajeCompleto .= ' ' . $alerta['mensaje_adicional'];
+                                                    }
                                                 @endphp
                                                 <div class="alert alert-{{ $alerta['color'] }} alert-dismissible fade show" role="alert">
                                                     <h5>
                                                         <i class="{{ $iconClass }}"></i> Alerta!
                                                     </h5>
-                                                    {{ $alerta['mensaje'] }}
+                                                    {{ $mensajeCompleto }}
                                                 </div>
                                             @endforeach
-                                            @else
+                                        @else
                                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                                 <h5>
                                                     <i class="fas fa-info-circle"></i> No hay predicciones de fallas.
@@ -370,5 +371,4 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 @stop

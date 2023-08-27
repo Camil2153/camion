@@ -38,7 +38,7 @@ class Conductore extends Model
 		'num_lic_con' => 'required',
 		'fec_ven_lic_con' => 'required',
 		'fec_con_con' => 'required',
-		'est_con' => 'required',
+		'est_con' => 'sometimes',
 		'fec_nac_con' => 'required',
 		'dir_con' => 'required',
 		'num_tel_con' => 'required',

@@ -31,7 +31,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Estado Actual') }}
-                    @if (Route::currentRouteName() === 'fallas.edit') <!-- Verificar si es una ruta de edición -->
+                    @if (Route::currentRouteName() === 'fallas.edit')
                     {{ Form::select('est_act_fal', ['pendiente' => 'Pendiente de reparación', 'proceso' => 'En proceso de reparación', 'reparada' => 'Reparada'], $falla->est_act_fal, ['class' => 'form-control' . ($errors->has('est_act_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione el estado', 'disabled' => 'disabled']) }}
                     @else
                         {{ Form::select('est_act_fal', ['pendiente' => 'Pendiente de reparación', 'proceso' => 'En proceso de reparación', 'reparada' => 'Reparada'], 'pendiente', ['class' => 'form-control' . ($errors->has('est_act_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione el estado', 'disabled' => 'disabled']) }}

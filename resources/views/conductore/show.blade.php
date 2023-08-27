@@ -41,7 +41,11 @@
                         </div>
                         <div class="form-group">
                             <strong>Estado:</strong>
-                            {{ $conductore->est_con }}
+                            <span class="estado-conductor {{ str_replace(' ', '-', $conductore->est_con) }}">
+                                <div class="estado-conductor-box">
+                                    {{ $conductore->est_con }}
+                                </div>
+                            </span>
                         </div>
                         <div class="form-group">
                             <strong>Fecha de nacimiento:</strong>
@@ -77,6 +81,25 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .estado-conductor.activo {
+            background-color: green;
+            color: white;
+        }
+        .estado-conductor.asignado {
+            background-color: yellow;
+            color: black;
+        }
+        .estado-conductor.bloqueado {
+            background-color: red;
+            color: white;
+        }
+        .estado-conductor-box {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+    </style>
 @stop
 
 @section('js')

@@ -126,6 +126,15 @@ class HomeController extends Controller
             ];
         });
 
+        // Obtener la cantidad de camiones fuera de servicio
+        $cantidadCamionesFueraDeServicio = Camione::where('est_cam', 'fuera de servicio')->count();
+
+        // Obtener la cantidad de camiones fuera de servicio desde la última visita
+        $cantidadNuevosCamionesFueraDeServicio = $cantidadCamionesFueraDeServicio - session('cantidad_camiones_fuera_de_servicio', $cantidadCamionesFueraDeServicio);
+
+        // Actualizar la cantidad en la variable de sesión
+        session(['cantidad_camiones_fuera_de_servicio' => $cantidadCamionesFueraDeServicio]);
+
         // Pasar los valores a la vista
         return view('home', [
             'gastosPendientes' => $gastosPendientes,
@@ -139,17 +148,21 @@ class HomeController extends Controller
             'evolucionGastosData' => $evolucionGastosData,
             'viajesData' => $viajesData,
             'estadosFallaPorSistema' => $estadosFallaPorSistema,
-            'porcentajesServicios' => $porcentajes
+            'porcentajesServicios' => $porcentajes,
+            'cantidadNuevosCamionesFueraDeServicio' => $cantidadNuevosCamionesFueraDeServicio,
         ]);
     }  
     
     public function mostrarCamionesFueraDeServicio()
     {
-        // Obtener los camiones con estado "fuera de servicio"
+        // Obtener los camiones fuera de servicio
         $camionesFueraDeServicio = Camione::where('est_cam', 'fuera de servicio')->get();
-
+    
+        // Marcar los camiones como "vistos" para que el icono desaparezca
+        session(['cantidad_camiones_fuera_de_servicio' => $camionesFueraDeServicio->count()]);
+    
         // Pasar los camiones a la vista
         return view('camione.index', ['camiones' => $camionesFueraDeServicio]);
     }  
-    
+
 }
