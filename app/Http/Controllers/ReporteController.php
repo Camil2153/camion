@@ -44,7 +44,8 @@ class ReporteController extends Controller
             $camiones = $baseQuery
                 ->leftJoin('viajes', function ($join) use ($startDate, $endDate) {
                     $join->on('camiones.pla_cam', '=', 'viajes.cam_via')
-                        ->whereBetween('viajes.fec_sal_via', [$startDate, $endDate]);
+                        ->whereBetween('viajes.fec_sal_via', [$startDate, $endDate])
+                        ->where('viajes.est_via', '=', 'completado');
                 })
                 ->leftJoin('fallas', function ($join) use ($startDate, $endDate) {
                     $join->on('camiones.pla_cam', '=', 'fallas.cam_fal')
@@ -52,7 +53,8 @@ class ReporteController extends Controller
                 })
                 ->leftJoin('servicios', function ($join) use ($startDate, $endDate) {
                     $join->on('camiones.pla_cam', '=', 'servicios.cam_ser')
-                        ->whereBetween('servicios.fec_ser', [$startDate, $endDate]);
+                        ->whereBetween('servicios.fec_ser', [$startDate, $endDate])
+                        ->where('servicios.est_ser', '=', 'completada');
                 })
                 ->select(
                     'camiones.pla_cam',
@@ -63,7 +65,7 @@ class ReporteController extends Controller
                 )
                 ->groupBy('camiones.pla_cam')
                 ->havingRaw('COUNT(DISTINCT viajes.cod_via) > 0 OR COUNT(DISTINCT fallas.cod_fal) > 0 OR COUNT(DISTINCT servicios.cod_ser) > 0')
-                ->get();   
+                ->get();
 
         } elseif ($selectedReportType === 'listado_documentos') {
             $documentosCamiones = $baseQuery
@@ -99,6 +101,7 @@ class ReporteController extends Controller
                 )
                 ->where('servicios.est_ser', '=', 'completada')
                 ->get();
+
         } elseif ($selectedReportType === 'inventario_camiones') {
             $camiones = $baseQuery
             ->select(
