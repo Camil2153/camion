@@ -79,8 +79,7 @@
         </div>
 
         <div class="row">
-
-            <section class="col-lg-6 connectedSortable ui-sortable">
+            <section class="col-lg-4 connectedSortable ui-sortable">
                 <div class="card">
                     <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
                         <h3 class="card-title">Distribución de Estados de Fallas por Sistema</h3>
@@ -88,7 +87,7 @@
                     <div class="card-body">
                         <div class="tab-content p-0">
                             <div class="chart tab-pane active" id="area-chart"
-                                style="position: relative; height: 305px;">
+                                style="position: relative;">
                                 <canvas id="estados-falla-chart"></canvas>
                             </div>
                         </div>
@@ -97,29 +96,15 @@
                 
                 <div class="card">
                     <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-                        <h3 class="card-title">Evolución de Gastos a lo Largo del Tiempo</h3>
+                        <h3 class="card-title">Distribución de Conductores por Años de Experiencia</h3>
                     </div>
                     <div class="card-body">
-                        <div class="tab-content p-0">
-                            <div class="chart tab-pane active" id="area-chart"
-                                style="position: relative; height: 305px;">
-                                <canvas id="evolucion-gastos-chart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-                        <h3 class="card-title">Viajes: Consumo de Combustible vs. Duración vs. Peso de Carga</h3>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="bubbleChart"></canvas>
+                        <canvas id="conductoresPorExperienciaChart"></canvas>
                     </div>
                 </div>
             </section>
 
-            <section class="col-lg-6 connectedSortable ui-sortable">
+            <section class="col-lg-4 connectedSortable ui-sortable">
                 <div class="card">
                     <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
                         <h3 class="card-title">Relación entre Peso de Carga y Consumo de Combustible en Viajes</h3>
@@ -134,20 +119,35 @@
                         <h3 class="card-title">Distribución de Servicios por Sistema</h3>
                     </div>
                     <div class="card-body">
-                        <canvas id="porcentaje-servicios-chart"></canvas>
+                        <canvas id="porcentaje-servicios-chart" style="width: 300px; height: 176px;"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="col-lg-4 connectedSortable ui-sortable">
+                <div class="card">
+                    <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
+                        <h3 class="card-title">Viajes: Consumo de Combustible vs. Duración vs. Peso de Carga</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="bubbleChart"></canvas>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-                        <h3 class="card-title">Distribución de Conductores por Años de Experiencia</h3>
+                        <h3 class="card-title">Evolución de Gastos a lo Largo del Tiempo</h3>
                     </div>
                     <div class="card-body">
-                        <canvas id="conductoresPorExperienciaChart"></canvas>
+                        <div class="tab-content p-0">
+                            <div class="chart tab-pane active" id="area-chart"
+                                style="position: relative;">
+                                <canvas id="evolucion-gastos-chart"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
-
         </div>
 
     </div>

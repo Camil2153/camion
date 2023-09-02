@@ -104,16 +104,17 @@ class ServicioController extends Controller
         $cod_ser = $request->input('cod_ser');
         $primerosCuatroDigitos = substr($cod_ser, 0, 4);
     
-        // Verificar si existe un registro con los mismos 4 primeros dígitos y estado no completado
+        // Verificar si existe un registro con los mismos 4 primeros dígitos, estado no completado y misma placa de camión
         $registroExistente = Servicio::where('cod_ser', 'LIKE', $primerosCuatroDigitos . '%')
             ->where('est_ser', '<>', 'Completada')
+            ->where('cam_ser', $request->input('cam_ser'))
             ->first();
-    
+
         if ($registroExistente) {
             return redirect()->route('servicios.index')
                 ->with('error', '<div class="alert alert-info alert-dismissible">
                                     <h5><i class="fas fa-info"></i> Alerta!</h5>
-                                    No se puede crear un nuevo registro, ya que existe un servicio previo sin completar.
+                                    No se puede crear un nuevo registro, ya que existe un servicio previo sin completar con el mismo camión.
                                 </div>');
         }
 

@@ -129,5 +129,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'documentos-camiones.destroy', 'description' => 'Eliminar documento de camion'])->syncRoles([$role1,$role2,$role3]);
 
         Permission::create(['name' => 'consultas.index', 'description' => 'Ver consultas'])->syncRoles([$role1,$role2]);
+
+        Permission::create(['name' => 'reportes.index', 'description' => 'Generar reportes'])->syncRoles([$role1,$role2]);
     }
 }

@@ -434,11 +434,10 @@ return [
             'can' => 'consultas.index',
         ],
         [
-            'text'    => 'Reportes',
-            'icon'    => 'fas fa-fw fa-share',
-            'can' => 'users.index',
-            'submenu' => [
-            ],
+            'text' => 'Reportes',
+            'url'  => 'reportes',
+            'icon' => 'fa fa-file-pdf',
+            'can' => 'reportes.index',
         ],
     ],
 
