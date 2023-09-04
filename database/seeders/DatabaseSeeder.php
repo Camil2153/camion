@@ -15,9 +15,9 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         
         User::create([
-            'name' => 'Eliana Beltran',
-            'email' => 'eliana@gmail.com',
-            'password' => bcrypt('12345678')
+            'name' => 'Admin',
+            'email' => 'admin@sistruckfaultsim.com',
+            'password' => bcrypt('Sis2023tfs')
         ])->assignRole('Administrador');
     }
 }

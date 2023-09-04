@@ -16,7 +16,7 @@
                 <input class="form-control form-control-navbar" type="search"
                     @isset($item['id']) id="{{ $item['id'] }}" @endisset
                     name="{{ $item['input_name'] }}"
-                    placeholder="{{ $item['text'] }}"
+                    placeholder="{{ 'Buscar...' }}"
                     aria-label="{{ $item['text'] }}">
 
                 {{-- Search buttons --}}

@@ -29,10 +29,10 @@
                 <label for="report_type">Reporte:</label>
                 <select name="report_type" id="report_type" class="form-control">
                     <option value="">Seleccionar tipo de reporte</option>
-                    <option value="listado_camiones">Listado general camiones</option>
-                    <option value="listado_documentos">Listado general documentos camiones</option>
-                    <option value="listado_servicios">Listado general servicios</option>
-                    <option value="inventario_camiones">Inventario de camiones</option>
+                    <option value="listado_camiones">Listado General de Camiones</option>
+                    <option value="listado_documentos">Listado General de Documentos de Camiones</option>
+                    <option value="listado_servicios">Listado General de Servicios</option>
+                    <option value="inventario_camiones">Inventario de Camiones</option>
                 </select>
             </div>
             <div class="text-center">
@@ -69,6 +69,11 @@
             </tbody>
         </table>
     </div>
+    <div class="card-body">
+        <div class="text-right">
+            <a href="{{ route('reportes.pdf', ['date_range' => request('date_range'), 'camion' => request('camion'), 'report_type' => request('report_type')]) }}" class="btn btn-outline-primary btn-sm">PDF</a>
+        </div>
+    </div>
 </div>
 
 @elseif ($selectedReportType === 'listado_documentos')
@@ -95,6 +100,11 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
+    <div class="card-body">
+        <div class="text-right">
+            <a href="{{ route('reportes.pdf', ['date_range' => request('date_range'), 'camion' => request('camion'), 'report_type' => 'listado_documentos']) }}" class="btn btn-outline-primary btn-sm">PDF</a>
+        </div>
     </div>
 </div>
 
@@ -125,6 +135,11 @@
             </tbody>
         </table>
     </div>
+    <div class="card-body">
+        <div class="text-right">
+            <a href="{{ route('reportes.pdf', ['date_range' => request('date_range'), 'camion' => request('camion'), 'report_type' => 'listado_servicios']) }}" class="btn btn-outline-primary btn-sm">PDF</a>
+        </div>
+    </div>
 </div>
 
 @elseif ($selectedReportType === 'inventario_camiones')
@@ -151,6 +166,11 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
+    <div class="card-body">
+        <div class="text-right">
+            <a href="{{ route('reportes.pdf', ['date_range' => request('date_range'), 'camion' => request('camion'), 'report_type' => 'inventario_camiones']) }}" class="btn btn-outline-primary btn-sm">PDF</a>
+        </div>
     </div>
 </div>
 @endif

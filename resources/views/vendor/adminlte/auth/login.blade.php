@@ -2,6 +2,15 @@
 
 @section('adminlte_css_pre')
     <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+
+    <style>
+        body {
+            background-image: url('{{ asset('vendor/adminlte/dist/img/trucks-kenworth.jpg') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
 @stop
 
 @php( $login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login') )
@@ -64,11 +73,20 @@
         <div class="row">
             <div class="col-7">
                 <div class="icheck-primary" title="{{ __('adminlte::adminlte.remember_me_hint') }}">
-                    <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                {{--<input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                     <label for="remember">
                         {{ __('Acuérdate de mí') }}
-                    </label>
+                    </label> --}}
+
+                    {{-- Register link --}}
+                    @if($register_url)
+                        <p class="my-0">
+                            <a href="{{ $register_url }}">
+                                {{ __('Registrar una nueva membresía') }}
+                            </a>
+                        </p>
+                    @endif
                 </div>
             </div>
 
@@ -86,19 +104,10 @@
 @section('auth_footer')
     {{-- Password reset link --}}
     @if($password_reset_url)
-        <p class="my-0">
+    {{--<p class="my-0">
             <a href="{{ $password_reset_url }}">
                 {{ __('Olvidé mi contraseña') }}
             </a>
-        </p>
-    @endif
-
-    {{-- Register link --}}
-    @if($register_url)
-        <p class="my-0">
-            <a href="{{ $register_url }}">
-                {{ __('Registrar una nueva membresía') }}
-            </a>
-        </p>
+        </p>--}}
     @endif
 @stop
