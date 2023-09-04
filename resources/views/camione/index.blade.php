@@ -59,8 +59,10 @@
                         <span class="badge badge-danger">{{ $camione->est_cam }}</span>
                     @elseif ($camione->est_cam == 'en mantenimiento')
                         <span class="badge badge-warning">{{ $camione->est_cam }}</span>
-                        @elseif ($camione->est_cam == 'en viaje')
+                    @elseif ($camione->est_cam == 'en viaje')
                         <span class="badge badge-info">{{ $camione->est_cam }}</span>
+                    @elseif ($camione->est_cam == 'inactivo')
+                        <span class="badge badge-secondary">{{ $camione->est_cam }}</span>
                     @else
                         {{ $camione->est_cam }}
                     @endif

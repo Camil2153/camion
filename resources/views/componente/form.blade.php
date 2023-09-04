@@ -23,11 +23,12 @@
         </div>
         <div class="form-group">
             {{ Form::label('Costo') }}
-             <?php
-              $cos_com_formatted = number_format($componente->cos_com, 2, ',', '.');
-             ?>
-           {{ Form::text('cos_com', $componente->cos_com, ['id' => 'cos_com', 'class' => 'form-control' . ($errors->has('cos_com') ? ' is-invalid' : '')]) }}
-           {!! $errors->first('cos_com', '<div class="invalid-feedback">:message</div>') !!}
+            <?php
+            // Formatear el costo con separador de miles y millones
+            $cos_com_formatted = number_format($componente->cos_com, 0, ',', '.');
+            ?>
+            {{ Form::text('cos_com', $cos_com_formatted, ['id' => 'cos_com', 'class' => 'form-control' . ($errors->has('cos_com') ? ' is-invalid' : '')]) }}
+            {!! $errors->first('cos_com', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Sistema') }}
@@ -42,20 +43,25 @@
     </div>
 </div>
 
-    <script>
+
+<script>
     var cosComInput = document.getElementById('cos_com');
 
     cosComInput.closest('form').addEventListener('submit', function(event) {
+        // Obtener el valor del campo de costo sin los separadores de miles ni comas
+        var rawValue = cosComInput.value.replace(/\./g, '');
+
+        // Asignar el valor formateado sin separadores al campo de costo antes de enviar el formulario
+        cosComInput.value = rawValue;
+    });
+
+    // Agregar evento al campo "Costo" para formatear con separador de miles y millones cuando se pierde el foco
+    cosComInput.addEventListener('blur', function(event) {
         // Obtener el valor del campo de costo sin los separadores de miles
         var rawValue = cosComInput.value.replace(/\./g, '');
 
-        // Eliminar los dos ceros innecesarios del final
-        var sanitizedValue = rawValue.replace(/\.00$/, '');
-
-        // Agregar separadores de miles
-        var formattedValue = addThousandSeparators(sanitizedValue, 2);
-        
-        // Asignar el valor formateado al campo de costo antes de enviar el formulario
+        // Formatear el valor con separador de miles y millones y asignarlo de nuevo al campo
+        var formattedValue = new Intl.NumberFormat('es-ES').format(rawValue);
         cosComInput.value = formattedValue;
     });
-    </script>
+</script>

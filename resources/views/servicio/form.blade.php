@@ -105,6 +105,7 @@
             {{ Form::text('int_ale_ser', $servicio->int_ale_ser, ['id' => 'int_ale_ser', 'class' => 'form-control custom-input']) }}
             <span>antes de cumplirse el intervalo para mantenimiento.</span>
         </div>
+
     </div>
         <div class="form-group">
             {{ Form::label('Alerta') }}
@@ -236,20 +237,53 @@
     });
     </script>
 
-    <script>
-    var cosComInput = document.getElementById('cos_ser');
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    cosComInput.closest('form').addEventListener('submit', function(event) {
-        // Obtener el valor del campo de costo sin los separadores de miles
-        var rawValue = cosComInput.value.replace(/\./g, '');
+<script>
+    // Función para agregar separadores de miles
+    function addThousandSeparators(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
 
-        // Eliminar los dos ceros innecesarios del final
-        var sanitizedValue = rawValue.replace(/\.00$/, '');
+    document.addEventListener('DOMContentLoaded', function () {
+        // Campos que deseas formatear
+        var cosComInput = document.getElementById('cos_ser');
+        var intSerInput = document.getElementById('int_ser');
+        var intAleSerInput = document.getElementById('int_ale_ser');
 
-        // Agregar separadores de miles
-        var formattedValue = addThousandSeparators(sanitizedValue, 2);
-        
-        // Asignar el valor formateado al campo de costo antes de enviar el formulario
-        cosComInput.value = formattedValue;
+        // Agregamos un evento a los campos para formatearlos cuando cambien
+        cosComInput.addEventListener('input', formatCost);
+        intSerInput.addEventListener('input', formatInterval);
+        intAleSerInput.addEventListener('input', formatInterval);
+
+        // Agregamos un evento al formulario para quitar los puntos antes de enviarlo
+        cosComInput.closest('form').addEventListener('submit', removeDots);
+        intSerInput.closest('form').addEventListener('submit', removeDots);
+        intAleSerInput.closest('form').addEventListener('submit', removeDots);
+
+        // Función para formatear el campo "Costo"
+        function formatCost() {
+            // Obtener el valor del campo sin los puntos
+            var rawValue = cosComInput.value.replace(/\./g, '');
+
+            // Formatear el valor con separadores de miles y asignarlo al campo nuevamente
+            cosComInput.value = addThousandSeparators(rawValue);
+        }
+
+        // Función para formatear los campos "Intervalo" y "Avisar"
+        function formatInterval() {
+            // Obtener el valor del campo sin los puntos
+            var rawValue = this.value.replace(/\./g, '');
+
+            // Formatear el valor con separadores de miles y asignarlo al campo nuevamente
+            this.value = addThousandSeparators(rawValue);
+        }
+
+        // Función para quitar los puntos antes de enviar el formulario
+        function removeDots() {
+            cosComInput.value = cosComInput.value.replace(/\./g, '');
+            intSerInput.value = intSerInput.value.replace(/\./g, '');
+            intAleSerInput.value = intAleSerInput.value.replace(/\./g, '');
+        }
     });
-    </script>
+</script>

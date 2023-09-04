@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nom_com', 25); // nombre componente
             $table->string('mar_com', 15); // marca componente
             $table->string('desc_com', 500); // descripcion componente
-            $table->decimal('cos_com', 10, 2); // costo componente
+            $table->integer('cos_com'); // costo componente
             $table->string('sis_com', 2); // sistema componente
         
             $table->foreign('sis_com')->references('cod_sis')->on('sistemas');

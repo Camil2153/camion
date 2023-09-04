@@ -21,6 +21,8 @@ return new class extends Migration
             $table->time('tim_com_tra')->nullable(); // hora trazabilidad completado
             $table->date('dat_can_tra')->nullable(); // fecha trazabilidad cancelado
             $table->time('tim_can_tra')->nullable(); // hora trazabilidad cancelado
+            $table->datetime('ini_ina_tra')->nullable(); // inicio de contador de tiempo inactivo
+            $table->time('fin_ina_tra')->nullable(); // fin de contador de tiempo inactivo
 
             $table->string('via_tra', 4); // viaje trazabilidad
  

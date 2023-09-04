@@ -61,6 +61,8 @@
                             <span class="badge badge-warning">{{ $viaje->est_via }}</span>
                         @elseif ($viaje->est_via == 'programado')
                             <span class="badge badge-primary">{{ $viaje->est_via }}</span>
+                        @elseif ($viaje->est_via == 'inactivo')
+                            <span class="badge badge-secondary">{{ $viaje->est_via }}</span>
                         @else
                             {{ $viaje->est_via }}
                         @endif

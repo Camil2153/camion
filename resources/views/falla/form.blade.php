@@ -50,7 +50,11 @@
                 </div>
                 <div class="form-group">
                     {{ Form::label('Camion') }}
+                    @if (Route::currentRouteName() === 'fallas.edit')
+                    {{ Form::select('cam_fal', $camiones, $falla->cam_fal, ['class' => 'form-control' . ($errors->has('cam_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion', 'disabled' => 'disabled']) }}
+                    @else
                     {{ Form::select('cam_fal', $camiones, $falla->cam_fal, ['class' => 'form-control' . ($errors->has('cam_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion']) }}
+                    @endif
                     {!! $errors->first('cam_fal', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>

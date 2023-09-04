@@ -6,6 +6,8 @@ use App\Models\Falla;
 use Illuminate\Http\Request;
 use App\Models\Sistema;
 use App\Models\Camione;
+use App\Models\Viaje;
+use App\Models\Trazabilidad;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -83,6 +85,26 @@ class FallaController extends Controller
      */
     public function store(Request $request)
     {
+        
+         // Verificar si el estado del camión seleccionado es "en viaje"
+    $camion = Camione::where('pla_cam', $request->input('cam_fal'))->first();
+    if ($camion && $camion->est_cam == 'en viaje') {
+        // Obtener el viaje asociado al camión
+        $viaje = Viaje::where('cam_via', $camion->pla_cam)->first();
+        if ($viaje) {
+
+            $trazabilidad = Trazabilidad::where('via_tra', $viaje->cod_via)->first();
+            $trazabilidad->ini_ina_tra = now(); // Almacena la fecha y hora de inicio del conteo
+            $trazabilidad->save();
+
+            // Cambiar el estado del viaje a "inactivo"
+            $viaje->est_via = 'inactivo';
+            $camion->est_cam = 'inactivo';
+            $viaje->save();
+            $camion->save();
+        }
+    }
+
         if ($request->has('servicio_id') && $request->get('servicio_id') !== null) {
             // Obtener el ID del servicio al que se está asignando la falla
             $servicioId = $request->get('servicio_id');

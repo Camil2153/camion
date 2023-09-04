@@ -44,8 +44,8 @@ class HomeController extends Controller
         // Obtener el número de camiones cuyo estado es "fuera de servicio"
         $camionesFueraDeServicio = Camione::where('est_cam', 'fuera de servicio')->count();
         
-        // Obtener el número de registros en la tabla "rutas"
-        $totalRutas = Ruta::count();
+        // Obtener el número de registros en la tabla "Viajes"
+        $totalViajes = Viaje::count();
         
         // Obtener el número de registros en la tabla "fallas"
         $totalFallas = Falla::count();
@@ -140,7 +140,7 @@ class HomeController extends Controller
             'gastosPendientes' => $gastosPendientes,
             'totalCamiones' => $totalCamiones,
             'camionesFueraDeServicio' => $camionesFueraDeServicio,
-            'totalRutas' => $totalRutas,
+            'totalViajes' => $totalViajes,
             'totalFallas' => $totalFallas,
             'esAdmin' => $esAdmin,
             'conductoresPorExperiencia' =>$conductoresPorExperiencia,

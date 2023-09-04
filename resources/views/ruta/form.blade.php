@@ -4,20 +4,22 @@
             {{ Form::label('Código') }}
             {{ Form::text('cod_rut', $ruta->cod_rut, ['class' => 'form-control' . ($errors->has('cod_rut') ? ' is-invalid' : ''), 'maxlength' => '4', 'pattern' => '[0-9]{4}', 'placeholder' => '1111']) }}
             {!! $errors->first('cod_rut', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
+        </div>     
         <div class="form-group">
             {{ Form::label('Nombre') }}
-            {{ Form::text('nom_rut', $ruta->nom_rut, ['class' => 'form-control' . ($errors->has('nom_rut') ? ' is-invalid' : '')]) }}
+            {{ Form::text('nom_rut', $ruta->nom_rut, ['id' => 'nom_rut', 'class' => 'form-control' . ($errors->has('nom_rut') ? ' is-invalid' : ''), 'readonly' => 'readonly']) }}
             {!! $errors->first('nom_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+
         <div class="form-group">
             {{ Form::label('Origen') }}
-            {{ Form::text('ori_rut', $ruta->ori_rut, ['id' => 'ori_rut', 'class' => 'form-control' . ($errors->has('ori_rut') ? ' is-invalid' : ''), 'onchange' => 'updateMap()']) }}
+            {{ Form::text('ori_rut', $ruta->ori_rut, ['id' => 'ori_rut', 'class' => 'form-control' . ($errors->has('ori_rut') ? ' is-invalid' : ''), 'oninput' => 'updateName()', 'onchange' => 'updateMap()']) }}
             {!! $errors->first('ori_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+
         <div class="form-group">
             {{ Form::label('Destino') }}
-            {{ Form::text('des_rut', $ruta->des_rut, ['id' => 'des_rut', 'class' => 'form-control' . ($errors->has('des_rut') ? ' is-invalid' : ''), 'onchange' => 'updateMap()']) }}
+            {{ Form::text('des_rut', $ruta->des_rut, ['id' => 'des_rut', 'class' => 'form-control' . ($errors->has('des_rut') ? ' is-invalid' : ''), 'oninput' => 'updateName()', 'onchange' => 'updateMap()']) }}
             {!! $errors->first('des_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div id="map" style="height: 400px; width: 100%;"></div>
@@ -148,4 +150,14 @@
             }
         });
     }
+</script>
+
+<script>
+function updateName() {
+    var origin = document.getElementById('ori_rut').value;
+    var destination = document.getElementById('des_rut').value;
+
+    var nameField = document.getElementById('nom_rut');
+    nameField.value = origin + ' - ' + destination;
+}
 </script>

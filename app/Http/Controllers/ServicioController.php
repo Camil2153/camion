@@ -10,6 +10,9 @@ use App\Models\Falla;
 use App\Models\Tallere;
 use App\Models\Camione;
 use App\Models\Almacene;
+use App\Models\Viaje;
+use App\Models\Trazabilidad;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -214,27 +217,88 @@ class ServicioController extends Controller
     public function update(Request $request, Servicio $servicio)
     {
         $request->validate(Arr::except(Servicio::$rules, 'cod_ser'));
-        if ($request->has('est_ser') && $request->est_ser === 'Completada') {
+        $estadoServicio = $request->input('est_ser');
+
+        if ($estadoServicio === 'No comenzada' || $estadoServicio === 'En curso') {
+            $camione = Camione::findOrFail($request->input('cam_ser'));
+            $camione->est_cam = 'en mantenimiento';
+            $camione->save();
+        } elseif ($estadoServicio === 'Completada') {
+
             if ($servicio->fal_ser) {
                 $falla = Falla::findOrFail($servicio->fal_ser);
                 $falla->est_act_fal = 'reparada';
                 $falla->save();
+
+                $camion = Camione::findOrFail($servicio->cam_ser);
+
+                // Buscar el viaje asociado al camión
+                $viaje = Viaje::where('cam_via', $camion->pla_cam)->first();
+    
+                if ($viaje && $viaje->est_via === 'inactivo') {
+                    // Buscar el registro más reciente en la tabla de trazabilidad
+                    $trazabilidad = Trazabilidad::where('via_tra', $viaje->cod_via)
+                    ->orderByDesc('dat_pro_tra')
+                    ->orderByDesc('tim_pro_tra')
+                    ->orderByDesc('dat_enp_tra')
+                    ->orderByDesc('tim_enp_tra')
+                    ->first();
+
+                if ($trazabilidad) {
+                    // Comparar las fechas y horas más recientes
+                    $fechaHoraProg = $trazabilidad->dat_pro_tra . ' ' . $trazabilidad->tim_pro_tra;
+                    $fechaHoraEnProg = $trazabilidad->dat_enp_tra . ' ' . $trazabilidad->tim_enp_tra;
+
+                        if ($fechaHoraProg > $fechaHoraEnProg) {
+                            // Cambiar el estado del viaje a "programado"
+                            $viaje->est_via = 'programado';
+                        } else {
+                            // Cambiar el estado del viaje a "en progreso"
+                            $viaje->est_via = 'en progreso';
+                        }
+                            $viaje->save();
+                        }
+                    $camion->est_cam = 'en viaje';
+                    $camion->save();
+                    
+                    $trazabilidad = Trazabilidad::where('via_tra', $viaje->cod_via)->first();
+                    if ($trazabilidad && $trazabilidad->ini_ina_tra) {
+                        $inicioConteo = new DateTime($trazabilidad->ini_ina_tra); // Convierte a objeto DateTime
+
+                        $ahora = new DateTime(); // Obtiene la fecha y hora actual
+
+                        $intervalo = $inicioConteo->diff($ahora); // Calcula la diferencia de tiempo
+
+                        // Calcula la diferencia en horas
+                        $horas = $intervalo->h + ($intervalo->days * 24);
+
+                        // Formatea la diferencia en horas en el formato de tiempo
+                        $tiempoTranscurrido = sprintf('%02d:%02d:%02d', $horas, $intervalo->i, $intervalo->s);
+
+                        // Guarda el tiempo transcurrido en el campo fin_ina_tra
+                        $trazabilidad->fin_ina_tra = $tiempoTranscurrido;
+                        $trazabilidad->save();
+                    }
+                }
+                }else{
+                    $camione = Camione::findOrFail($request->input('cam_ser'));
+                    $camione->est_cam = 'disponible';
+                    $camione->save();
             }
+        } else{
+            $camione = Camione::findOrFail($request->input('cam_ser'));
+            $camione->est_cam = 'fuera de servicio';
+            $camione->save();
         }
-      // Lógica para obtener el servicio existente
-      $cantidadAnterior = $servicio->can_ser;
 
-      if ($request->has('est_ser') && $request->est_ser === 'Completada') {
-          if ($servicio->fal_ser) {
-              $falla = Falla::findOrFail($servicio->fal_ser);
-              $falla->est_act_fal = 'reparada';
-              $falla->save();
-          }
-      }
-      
-      // Actualizar el servicio
+        if ($request->has('est_ser') && $request->est_ser === 'Completada') {
+            
+        }
+    
+        // Actualizar el servicio
         $servicio->update($request->all());
-
+        // Lógica para obtener el servicio existente
+        $cantidadAnterior = $servicio->can_ser;
     // Lógica para actualizar la cantidad en la tabla almacenes
       $componenteSeleccionado = $request->input('alm_ser');
       $cantidadNueva = $request->input('can_ser');
@@ -255,21 +319,7 @@ class ServicioController extends Controller
   
           $almacene->save();
       }
-        $estadoServicio = $request->input('est_ser');
 
-        if ($estadoServicio === 'No comenzada' || $estadoServicio === 'En curso') {
-            $camione = Camione::findOrFail($request->input('cam_ser'));
-            $camione->est_cam = 'en mantenimiento';
-            $camione->save();
-        } elseif ($estadoServicio === 'Completada') {
-            $camione = Camione::findOrFail($request->input('cam_ser'));
-            $camione->est_cam = 'disponible';
-            $camione->save();
-        } else{
-            $camione = Camione::findOrFail($request->input('cam_ser'));
-            $camione->est_cam = 'fuera de servicio';
-            $camione->save();
-        }
 
         return redirect()->route('servicios.index')
             ->with('success', '<div class="alert alert-success alert-dismissible">

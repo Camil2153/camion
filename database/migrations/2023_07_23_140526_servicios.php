@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('int_ser'); // intervalo de tiempo/kilometraje recomendado para realizar el mantenimiento
             $table->integer('int_ale_ser'); // intervalo dias/kilometros previos para mostrar la alerta
             $table->string('ale_ser', 500); // alerta servicio
-            $table->decimal('cos_ser', 10, 2); // costo servicio
+            $table->integer('cos_ser'); // costo servicio
             $table->string('alm_ser', 4)->nullable(); // almacen servicio
             $table->bigInteger('can_ser')->nullable(); // cantidad almacen servicio
 
