@@ -71,7 +71,7 @@
                 {!! $errors->first('est_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="form-group">
-                {{ Form::label('Combustible (Litros)') }}
+                {{ Form::label('Combustible (Galones)') }}
                 {{ Form::text('com_via', $viaje->com_via, ['class' => 'form-control' . ($errors->has('com_via') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
                 {!! $errors->first('com_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>

@@ -63,6 +63,10 @@ class Ruta extends Model
     {
         return $this->hasMany('App\Models\Viaje', 'rut_via', 'cod_rut');
     }
-    
+    public function falla()
+    {
+        return $this->hasMany('App\Models\Falla', 'rut_fal', 'cod_rut');
+    }
+
 
 }

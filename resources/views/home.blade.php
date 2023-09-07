@@ -3,9 +3,24 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<h1>Dashboard</h1>
+<div class="row">
+    <div class="col-md-6">
+        <h1>Dashboard</h1>
+    </div>
+    <div class="col-md-6 text-right">
+        <div class="input-group mb-3">
+            <select class="form-control" id="year">
+                @for($year = 2020; $year <= 2023; $year++)
+                    <option value="{{ $year }}">{{ $year }}</option>
+                @endfor
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary custom-btn" type="button" id="filterBtn">Filtrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 @stop
-
 @section('content')
 @if($esAdmin)
 <section class="content">
@@ -17,7 +32,6 @@
             Hay gastos pendientes por aprobación en la tabla de gastos.
         </div>
         @endif
-
         <div class="row">
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
@@ -60,7 +74,7 @@
                     <div class="icon">
                         <i class="fa-solid fa-route"></i>
                     </div>
-                    <a href="rutas" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="viajes" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div><br>
 
@@ -82,7 +96,7 @@
             <section class="col-lg-4 connectedSortable ui-sortable">
                 <div class="card">
                     <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-                        <h3 class="card-title">Distribución de Estados de Fallas por Sistema</h3>
+                        <h3 class="card-title">Estados de Fallas por Sistema</h3>
                     </div>
                     <div class="card-body">
                         <div class="tab-content p-0">
@@ -105,35 +119,33 @@
             </section>
 
             <section class="col-lg-4 connectedSortable ui-sortable">
-                <div class="card">
-                    <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-                        <h3 class="card-title">Relación entre Peso de Carga y Consumo de Combustible en Viajes</h3>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="scatter-chart"></canvas>
-                    </div>
+            <div class="card">
+                <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
+                    <h3 class="card-title">Fallas por Ruta</h3>
                 </div>
+                <div class="card-body">
+                    <canvas id="fallas-por-ruta-chart"></canvas>
+                </div>
+            </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Distribución de Servicios por Sistema</h3>
+                        <h3 class="card-title">Servicios por Sistema</h3>
                     </div>
                     <div class="card-body">
                         <canvas id="porcentaje-servicios-chart" style="width: 300px; height: 176px;"></canvas>
                     </div>
                 </div>
             </section>
-
             <section class="col-lg-4 connectedSortable ui-sortable">
                 <div class="card">
-                    <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-                        <h3 class="card-title">Viajes: Consumo de Combustible vs. Duración vs. Peso de Carga</h3>
+                    <div class="card-header">
+                        <h3 class="card-title">Tiempo de Inactividad por Camión</h3>
                     </div>
                     <div class="card-body">
-                        <canvas id="bubbleChart"></canvas>
+                        <canvas id="tiempo-inactividad-chart" style="width: 300px; height: 176px;"></canvas>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
                         <h3 class="card-title">Evolución de Gastos a lo Largo del Tiempo</h3>
@@ -184,8 +196,8 @@ var chart = new Chart(ctx, {
         datasets: [{
             label: 'Número de Conductores',
             data: data,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192)',
+            borderColor: 'rgba(75, 192, 192)',
             borderWidth: 1
         }]
     },
@@ -202,55 +214,40 @@ var chart = new Chart(ctx, {
 </script>
 
 <script>
-var viajes = @json($viajes); // Reemplaza con tus datos de viajes
+    var fallasPorRuta = @json($fallasPorRuta);
 
-var pesosCarga = viajes.map(function(viaje) {
-    return viaje.pes_via;
-});
+    var labels = [];
+    var data = [];
 
-var consumosCombustible = viajes.map(function(viaje) {
-    return viaje.com_via;
-});
+    fallasPorRuta.forEach(function(item) {
+        labels.push(item.nom_rut);
+        data.push(item.total);
+    });
 
-var ctx = document.getElementById('scatter-chart').getContext('2d');
-var scatterChart = new Chart(ctx, {
-    type: 'scatter',
-    data: {
-        datasets: [{
-            label: 'Relación entre Peso de Carga y Consumo de Combustible',
-            data: viajes.map(function(viaje) {
-                return {
-                    x: viaje.pes_via,
-                    y: viaje.com_via
-                };
-            }),
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            pointRadius: 5,
-            pointHoverRadius: 8
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            x: {
-                type: 'linear',
-                position: 'bottom',
-                title: {
-                    display: true,
-                    text: 'Peso de Carga'
-                }
-            },
-            y: {
-                type: 'linear',
-                title: {
-                    display: true,
-                    text: 'Consumo de Combustible'
+    var ctx = document.getElementById('fallas-por-ruta-chart').getContext('2d');
+
+    var barChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Número de Fallas',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192)',
+                borderColor: 'rgba(75, 192, 192)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stepSize: 1
                 }
             }
         }
-    }
-});
+    });
 </script>
 
 <script>
@@ -273,8 +270,8 @@ var areaChart = new Chart(ctx, {
         datasets: [{
             label: 'Evolución de Gastos',
             data: montosGastos,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192)',
+            borderColor: 'rgba(75, 192, 192)',
             borderWidth: 1,
             fill: true // Agregar esta línea para rellenar el área bajo la línea
         }]
@@ -298,60 +295,6 @@ var areaChart = new Chart(ctx, {
         }
     }
 });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-var bubbleData = @json($viajesData);
-
-// Crear el gráfico de burbujas
-var ctx = document.getElementById('bubbleChart').getContext('2d');
-var bubbleChart = new Chart(ctx, {
-    type: 'bubble',
-    data: {
-        datasets: [{
-            label: 'Viajes',
-            data: bubbleData.map(viaje => ({
-                x: viaje.duracion, // Duración en minutos
-                y: viaje.com_via, // Consumo de Combustible
-                r: viaje.pes_via, // Peso de Carga
-                backgroundColor: getColorForState(viaje
-                .est_via), // Color basado en el estado
-                label: viaje.est_via // Etiqueta del estado
-            })),
-        }]
-    },
-    options: {
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'Duración del Viaje (minutos)'
-                }
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Consumo de Combustible'
-                }
-            }
-        }
-    }
-});
-
-// Función para obtener color basado en el estado del viaje
-function getColorForState(state) {
-    // Definir colores según los estados
-    var colors = {
-        'programado': 'rgba(54, 162, 235, 0.6)',
-        'en progreso': 'rgba(255, 206, 86, 0.6)',
-        'completado': 'rgba(99, 224, 99, 0.6)',
-        'cancelado': 'rgba(255, 99, 132, 0.6)',
-        // ... agregar más colores para otros estados
-    };
-
-    return colors[state];
-}
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
@@ -382,17 +325,17 @@ var stackedBarChart = new Chart(ctx, {
         datasets: [{
                 label: 'Pendiente',
                 data: pendientes,
-                backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                backgroundColor: 'rgba(220, 53, 69, 0.9)',
             },
             {
                 label: 'En Proceso',
                 data: enProceso,
-                backgroundColor: 'rgba(255, 255, 0, 0.2)',
+                backgroundColor: 'rgba(255, 193, 7, 0.8)',
             },
             {
                 label: 'Reparada',
                 data: reparadas,
-                backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                backgroundColor: 'rgba(40, 167, 69, 0.9)',
             }
         ]
     },
@@ -431,9 +374,9 @@ var pieChart = new Chart(ctx, {
         datasets: [{
             data: data,
             backgroundColor: [
-                'rgba(0, 255, 0, 0.3)',
-                'rgba(0, 0, 255, 0.3)',
-                'rgba(255, 0, 0, 0.3)',
+                'rgba(40, 167, 69, 0.9)',
+                'rgba(75, 192, 192)',
+                'rgba(220, 53, 69, 0.9)',
                 // ... otros colores para más sistemas
             ],
         }]
@@ -444,4 +387,39 @@ var pieChart = new Chart(ctx, {
     }
 });
 </script>
+
+<script>
+var tiempoInactividadData = @json($tiempoInactividadPorCamion);
+
+var labels = [];
+var data = [];
+
+tiempoInactividadData.forEach(function(item) {
+    labels.push(item.pla_cam);
+    data.push(item.tiempo_inactividad);
+});
+
+var ctx = document.getElementById('tiempo-inactividad-chart').getContext('2d');
+
+var doughnutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: labels,
+        datasets: [{
+            data: data,
+            backgroundColor: [
+                'rgba(220, 53, 69, 0.9)',
+                'rgba(40, 167, 69, 0.9)',
+                'rgba(0, 0, 255, 0.6)',
+                // Puedes agregar más colores aquí para más camiones
+            ],
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+    }
+});
+</script>
+
 @stop

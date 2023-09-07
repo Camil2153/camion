@@ -52,7 +52,7 @@
                     {!! $errors->first('cap_cam', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
                 <div class="form-group">
-                    {{ Form::label('Promedio de combustible (Litros por Kilometro)') }}
+                    {{ Form::label('Promedio de combustible (Kilometros por galón)') }}
                     {{ Form::number('cont_cam', $camione->cont_cam, ['class' => 'form-control' . ($errors->has('cont_cam') ? ' is-invalid' : ''), 'min' => 0, 'step' => 'any','placeholder' => '']) }}
                     {!! $errors->first('cont_cam', '<div class="invalid-feedback">:message</div>') !!}
                 </div>

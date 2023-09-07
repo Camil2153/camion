@@ -112,5 +112,4 @@ class Viaje extends Model
         return $this->hasMany('App\Models\Trazabilidad', 'via_tra', 'cod_via');
     }
     
-
 }

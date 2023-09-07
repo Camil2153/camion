@@ -41,6 +41,7 @@ class Falla extends Model
 		'res_det_fal' => 'required',
 		'sis_fal' => 'required',
 		'cam_fal' => 'required',
+        'rut_fal' => 'sometimes',
     ];
 
     protected $perPage = 20;
@@ -50,7 +51,7 @@ class Falla extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_fal','desc_fal','fec_fal','kil_fal','gra_fal','est_act_fal','res_det_fal','sis_fal','cam_fal'];
+    protected $fillable = ['cod_fal','desc_fal','fec_fal','kil_fal','gra_fal','est_act_fal','res_det_fal','sis_fal','cam_fal', 'rut_fal'];
 
 
     /**
@@ -77,5 +78,9 @@ class Falla extends Model
         return $this->hasOne('App\Models\Sistema', 'cod_sis', 'sis_fal');
     }
     
+    public function ruta()
+    {
+        return $this->hasOne('App\Models\Viaje', 'cod_rut', 'rut_fal');
+    }
 
 }

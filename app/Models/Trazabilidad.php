@@ -39,7 +39,7 @@ class Trazabilidad extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_tra','dat_pro_tra','tim_pro_tra','dat_enp_tra','tim_enp_tra','dat_com_tra','tim_com_tra','dat_can_tra','tim_can_tra','via_tra'];
+    protected $fillable = ['cod_tra','dat_pro_tra','tim_pro_tra','dat_enp_tra','tim_enp_tra','dat_com_tra','tim_com_tra','dat_can_tra','tim_can_tra','via_tra','ini_ina_tra','fin_ina_tra'];
 
 
     /**

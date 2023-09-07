@@ -135,6 +135,20 @@ class HomeController extends Controller
         // Actualizar la cantidad en la variable de sesión
         session(['cantidad_camiones_fuera_de_servicio' => $cantidadCamionesFueraDeServicio]);
 
+        $fallasPorRuta = Falla::select('rutas.nom_rut', DB::raw('COUNT(*) as total'))
+        ->leftJoin('rutas', 'fallas.rut_fal', '=', 'rutas.cod_rut')
+        ->groupBy('rutas.nom_rut')
+        ->get();
+
+        $tiempoInactividadPorCamion = DB::table('trazabilidad')
+        ->join('viajes', 'trazabilidad.via_tra', '=', 'viajes.cod_via') // Asegúrate de usar la relación correcta entre trazabilidad y viajes.
+        ->join('camiones', 'viajes.cam_via', '=', 'camiones.pla_cam')
+        ->where('trazabilidad.fin_ina_tra', '>', 0) // Filtra aquellos con tiempo de inactividad mayor a 0
+        ->select('camiones.pla_cam', DB::raw('SUM(trazabilidad.fin_ina_tra) as tiempo_inactividad'))
+        ->groupBy('camiones.pla_cam')
+        ->get();
+    
+
         // Pasar los valores a la vista
         return view('home', [
             'gastosPendientes' => $gastosPendientes,
@@ -150,6 +164,8 @@ class HomeController extends Controller
             'estadosFallaPorSistema' => $estadosFallaPorSistema,
             'porcentajesServicios' => $porcentajes,
             'cantidadNuevosCamionesFueraDeServicio' => $cantidadNuevosCamionesFueraDeServicio,
+            'fallasPorRuta' => $fallasPorRuta,
+            'tiempoInactividadPorCamion' => $tiempoInactividadPorCamion,
         ]);
     }  
     
@@ -164,5 +180,6 @@ class HomeController extends Controller
         // Pasar los camiones a la vista
         return view('camione.index', ['camiones' => $camionesFueraDeServicio]);
     }  
+
 
 }

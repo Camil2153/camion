@@ -6,6 +6,7 @@ use App\Models\Falla;
 use Illuminate\Http\Request;
 use App\Models\Sistema;
 use App\Models\Camione;
+use App\Models\Ruta;
 use App\Models\Viaje;
 use App\Models\Trazabilidad;
 use Illuminate\Support\Facades\Auth;
@@ -74,7 +75,8 @@ class FallaController extends Controller
         $falla = new Falla();
         $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
-        return view('falla.create', compact('falla', 'sistemas', 'camiones'));
+        $rutas = Ruta::pluck('nom_rut', 'cod_rut');
+        return view('falla.create', compact('falla', 'sistemas', 'camiones', 'rutas'));
     }
 
     /**
@@ -154,7 +156,8 @@ class FallaController extends Controller
         $falla = Falla::find($cod_fal);
         $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
-        return view('falla.edit', compact('falla', 'sistemas', 'camiones'));
+        $rutas = Ruta::pluck('nom_rut', 'cod_rut');
+        return view('falla.edit', compact('falla', 'sistemas', 'camiones', 'rutas'));
     }
 
     /**

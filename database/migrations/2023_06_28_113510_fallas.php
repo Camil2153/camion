@@ -21,9 +21,11 @@ return new class extends Migration
             $table->string('res_det_fal', 45); // responsable de deteccion falla
             $table->string('sis_fal', 2); // sistema falla
             $table->string('cam_fal', 7); // camion falla
-
+            $table->string('rut_fal', 4);
+ 
             $table->foreign('sis_fal')->references('cod_sis')->on('sistemas');   
-            $table->foreign('cam_fal')->references('pla_cam')->on('camiones');               
+            $table->foreign('cam_fal')->references('pla_cam')->on('camiones');   
+            $table->foreign('rut_fal')->references('cod_rut')->on('rutas');             
             $table->timestamps();
         });
     }

@@ -52,10 +52,16 @@
                     {{ Form::label('Camion') }}
                     @if (Route::currentRouteName() === 'fallas.edit')
                     {{ Form::select('cam_fal', $camiones, $falla->cam_fal, ['class' => 'form-control' . ($errors->has('cam_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion', 'disabled' => 'disabled']) }}
+                    {{ Form::hidden('cam_fal', $falla->cam_fal) }}
                     @else
                     {{ Form::select('cam_fal', $camiones, $falla->cam_fal, ['class' => 'form-control' . ($errors->has('cam_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion']) }}
                     @endif
                     {!! $errors->first('cam_fal', '<div class="invalid-feedback">:message</div>') !!}
+                </div>
+                <div class="form-group">
+                    {{ Form::label('Rutas') }}
+                    {{ Form::select('rut_fal', $rutas, $falla->rut_fal, ['class' => 'form-control' . ($errors->has('rut_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar ruta']) }}
+                    {!! $errors->first('rut_fal', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
         </div>
