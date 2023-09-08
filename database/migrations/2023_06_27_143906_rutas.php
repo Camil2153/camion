@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('rutas', function (Blueprint $table) {
             $table->string('cod_rut', 4)->primary(); // codigo ruta
-            $table->string('nom_rut', 25); // nombre ruta
+            $table->string('nom_rut', 40); // nombre ruta
             $table->string('ori_rut', 40); // ciudad de origen de la ruta
             $table->string('des_rut', 40); // ciudad de destino de la ruta
             $table->string('dis_rut', 15); // distancia ruta

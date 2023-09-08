@@ -64,6 +64,17 @@ class Conductore extends Model
     {
         return $this->hasMany('App\Models\Camione', 'con_cam', 'dni_con');
     }
-    
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($conductore) {
+            $user = User::where('email', $conductore->cor_ele_con)->first();
+            if ($user) {
+                $user->delete();
+            }
+        });
+    }
 
 }

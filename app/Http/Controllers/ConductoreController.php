@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Arr;
 use App\Models\Conductore;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 /**
  * Class ConductoreController
@@ -89,6 +91,16 @@ class ConductoreController extends Controller
         request()->validate(Conductore::$rules);
         $request->merge(['est_con' => 'activo']);
         $conductore = Conductore::create($request->all());
+
+        $user = new User([
+            'name' => $conductore->nom_con,
+            'email' => $conductore->cor_ele_con,
+            'password' => bcrypt('Sis' . $conductore->dni_con . 'tfs'),
+        ]);
+        $user->save();
+
+        $conductorRole = Role::where('name', 'Conductor')->first();
+        $user->assignRole($conductorRole);
         
         return redirect()->route('conductores.index')
             ->with('success', '<div class="alert alert-success alert-dismissible">
@@ -178,7 +190,6 @@ class ConductoreController extends Controller
     public function destroy($dni_con)
     {
         try {
-            // Intenta eliminar el registro del camión
             $conductore = Conductore::find($dni_con);
             if (!$conductore) {
                 return redirect()->route('conductores.index')

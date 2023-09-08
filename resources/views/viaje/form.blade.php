@@ -130,14 +130,25 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function parseDurationText(durationText) {
-        var regex = /(\d+)\s+día\(s\)\s+(\d+)\s+hora\(s\)\s+(\d+)\s+minuto\(s\)/;
+        var regex = /(\d+)\s+día\(s\)\s+(\d+)\s+hora\(s\)\s+(\d+)\s+minuto\(s\)|(\d+)\s+hora\(s\)\s+(\d+)\s+minuto\(s\)|(\d+)\s+día\(s\)\s+(\d+)\s+hora\(s\)/;
         var match = durationText.match(regex);
 
         if (match) {
-            var days = parseInt(match[1]);
-            var hours = parseInt(match[2]);
-            var minutes = parseInt(match[3]);
-            return days * 24 * 60 + hours * 60 + minutes; // Convertir a minutos
+            var days = parseInt(match[1]) || 0;
+            var hours = parseInt(match[2]) || 0;
+            var minutes = parseInt(match[3]) || 0;
+
+            if (match[4] !== undefined && match[5] !== undefined) {
+                hours = parseInt(match[4]) || 0;
+                minutes = parseInt(match[5]) || 0;
+            }
+
+            if (match[6] !== undefined && match[7] !== undefined) {
+                days = parseInt(match[6]) || 0;
+                hours = parseInt(match[7]) || 0;
+            }
+
+            return days * 24 * 60 + hours * 60 + minutes;
         }
 
         return 0;
