@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('cap_cam'); // capacidad en toneladas del camion
             $table->float('cont_cam'); // promedio de consumo de combustible en litros por kilometro 
             $table->string('con_cam', 20); // conductor camion
+            $table->string('est_cam_anterior', 20)->nullable(); // estado camion anterior
         
             $table->foreign('con_cam')->references('dni_con')->on('conductores');
             $table->timestamps();

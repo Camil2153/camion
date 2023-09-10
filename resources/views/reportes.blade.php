@@ -32,6 +32,7 @@
                     <option value="listado_camiones">Listado General de Camiones</option>
                     <option value="listado_documentos">Listado General de Documentos de Camiones</option>
                     <option value="listado_servicios">Listado General de Servicios</option>
+                    <option value="listado_gastos">Listado General de Gastos</option>
                     <option value="inventario_camiones">Inventario de Camiones</option>
                 </select>
             </div>
@@ -138,6 +139,40 @@
     <div class="card-body">
         <div class="text-right">
             <a href="{{ route('reportes.pdf', ['date_range' => request('date_range'), 'camion' => request('camion'), 'report_type' => 'listado_servicios']) }}" class="btn btn-outline-primary btn-sm">PDF</a>
+        </div>
+    </div>
+</div>
+
+@elseif ($selectedReportType === 'listado_gastos')
+<div class="card">
+    <div class="card-body">
+        <h2>Listado General de Gastos</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Viaje</th>
+                    <th>Camión</th>
+                    <th>Categoría</th>
+                    <th>Monto</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($gastos as $gasto)
+                <tr>
+                    <td>{{ $gasto->viaje}}</td>
+                    <td>{{ $gasto->camion }}</td>
+                    <td>{{ $gasto->categoria }}</td>
+                    <td>{{ $gasto->monto }}</td>
+                    <td>{{ $gasto->fecha }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class="card-body">
+        <div class="text-right">
+            <a href="{{ route('reportes.pdf', ['date_range' => request('date_range'), 'camion' => request('camion'), 'report_type' => 'listado_gastos']) }}" class="btn btn-outline-primary btn-sm">PDF</a>
         </div>
     </div>
 </div>

@@ -54,7 +54,7 @@ class Camione extends Model
      *
      * @var array
      */
-    protected $fillable = ['pla_cam','mar_cam','mod_cam','tip_cam','num_eje_cam','est_cam','kil_cam','cap_cam','cont_cam','con_cam'];
+    protected $fillable = ['pla_cam','mar_cam','mod_cam','tip_cam','num_eje_cam','est_cam','kil_cam','cap_cam','cont_cam','con_cam','est_cam_anterior'];
 
 
     /**

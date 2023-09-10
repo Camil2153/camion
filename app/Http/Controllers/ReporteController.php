@@ -35,6 +35,7 @@ class ReporteController extends Controller
         $camiones = null;
         $documentosCamiones = null;
         $serviciosCamiones = null;
+        $gastos = null;
         
         $selectedCamion = $request->input('camion');
         $baseQuery = DB::table('camiones');
@@ -106,7 +107,26 @@ class ReporteController extends Controller
             if (!empty($selectedCamion)) {
                 $baseQuery->where('camion_data.camion_pla_cam', '=', $selectedCamion);
             }
-            $serviciosCamiones = $baseQuery->get();    
+            $serviciosCamiones = $baseQuery->get();
+        
+        } elseif ($selectedReportType === 'listado_gastos') {
+            $baseQuery = DB::table('gastos')
+                ->join('viajes', 'gastos.via_gas', '=', 'viajes.cod_via')
+                ->join('categorias_gastos', 'gastos.cat_gas', '=', 'categorias_gastos.cod_cat_gas')
+                ->select(
+                    'viajes.cod_via as viaje',
+                    'viajes.cam_via as camion',
+                    'categorias_gastos.nom_cat_gas as categoria',
+                    'gastos.mon_gas as monto',
+                    'gastos.fec_gas as fecha'
+                )
+                ->whereBetween('gastos.fec_gas', [$startDate, $endDate])
+                ->where('gastos.est_gas', '=', 'aprobado');
+        
+            if (!empty($selectedCamion)) {
+                $baseQuery->where('viajes.cam_via', '=', $selectedCamion);
+            }
+            $gastos = $baseQuery->get();        
 
         } elseif ($selectedReportType === 'inventario_camiones') {
             $camiones = $baseQuery
@@ -126,6 +146,7 @@ class ReporteController extends Controller
             'camiones' => $camiones,
             'documentosCamiones' => $documentosCamiones,
             'serviciosCamiones' => $serviciosCamiones,
+            'gastos' => $gastos,
             'selectedReportType' => $selectedReportType,
             'camionesDropdown' => $camionesDropdown,
             'selectedCamion' => $selectedCamion,
@@ -237,6 +258,28 @@ class ReporteController extends Controller
             
             $pdf = PDF::loadView('pdf.listado_servicios', compact('serviciosCamiones', 'empresas', 'dateRange'));
             return $pdf->stream('listado_servicios.pdf');
+
+        } elseif ($selectedReportType === 'listado_gastos') {
+            $baseQuery = DB::table('gastos')
+                ->join('viajes', 'gastos.via_gas', '=', 'viajes.cod_via')
+                ->join('categorias_gastos', 'gastos.cat_gas', '=', 'categorias_gastos.cod_cat_gas')
+                ->select(
+                    'viajes.cod_via as viaje',
+                    'viajes.cam_via as camion',
+                    'categorias_gastos.nom_cat_gas as categoria',
+                    'gastos.mon_gas as monto',
+                    'gastos.fec_gas as fecha'
+                )
+                ->whereBetween('gastos.fec_gas', [$startDate, $endDate])
+                ->where('gastos.est_gas', '=', 'aprobado');
+        
+            if (!empty($selectedCamion)) {
+                $baseQuery->where('viajes.cam_via', '=', $selectedCamion);
+            }
+            $gastos = $baseQuery->get();  
+            
+            $pdf = PDF::loadView('pdf.listado_gastos', compact('gastos', 'empresas', 'dateRange'));
+            return $pdf->stream('listado_gastos.pdf');
 
         } elseif ($selectedReportType === 'inventario_camiones') {
             $camionesQuery = DB::table('camiones')
