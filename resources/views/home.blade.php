@@ -3,24 +3,9 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<div class="row">
-    <div class="col-md-6">
-        <h1>Dashboard</h1>
-    </div>
-    <div class="col-md-6 text-right">
-        <div class="input-group mb-3">
-            <select class="form-control" id="year">
-                @for($year = 2020; $year <= 2023; $year++)
-                    <option value="{{ $year }}">{{ $year }}</option>
-                @endfor
-            </select>
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary custom-btn" type="button" id="filterBtn">Filtrar</button>
-            </div>
-        </div>
-    </div>
-</div>
+<h1>Dashboard</h1>
 @stop
+
 @section('content')
 @if($esAdmin)
 <section class="content">
