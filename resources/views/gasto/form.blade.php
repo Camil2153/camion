@@ -23,7 +23,11 @@
         </div>
         <div class="form-group">
             {{ Form::label('Viaje') }}
-            {{ Form::select('via_gas', $viajes, $gasto->via_gas, ['class' => 'form-control' . ($errors->has('via_gas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar viaje']) }}
+            @if ($viajeAsociado)
+                {{ Form::text('via_gas', $viajeAsociado, ['class' => 'form-control', 'readonly' => 'readonly']) }}
+            @else
+                {{ Form::select('via_gas', $viajes, $gasto->via_gas, ['class' => 'form-control' . ($errors->has('via_gas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar viaje']) }}
+            @endif
             {!! $errors->first('via_gas', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

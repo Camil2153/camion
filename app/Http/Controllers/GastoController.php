@@ -81,8 +81,36 @@ class GastoController extends Controller
     {
         $gasto = new Gasto();
         $categorias = CategoriasGasto::pluck('nom_cat_gas', 'cod_cat_gas');
-        $viajes = Viaje::pluck('cod_via', 'cod_via');
-        return view('gasto.create', compact('gasto', 'categorias', 'viajes'));
+
+        $user = Auth::user();
+        $viajeAsociado = null;
+
+        if ($user) {
+            $conductorEmail = $user->email;
+
+            // Verificar si el correo del usuario coincide con el correo en la tabla de conductores
+            $conductor = DB::table('conductores')
+                ->where('cor_ele_con', $conductorEmail)
+                ->first();
+
+            if ($conductor) {
+                // El usuario es un conductor, obtener el viaje asociado a su camión si existe.
+                $camion = Camione::where('con_cam', $conductor->dni_con)->first();
+
+                if ($camion) {
+                    $viajeAsociado = $camion->viajes()
+                        ->where('est_via', 'en progreso')
+                        ->latest()
+                        ->pluck('cod_via')
+                        ->first();
+                }
+            }
+        }
+
+        // Obtener todos los viajes en progreso si el usuario no es conductor o si no hay viaje asociado.
+        $viajes = Viaje::where('est_via', 'en progreso')->pluck('cod_via', 'cod_via');
+
+        return view('gasto.create', compact('gasto', 'categorias', 'viajeAsociado', 'viajes'));
     }
 
     /**
@@ -127,9 +155,37 @@ class GastoController extends Controller
     {
         $gasto = Gasto::find($cod_gas);
         $categorias = CategoriasGasto::pluck('nom_cat_gas', 'cod_cat_gas');
-        $viajes = Viaje::pluck('cod_via', 'cod_via');
-        return view('gasto.edit', compact('gasto', 'categorias', 'viajes'));
-    }
+    
+        $user = Auth::user();
+        $viajeAsociado = null;
+    
+        if ($user) {
+            $conductorEmail = $user->email;
+    
+            // Verificar si el correo del usuario coincide con el correo en la tabla de conductores
+            $conductor = DB::table('conductores')
+                ->where('cor_ele_con', $conductorEmail)
+                ->first();
+    
+            if ($conductor) {
+                // El usuario es un conductor, obtener el viaje asociado a su camión si existe.
+                $camion = Camione::where('con_cam', $conductor->dni_con)->first();
+    
+                if ($camion) {
+                    $viajeAsociado = $camion->viajes()
+                        ->where('est_via', 'en progreso')
+                        ->latest()
+                        ->pluck('cod_via')
+                        ->first();
+                }
+            }
+        }
+    
+        // Obtener todos los viajes en progreso si el usuario no es conductor o si no hay viaje asociado.
+        $viajes = Viaje::where('est_via', 'en progreso')->pluck('cod_via', 'cod_via');
+    
+        return view('gasto.edit', compact('gasto', 'categorias', 'viajeAsociado', 'viajes'));
+    } 
 
     /**
      * Update the specified resource in storage.
