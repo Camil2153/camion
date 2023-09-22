@@ -32,10 +32,15 @@
             {!! $errors->first('num_con_tal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Ruta') }}
-            {{ Form::select('rut_tal', $rutas, $tallere->rut_tal, ['class' => 'form-control' . ($errors->has('rut_tal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar ruta']) }}
-            {!! $errors->first('rut_tal', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
+    {{ Form::label('Ruta') }}
+    @if ($rutaAsociada)
+        {{ Form::select('rut_tal', [$rutaPredeterminada => $rutaAsociada->nom_rut], $rutaPredeterminada, ['class' => 'form-control', 'readonly' => 'readonly']) }}
+    @else
+        {{ Form::select('rut_tal', $rutas, $rutaPredeterminada, ['class' => 'form-control' . ($errors->has('rut_tal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar ruta']) }}
+    @endif
+    {!! $errors->first('rut_tal', '<div class="invalid-feedback">:message</div>') !!}
+</div>
+
 
     </div>
     <div class="box-footer mt20 text-center">

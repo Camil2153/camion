@@ -84,18 +84,62 @@ class ServicioController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+    
+        if (!$user) {
+            // El usuario no está autenticado, redirigir o mostrar un mensaje de error.
+            return "No estás autenticado.";
+        }
+    
+        $conductorEmail = $user->email;
+    
+        // Verificar si el correo del usuario coincide con el correo en la tabla de conductores
+        $conductor = DB::table('conductores')
+            ->where('cor_ele_con', $conductorEmail)
+            ->first();
+    
         $servicio = new Servicio();
         $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
         $actividades = Actividade::pluck('nom_act', 'cod_act');
         $fallasDisponibles = Falla::pluck('desc_fal', 'cod_fal');
         $fallasRegistrados = $servicio->pluck('fal_ser');
         $fallasFiltrados = $fallasDisponibles->except($fallasRegistrados);
-        $talleres = Tallere::pluck('nom_tal', 'nit_tal');
+        $almacenes = Almacene::where('est_alm', 'disponible')->with('componente')->get();
+    
+        $camion = null;
+        $talleres = [];
+    
+        if ($conductor) {
+            // Verificar si el usuario es conductor y obtener el viaje en progreso asociado.
+            $camion = Camione::where('con_cam', $conductor->dni_con)->first();
+    
+            if ($camion) {
+                $viaje = $camion->viajes()
+                    ->where('est_via', 'en progreso')
+                    ->latest()
+                    ->first();
+    
+                if ($viaje) {
+                    // Obtener la ruta asociada al viaje actual.
+                    $rutaAsociada = $viaje->ruta;
+    
+                    // Obtener los talleres asociados a la ruta.
+                    $talleres = $rutaAsociada->talleres->pluck('nom_tal', 'nit_tal');
+                }
+            }
+        }
+    
+        // Obtener todos los talleres si el usuario no es conductor.
+        if (!$conductor) {
+            $talleres = Tallere::pluck('nom_tal', 'nit_tal');
+        }
+    
+        // Obtener todos los camiones, independientemente de si el usuario es conductor o no.
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
         $almacenes = Almacene::where('est_alm', 'disponible')->with('componente')->get();
-        return view('servicio.create', compact('servicio', 'sistemas', 'actividades', 'fallasFiltrados', 'talleres', 'camiones', 'almacenes'));
+        return view('servicio.create', compact('servicio', 'sistemas', 'actividades', 'fallasFiltrados', 'talleres', 'camiones', 'almacenes', 'camion'));
     }
-
+        
     /**
      * Store a newly created resource in storage.
      *

@@ -85,9 +85,43 @@ class TallereController extends Controller
     public function create()
     {
         $tallere = new Tallere();
+        $user = Auth::user();
+        
+        $rutaAsociada = null; // Establece la variable $rutaAsociada en nulo por defecto.
+    
+        if ($user) {
+            $conductorEmail = $user->email;
+            
+            // Verificar si el correo del usuario coincide con el correo en la tabla de conductores
+            $conductor = DB::table('conductores')
+                ->where('cor_ele_con', $conductorEmail)
+                ->first();
+        
+            if ($conductor) {
+                // El usuario es un conductor, intenta obtener la ruta asociada al viaje actual.
+                $camion = Camione::where('con_cam', $conductor->dni_con)->first();
+        
+                if ($camion) {
+                    $viaje = $camion->viajes()
+                        ->where('est_via', 'en progreso')
+                        ->latest()
+                        ->first();
+        
+                    if ($viaje) {
+                        $rutaAsociada = $viaje->ruta;
+                    }
+                }
+            }
+        }
+        
+        // Obtener todas las rutas disponibles, independientemente de si el usuario es conductor o no.
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
-        return view('tallere.create', compact('tallere', 'rutas'));
-    }
+        
+        // Si la variable $rutaAsociada está definida, establece el valor predeterminado en su código.
+        $rutaPredeterminada = $rutaAsociada ? $rutaAsociada->cod_rut : null;
+    
+        return view('tallere.create', compact('tallere', 'rutas', 'rutaPredeterminada', 'conductor', 'rutaAsociada'));
+    }    
 
     /**
      * Store a newly created resource in storage.

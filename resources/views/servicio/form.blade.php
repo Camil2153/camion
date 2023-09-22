@@ -56,11 +56,15 @@
             {!! $errors->first('det_ser', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     <div class="box-body form-grid">
-        <div class="form-group">
-            {{ Form::label('Camion') }}
+    <div class="form-group">
+        {{ Form::label('Camion') }}
+        @if ($camion)
+            {{ Form::text('cam_ser', $camion->pla_cam, ['class' => 'form-control', 'readonly' => true]) }}
+        @else
             {{ Form::select('cam_ser', $camiones, $servicio->cam_ser, ['class' => 'form-control' . ($errors->has('cam_ser') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion']) }}
-            {!! $errors->first('cam_ser', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
+        @endif
+        {!! $errors->first('cam_ser', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
         <div class="form-group" id="falla-field">
             {{ Form::label('Falla') }}
             @if (Route::currentRouteName() === 'servicios.edit') <!-- Verificar si es una ruta de edición -->

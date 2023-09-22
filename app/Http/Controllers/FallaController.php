@@ -74,9 +74,53 @@ class FallaController extends Controller
     {
         $falla = new Falla();
         $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
-        $camiones = Camione::pluck('pla_cam', 'pla_cam');
-        $rutas = Ruta::pluck('nom_rut', 'cod_rut');
-        return view('falla.create', compact('falla', 'sistemas', 'camiones', 'rutas'));
+        $camiones = [];
+        $rutas = [];
+
+        $user = Auth::user();
+
+        if ($user) {
+            $conductorEmail = $user->email;
+            
+            // Verificar si el correo del usuario coincide con el correo en la tabla de conductores
+            $conductor = DB::table('conductores')
+                ->where('cor_ele_con', $conductorEmail)
+                ->first();
+        
+            // Inicializa las variables de ruta y camión asociados como nulas.
+            $rutaAsociada = null;
+            $camionAsociado = null;
+
+            // Verificar si el usuario es conductor y obtener la ruta y el camión asociados al viaje actual.
+            if ($conductor) {
+                $camion = Camione::where('con_cam', $conductor->dni_con)->first();
+
+                if ($camion) {
+                    $viaje = $camion->viajes()
+                        ->where('est_via', 'en progreso')
+                        ->latest()
+                        ->first();
+
+                    if ($viaje) {
+                        $rutaAsociada = $viaje->ruta; // Obtén la ruta asociada al viaje actual
+                        $camionAsociado = $camion; // El camión ya lo tienes
+                    }
+                }
+            }
+        }
+
+        // Si se encontró una ruta y un camión asociados al viaje actual, establece los valores predeterminados.
+        if (isset($rutaAsociada) && isset($camionAsociado)) {
+            $rutas[$rutaAsociada->cod_rut] = $rutaAsociada->nom_rut;
+            $camiones[$camionAsociado->pla_cam] = $camionAsociado->pla_cam;
+        } else {
+            // Si no es conductor o no hay ruta y camión asociados al viaje actual, obtén todas las rutas y camiones.
+            $rutas = Ruta::pluck('nom_rut', 'cod_rut');
+            $camiones = Camione::pluck('pla_cam', 'pla_cam');
+        }
+
+        // Agrega $rutaAsociada y $camionAsociado al arreglo compact
+        return view('falla.create', compact('falla', 'sistemas', 'camiones', 'rutas', 'rutaAsociada', 'camionAsociado'));
     }
 
     /**
@@ -88,7 +132,7 @@ class FallaController extends Controller
     public function store(Request $request)
     {
         
-         // Verificar si el estado del camión seleccionado es "en viaje"
+    // Verificar si el estado del camión seleccionado es "en viaje"
     $camion = Camione::where('pla_cam', $request->input('cam_fal'))->first();
     if ($camion && $camion->est_cam == 'en viaje') {
         // Obtener el viaje asociado al camión
@@ -132,6 +176,7 @@ class FallaController extends Controller
                                     Falla creada exitosamente.
                                 </div>');
     }
+    
     /**
      * Display the specified resource.
      *

@@ -49,18 +49,26 @@
                     {!! $errors->first('sis_fal', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
                 <div class="form-group">
-                    {{ Form::label('Camion') }}
-                    @if (Route::currentRouteName() === 'fallas.edit')
-                    {{ Form::select('cam_fal', $camiones, $falla->cam_fal, ['class' => 'form-control' . ($errors->has('cam_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion', 'disabled' => 'disabled']) }}
-                    {{ Form::hidden('cam_fal', $falla->cam_fal) }}
+                    {{ Form::label('Camión') }}
+                    @if (isset($camionAsociado))
+                        {{ Form::select('cam_fal', $camiones, $camionAsociado->pla_cam, ['class' => 'form-control', 'readonly' => 'readonly']) }}
+                        {{ Form::hidden('cam_fal', $camionAsociado->pla_cam) }}
+                    @elseif (isset($falla) && Route::currentRouteName() === 'fallas.edit')
+                        {{ Form::select('cam_fal', $camiones, $falla->cam_fal, ['class' => 'form-control' . ($errors->has('cam_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion', 'disabled' => 'disabled']) }}
+                        {{ Form::hidden('cam_fal', $falla->cam_fal) }}
                     @else
-                    {{ Form::select('cam_fal', $camiones, $falla->cam_fal, ['class' => 'form-control' . ($errors->has('cam_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion']) }}
+                        {{ Form::select('cam_fal', $camiones, null, ['class' => 'form-control' . ($errors->has('cam_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar camion']) }}
                     @endif
                     {!! $errors->first('cam_fal', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
                 <div class="form-group">
-                    {{ Form::label('Rutas') }}
-                    {{ Form::select('rut_fal', $rutas, $falla->rut_fal, ['class' => 'form-control' . ($errors->has('rut_fal') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar ruta']) }}
+                    {{ Form::label('Ruta') }}
+                    @if (isset($rutaAsociada))
+                        {{ Form::select('rut_fal', $rutas, $rutaAsociada->cod_rut, ['class' => 'form-control', 'readonly' => 'readonly']) }}
+                        {{ Form::hidden('rut_fal', $rutaAsociada->cod_rut) }}
+                    @else
+                        {{ Form::select('rut_fal', $rutas, null, ['class' => 'form-control', 'placeholder' => 'Seleccionar ruta'])}}
+                    @endif
                     {!! $errors->first('rut_fal', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
