@@ -64,10 +64,10 @@
                 <div class="form-group">
                     {{ Form::label('Ruta') }}
                     @if (isset($rutaAsociada))
-                        {{ Form::select('rut_fal', $rutas, $rutaAsociada->cod_rut, ['class' => 'form-control', 'readonly' => 'readonly']) }}
+                        {{ Form::select('rut_fal', $rutas->prepend($rutaAsociada->nom_rut, $rutaAsociada->cod_rut), $falla->rut_fal, ['class' => 'form-control', 'readonly' => 'readonly']) }}
                         {{ Form::hidden('rut_fal', $rutaAsociada->cod_rut) }}
                     @else
-                        {{ Form::select('rut_fal', $rutas, null, ['class' => 'form-control', 'placeholder' => 'Seleccionar ruta'])}}
+                        {{ Form::select('rut_fal', $rutas->prepend('Seleccionar ruta', ''), $falla->rut_fal, ['class' => 'form-control']) }}
                     @endif
                     {!! $errors->first('rut_fal', '<div class="invalid-feedback">:message</div>') !!}
                 </div>

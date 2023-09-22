@@ -165,7 +165,13 @@ class TallereController extends Controller
     {
         $tallere = Tallere::find($nit_tal);
         $rutas = Ruta::pluck('nom_rut', 'cod_rut');
-        return view('tallere.edit', compact('tallere', 'rutas'));
+        $rutaAsociada = null;
+        $rutaPredeterminada = null;
+
+        if ($tallere->ruta) {
+            $rutaPredeterminada = $tallere->ruta->cod_rut;
+        }
+        return view('tallere.edit', compact('tallere', 'rutas', 'rutaAsociada', 'rutaPredeterminada'));
     }
 
     /**

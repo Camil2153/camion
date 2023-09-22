@@ -136,7 +136,7 @@ class ServicioController extends Controller
         $almacenes = Almacene::where('est_alm', 'disponible')->with('componente')->get();     
         return view('servicio.create', compact('servicio', 'sistemas', 'actividades', 'fallasFiltrados', 'talleres', 'camiones', 'almacenes', 'camion'));
     }
-        
+
     /**
      * Store a newly created resource in storage.
      *
@@ -237,6 +237,20 @@ class ServicioController extends Controller
      */
     public function edit($cod_ser)
     {
+        $user = Auth::user();
+    
+        if (!$user) {
+            // El usuario no está autenticado, redirigir o mostrar un mensaje de error.
+            return "No estás autenticado.";
+        }
+    
+        $conductorEmail = $user->email;
+    
+        // Obtener el conductor asociado al usuario autenticado
+        $conductor = DB::table('conductores')
+            ->where('cor_ele_con', $conductorEmail)
+            ->first();
+    
         $servicio = Servicio::find($cod_ser);
         $sistemas = Sistema::pluck('nom_sis', 'cod_sis');
         $actividades = Actividade::pluck('nom_act', 'cod_act');
@@ -245,8 +259,14 @@ class ServicioController extends Controller
         $talleres = Tallere::pluck('nom_tal', 'nit_tal');
         $camiones = Camione::pluck('pla_cam', 'pla_cam');
         $almacenes = Almacene::where('est_alm', 'disponible')->with('componente')->get();
-        return view('servicio.edit', compact('servicio', 'sistemas', 'actividades', 'fallasFiltrados', 'talleres', 'camiones', 'almacenes'));
-    }
+        $camion = null; // Definir $camion como nulo por defecto
+    
+        if ($conductor) {
+            $camion = Camione::where('con_cam', $conductor->dni_con)->first();
+        }
+    
+        return view('servicio.edit', compact('servicio', 'sistemas', 'actividades', 'fallasFiltrados', 'talleres', 'camiones', 'almacenes', 'camion', 'conductor'));
+    }    
 
     /**
      * Update the specified resource in storage.

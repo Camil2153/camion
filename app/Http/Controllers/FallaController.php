@@ -90,6 +90,7 @@ class FallaController extends Controller
             // Inicializa las variables de ruta y camión asociados como nulas.
             $rutaAsociada = null;
             $camionAsociado = null;
+            $rutas = collect();
 
             // Verificar si el usuario es conductor y obtener la ruta y el camión asociados al viaje actual.
             if ($conductor) {
@@ -111,11 +112,12 @@ class FallaController extends Controller
 
         // Si se encontró una ruta y un camión asociados al viaje actual, establece los valores predeterminados.
         if (isset($rutaAsociada) && isset($camionAsociado)) {
-            $rutas[$rutaAsociada->cod_rut] = $rutaAsociada->nom_rut;
+            $rutas = collect([$rutaAsociada->cod_rut => $rutaAsociada->nom_rut]); // Crea una colección con la ruta asociada
             $camiones[$camionAsociado->pla_cam] = $camionAsociado->pla_cam;
         } else {
             // Si no es conductor o no hay ruta y camión asociados al viaje actual, obtén todas las rutas y camiones.
             $rutas = Ruta::pluck('nom_rut', 'cod_rut');
+            $rutas = collect($rutas); // Convierte el resultado de pluck en una colección
             $camiones = Camione::pluck('pla_cam', 'pla_cam');
         }
 
