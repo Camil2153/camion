@@ -3,11 +3,13 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
+@if($esAdmin || $esCoordinador)
 <h1>Dashboard</h1>
+@endif
 @stop
 
 @section('content')
-@if($esAdmin)
+@if($esAdmin || $esCoordinador)
 <section class="content">
     <div class="container-fluid">
 
@@ -147,6 +149,40 @@
             </section>
         </div>
 
+    </div>
+</section>
+@else
+<section class="content">
+    <div class="container-fluid">
+        <div style="position: relative; width: 100%; height: 650px;">
+            <img src="{{ asset('vendor/adminlte/dist/img/robson-hatsukami-morgan-NKr0qBAkU4s-unsplash.jpg') }}" alt="Imagen" style="width: 100%; height: 100%;">
+            <div style="position: absolute; top: 20px; right: 20px; background-color: white; padding: 10px; opacity: 0.8;">
+                <p>Nombre: {{ auth()->user()->name }}</p>
+                <p>Email: {{ auth()->user()->email }}</p>
+                <p>Roles:</p>
+                <ul>
+                    @foreach (auth()->user()->roles as $role)
+                        <li>{{ $role->name }}</li>
+                    @endforeach
+                </ul>
+                
+                @if (auth()->user()->hasRole('Conductor') && auth()->user()->conductor)
+                    <p>Información del Conductor:</p>
+                    <ul>
+                        <li>DNI: {{ auth()->user()->conductor->dni_con }}</li>
+                        <li>Número de Licencia: {{ auth()->user()->conductor->num_lic_con }}</li>
+                        <li>Fecha de Vencimiento de Licencia: {{ auth()->user()->conductor->fec_ven_lic_con }}</li>
+                        <li>Fecha de Contratación: {{ auth()->user()->conductor->fec_con_con }}</li>
+                        <li>Estado: {{ auth()->user()->conductor->est_con }}</li>
+                        <li>Fecha de Nacimiento: {{ auth()->user()->conductor->fec_nac_con }}</li>
+                        <li>Dirección: {{ auth()->user()->conductor->dir_con }}</li>
+                        <li>Número de Teléfono: {{ auth()->user()->conductor->num_tel_con }}</li>
+                        <li>Años de Experiencia: {{ auth()->user()->conductor->año_exp_con }}</li>
+                        <li>EPS: {{ auth()->user()->conductor->eps_con }}</li>
+                    </ul>
+                @endif
+            </div>
+        </div>
     </div>
 </section>
 @endif

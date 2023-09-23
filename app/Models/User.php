@@ -57,5 +57,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\RoleUser', 'user_id', 'id');
     }
 
-    // Resto del código del modelo...
+    public function conductor()
+    {
+        return $this->hasOne(Conductore::class, 'cor_ele_con', 'email');
+    }
 }

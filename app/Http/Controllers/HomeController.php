@@ -52,8 +52,9 @@ class HomeController extends Controller
 
         $viajes = Viaje::all(); // Obtén los viajes desde tu modelo o consulta
         
-        // Verificar si el usuario autenticado es un administrador
+        // Verificar si el usuario autenticado es un administrador o coordinador
         $esAdmin = auth()->user()->hasRole('Administrador');
+        $esCoordinador = auth()->user()->hasRole('Coordinador');
 
         $conductoresPorExperiencia = Conductore::select(DB::raw('año_exp_con, COUNT(*) as total'))
         ->groupBy('año_exp_con')
@@ -157,6 +158,7 @@ class HomeController extends Controller
             'totalViajes' => $totalViajes,
             'totalFallas' => $totalFallas,
             'esAdmin' => $esAdmin,
+            'esCoordinador' => $esCoordinador,
             'conductoresPorExperiencia' =>$conductoresPorExperiencia,
             'viajes' => $viajes,
             'evolucionGastosData' => $evolucionGastosData,
