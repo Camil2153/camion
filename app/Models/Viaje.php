@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $hor_sal_via
  * @property $fec_lle_via
  * @property $hor_lle_via
- * @property $com_via
+
  * @property $cam_via
  * @property $cli_via
  * @property $rut_via
@@ -47,7 +47,6 @@ class Viaje extends Model
 		'hor_sal_via' => 'required',
 		'fec_lle_via' => 'required',
 		'hor_lle_via' => 'required',
-		'com_via' => 'required',
 		'cam_via' => 'required',
 		'cli_via' => 'required',
 		'rut_via' => 'required',
@@ -61,7 +60,7 @@ class Viaje extends Model
      *
      * @var array
      */
-    protected $fillable = ['cod_via','car_via','pes_via','est_via','fec_sal_via','hor_sal_via','fec_lle_via','hor_lle_via','com_via','cam_via','cli_via','rut_via','emp_via'];
+    protected $fillable = ['cod_via','car_via','pes_via','est_via','fec_sal_via','hor_sal_via','fec_lle_via','hor_lle_via','cam_via','cli_via','rut_via','emp_via'];
 
 
     /**

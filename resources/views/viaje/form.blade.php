@@ -71,11 +71,6 @@
                 {!! $errors->first('est_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="form-group">
-                {{ Form::label('Combustible (Galones)') }}
-                {{ Form::text('com_via', $viaje->com_via, ['class' => 'form-control' . ($errors->has('com_via') ? ' is-invalid' : ''), 'placeholder' => 'Inserte datos sin puntos ni comas']) }}
-                {!! $errors->first('com_via', '<div class="invalid-feedback">:message</div>') !!}
-            </div>
-            <div class="form-group">
                 {{ Form::label('Cliente') }}
                 {{ Form::select('cli_via', $clientes, $viaje->cli_via, ['class' => 'form-control' . ($errors->has('cli_via') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar cliente']) }}
                 {!! $errors->first('cli_via', '<div class="invalid-feedback">:message</div>') !!}
