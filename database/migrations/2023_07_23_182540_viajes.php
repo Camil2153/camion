@@ -20,7 +20,6 @@ return new class extends Migration
             $table->time('hor_sal_via'); // hora de salida viaje
             $table->date('fec_lle_via'); // fecha de llegada viaje
             $table->time('hor_lle_via'); // hora de llegada viaje
-            $table->float('com_via'); // consumo de combustible registrado durante el viaje
             $table->string('cam_via', 7); // camion viaje
             $table->string('cli_via', 6); // cliente viaje
             $table->string('rut_via', 4); // ruta viaje

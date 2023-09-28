@@ -36,7 +36,6 @@
                 <th>Hora de Salida</th>
                 <th>Fecha de Llegada</th>
                 <th>Hora de Llegada</th>
-                <th>Combustible</th>
                 <th>Camion</th>
                 <th>Cliente</th>
                 <th>Ruta</th>
@@ -71,7 +70,6 @@
                     <td>{{ $viaje->hor_sal_via }}</td>
                     <td>{{ $viaje->fec_lle_via }}</td>
                     <td>{{ $viaje->hor_lle_via }}</td>
-                    <td>{{ $viaje->com_via }}</td>
                     <td>{{ $viaje->cam_via }}</td>
                     <td>{{ $viaje->cliente->nom_cli }}</td>
                     <td>{{ $viaje->ruta->nom_rut }}</td>

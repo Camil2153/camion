@@ -78,10 +78,6 @@
                                     <strong>Distancia:</strong>
                                     {{ $viaje->ruta->dis_rut }}
                                 </div>
-                                <div class="form-group">
-                                    <strong>Combustible:</strong>
-                                    {{ $viaje->com_via }}
-                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="map-container">

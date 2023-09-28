@@ -64,37 +64,6 @@ class HomeController extends Controller
         ->orderBy('fec_gas')
         ->get(['fec_gas', 'mon_gas']);
 
-        // Obtener los datos para el gráfico de burbujas
-        $viajesData = Viaje::select('viajes.com_via', 'viajes.pes_via', 'viajes.est_via', 'rutas.dur_rut')
-        ->join('rutas', 'viajes.rut_via', '=', 'rutas.cod_rut')
-        ->get();
-
-        // Procesar la duración de la ruta para convertirla en minutos
-        foreach ($viajesData as &$viaje) {
-            $duracionRuta = $viaje->dur_rut;
-            $pattern = '/(\d+)\s*([a-zA-Z]+)/';
-            preg_match_all($pattern, $duracionRuta, $matches);
-
-            $totalMinutes = 0;
-            $timeUnits = [
-                'día' => 24 * 60,
-                'días' => 24 * 60,
-                'hora' => 60,
-                'horas' => 60,
-                'minuto' => 1,
-                'minutos' => 1,
-            ];
-
-            foreach ($matches[1] as $key => $value) {
-                $unit = strtolower($matches[2][$key]);
-                if (isset($timeUnits[$unit])) {
-                    $totalMinutes += $value * $timeUnits[$unit];
-                }
-            }
-
-            $viaje->duracion = $totalMinutes;
-        }
-
         $estadosFallaPorSistema = Falla::select(
             'sistemas.nom_sis',
             DB::raw('SUM(CASE WHEN est_act_fal = "pendiente" THEN 1 ELSE 0 END) AS pendiente'),
@@ -162,7 +131,6 @@ class HomeController extends Controller
             'conductoresPorExperiencia' =>$conductoresPorExperiencia,
             'viajes' => $viajes,
             'evolucionGastosData' => $evolucionGastosData,
-            'viajesData' => $viajesData,
             'estadosFallaPorSistema' => $estadosFallaPorSistema,
             'porcentajesServicios' => $porcentajes,
             'cantidadNuevosCamionesFueraDeServicio' => $cantidadNuevosCamionesFueraDeServicio,

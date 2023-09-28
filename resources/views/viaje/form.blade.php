@@ -12,18 +12,6 @@
                 {!! $errors->first('pes_via', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="form-group">
-                <label for="rut_via">Ruta</label>
-                <select class="form-control" id="rut_via" name="rut_via" required>
-                    <option value="">Seleccionar ruta</option>
-                    @foreach ($rutas as $cod_rut => $nom_rut)
-                        @php
-                            $selected = ($viaje->ruta && $viaje->ruta->cod_rut == $cod_rut) ? 'selected' : '';
-                        @endphp
-                        <option value="{{ $cod_rut }}" data-duracion="{{ $rutasDuraciones[$cod_rut] }}" {{ $selected }}>{{ $nom_rut }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
                 {{ Form::label('Fecha de salida') }}
                 {{ Form::date('fec_sal_via', $viaje->fec_sal_via, ['class' => 'form-control' . ($errors->has('fec_sal_via') ? ' is-invalid' : ''), 'id' => 'fec_sal_via']) }}
                 {!! $errors->first('fec_sal_via', '<div class="invalid-feedback">:message</div>') !!}
@@ -54,6 +42,18 @@
                 {{ Form::label('Tipo de Carga') }}
                 {{ Form::text('car_via', $viaje->car_via, ['class' => 'form-control' . ($errors->has('car_via') ? ' is-invalid' : '')]) }}
                 {!! $errors->first('car_via', '<div class="invalid-feedback">:message</div>') !!}
+            </div>
+            <div class="form-group">
+                <label for="rut_via">Ruta</label>
+                <select class="form-control" id="rut_via" name="rut_via" required>
+                    <option value="">Seleccionar ruta</option>
+                    @foreach ($rutas as $cod_rut => $nom_rut)
+                        @php
+                            $selected = ($viaje->ruta && $viaje->ruta->cod_rut == $cod_rut) ? 'selected' : '';
+                        @endphp
+                        <option value="{{ $cod_rut }}" data-duracion="{{ $rutasDuraciones[$cod_rut] }}" {{ $selected }}>{{ $nom_rut }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 {{ Form::label('Estado') }}
