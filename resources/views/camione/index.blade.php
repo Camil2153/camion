@@ -36,7 +36,6 @@
                 <th>Estado</th>
                 <th>Kilometraje</th>
                 <th>Capacidad</th>
-                <th>Promedio de Combustible</th>
                 <th>Conductor</th>
 
                 <th>Acciones</th>
@@ -69,7 +68,6 @@
                     </td>
                     <td>{{ number_format($camione->kil_cam, 0, '.', '.') }}</td>
                     <td>{{ $camione->cap_cam }}</td>
-                    <td>{{ $camione->cont_cam }}</td>
                     <td>{{ $camione->conductore->nom_con }}</td>
 
                     <td>

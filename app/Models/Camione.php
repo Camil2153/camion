@@ -43,7 +43,6 @@ class Camione extends Model
 		'est_cam' => 'sometimes',
 		'kil_cam' => 'required',
 		'cap_cam' => 'required',
-		'cont_cam' => 'required',
 		'con_cam' => 'required',
     ];
 

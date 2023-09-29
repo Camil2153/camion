@@ -56,10 +56,6 @@
                             {{ $camione->cap_cam }}
                         </div>
                         <div class="form-group">
-                            <strong>Promedio de combustible:</strong>
-                            {{ $camione->cont_cam }}
-                        </div>
-                        <div class="form-group">
                             <strong>Conductor:</strong>
                             {{ $camione->conductore->nom_con }}
                         </div>
