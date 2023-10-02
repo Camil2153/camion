@@ -48,7 +48,9 @@ class HomeController extends Controller
         $totalViajes = Viaje::count();
         
         // Obtener el número de registros en la tabla "fallas"
-        $totalFallas = Falla::count();
+        $totalFallas = Falla::where('est_act_fal', 'pendiente')
+        ->orWhere('est_act_fal', 'en proceso')
+        ->count();
 
         $viajes = Viaje::all(); // Obtén los viajes desde tu modelo o consulta
         
@@ -151,5 +153,15 @@ class HomeController extends Controller
         return view('camione.index', ['camiones' => $camionesFueraDeServicio]);
     }  
 
+    public function mostrarFallasPendientesEnProceso()
+    {
+        // Obtener las fallas en estado "pendiente" o "en proceso"
+        $fallasPendientesEnProceso = Falla::whereIn('est_act_fal', ['pendiente', 'en proceso'])->get();
 
+        // Marcar las fallas como "vistas" para que el icono desaparezca
+        session(['cantidad_fallas_pendientes_en_proceso' => $fallasPendientesEnProceso->count()]);
+
+        // Pasar las fallas a la vista
+        return view('falla.index', ['fallas' => $fallasPendientesEnProceso]);
+    }
 }

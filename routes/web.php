@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('camiones/fuera-de-servicio', [HomeController::class, 'mostrarCamionesFueraDeServicio'])->name('mostrar_camiones_fuera_de_servicio');
+Route::get('camiones/pendientes-en-proceso', [HomeController::class, 'mostrarFallasPendientesEnProceso'])->name('mostrar_fallas_pendientes_en_proceso');
 
 Auth::routes();
 Route::get('reportes/pdf', [App\Http\Controllers\ReporteController::class, 'pdf'])->name('reportes.pdf');

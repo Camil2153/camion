@@ -74,7 +74,7 @@
                     <div class="icon">
                         <i class="fa-solid fa-bug"></i>
                     </div>
-                    <a href="fallas" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('mostrar_fallas_pendientes_en_proceso') }}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div><br>
         </div>
