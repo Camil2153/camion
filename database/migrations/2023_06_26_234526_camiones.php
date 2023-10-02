@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('est_cam', 20); // estado camion
             $table->integer('kil_cam'); // kilometraje actual del camion
             $table->integer('cap_cam'); // capacidad en toneladas del camion
-            $table->float('cont_cam'); // promedio de consumo de combustible en litros por kilometro 
             $table->string('con_cam', 20); // conductor camion
             $table->string('est_cam_anterior', 20)->nullable(); // estado camion anterior
         
