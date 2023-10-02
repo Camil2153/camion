@@ -62,7 +62,7 @@ class ServicioController extends Controller
             }
         } else {
             // El usuario no es un conductor, obtener todos los servicios.
-            $servicios = Servicio::paginate(10);
+            $servicios = Servicio::paginate(1000);
         }
         
         // Definimos el mapeo de estados a colores

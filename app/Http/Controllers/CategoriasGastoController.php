@@ -26,7 +26,7 @@ class CategoriasGastoController extends Controller
      */
     public function index()
     {
-        $categoriasGastos = CategoriasGasto::paginate();
+        $categoriasGastos = CategoriasGasto::paginate(1000);
 
         return view('categorias-gasto.index', compact('categoriasGastos'))
             ->with('i', (request()->input('page', 1) - 1) * $categoriasGastos->perPage());

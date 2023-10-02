@@ -26,7 +26,7 @@ class RutaController extends Controller
      */
     public function index()
     {
-        $rutas = Ruta::paginate();
+        $rutas = Ruta::paginate(1000);
 
         return view('ruta.index', compact('rutas'))
             ->with('i', (request()->input('page', 1) - 1) * $rutas->perPage());

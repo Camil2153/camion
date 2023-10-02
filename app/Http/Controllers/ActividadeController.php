@@ -28,7 +28,7 @@ class ActividadeController extends Controller
      */
     public function index()
     {
-        $actividades = Actividade::paginate();
+        $actividades = Actividade::paginate(1000);
 
         return view('actividade.index', compact('actividades'))
             ->with('i', (request()->input('page', 1) - 1) * $actividades->perPage());

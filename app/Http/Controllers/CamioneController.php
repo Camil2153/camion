@@ -27,7 +27,7 @@ class CamioneController extends Controller
      */
     public function index()
     {
-        $camiones = Camione::paginate();
+        $camiones = Camione::paginate(1000);
 
         return view('camione.index', compact('camiones'))
             ->with('i', (request()->input('page', 1) - 1) * $camiones->perPage());

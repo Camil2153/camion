@@ -28,7 +28,7 @@ class ConductoreController extends Controller
      */
     public function index()
     {
-        $conductores = Conductore::paginate();
+        $conductores = Conductore::paginate(1000);
     
         foreach ($conductores as $conductor) {
             if ($conductor->fec_ven_lic_con < now()) {

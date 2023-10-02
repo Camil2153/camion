@@ -70,7 +70,7 @@ class TallereController extends Controller
             }
         } else {
             // El usuario no es un conductor, obtén todos los talleres sin restricción.
-            $talleres = Tallere::paginate();
+            $talleres = Tallere::paginate(1000);
         }
     
         return view('tallere.index', compact('talleres'))

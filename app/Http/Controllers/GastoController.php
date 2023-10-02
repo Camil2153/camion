@@ -65,7 +65,7 @@ class GastoController extends Controller
             }
         } else {
             // El usuario no es un conductor, obtener todos los gastos.
-            $gastos = Gasto::paginate();
+            $gastos = Gasto::paginate(1000);
         }
 
         return view('gasto.index', compact('gastos'))

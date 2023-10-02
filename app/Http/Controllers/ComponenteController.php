@@ -27,7 +27,7 @@ class ComponenteController extends Controller
      */
     public function index()
     {
-        $componentes = Componente::paginate();
+        $componentes = Componente::paginate(1000);
 
         return view('componente.index', compact('componentes'))
             ->with('i', (request()->input('page', 1) - 1) * $componentes->perPage());

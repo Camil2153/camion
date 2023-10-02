@@ -58,7 +58,7 @@ class FallaController extends Controller
             }
         } else {
             // El usuario no es un conductor, obtener todas las fallas.
-            $fallas = Falla::paginate();
+            $fallas = Falla::paginate(1000);
         }
     
         return view('falla.index', compact('fallas'))

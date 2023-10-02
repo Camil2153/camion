@@ -26,7 +26,7 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        $empresas = Empresa::paginate();
+        $empresas = Empresa::paginate(1000);
 
         return view('empresa.index', compact('empresas'))
             ->with('i', (request()->input('page', 1) - 1) * $empresas->perPage());

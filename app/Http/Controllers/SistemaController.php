@@ -26,7 +26,7 @@ class SistemaController extends Controller
      */
     public function index()
     {
-        $sistemas = Sistema::paginate();
+        $sistemas = Sistema::paginate(1000);
 
         return view('sistema.index', compact('sistemas'))
             ->with('i', (request()->input('page', 1) - 1) * $sistemas->perPage());

@@ -27,7 +27,7 @@ class DocumentosCamioneController extends Controller
      */
     public function index()
     {
-        $documentosCamiones = DocumentosCamione::paginate();
+        $documentosCamiones = DocumentosCamione::paginate(1000);
     
         foreach ($documentosCamiones as $documentoCamion) {
             $camion = $documentoCamion->camione;

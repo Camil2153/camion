@@ -34,7 +34,7 @@ class ViajeController extends Controller
      */
     public function index()
     {
-        $viajes = Viaje::paginate();
+        $viajes = Viaje::paginate(1000);
 
         return view('viaje.index', compact('viajes'))
             ->with('i', (request()->input('page', 1) - 1) * $viajes->perPage());

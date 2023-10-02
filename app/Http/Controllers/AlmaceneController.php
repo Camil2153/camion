@@ -27,7 +27,7 @@ class AlmaceneController extends Controller
      */
     public function index()
     {
-        $almacenes = Almacene::paginate();
+        $almacenes = Almacene::paginate(1000);
 
         return view('almacene.index', compact('almacenes'))
             ->with('i', (request()->input('page', 1) - 1) * $almacenes->perPage());
