@@ -218,8 +218,6 @@ var chart = new Chart(ctx, {
             label: 'Número de Conductores',
             data: data,
             backgroundColor: 'rgba(75, 192, 192)',
-            borderColor: 'rgba(75, 192, 192)',
-            borderWidth: 1
         }]
     },
     options: {
@@ -255,8 +253,6 @@ var chart = new Chart(ctx, {
                 label: 'Número de Fallas',
                 data: data,
                 backgroundColor: 'rgba(75, 192, 192)',
-                borderColor: 'rgba(75, 192, 192)',
-                borderWidth: 1
             }]
         },
         options: {
@@ -292,7 +288,7 @@ var areaChart = new Chart(ctx, {
             label: 'Evolución de Gastos',
             data: montosGastos,
             backgroundColor: 'rgba(75, 192, 192)',
-            borderColor: 'rgba(75, 192, 192)',
+            borderColor: 'rgba(0, 0, 0)',
             borderWidth: 1,
             fill: true // Agregar esta línea para rellenar el área bajo la línea
         }]
@@ -398,6 +394,8 @@ var pieChart = new Chart(ctx, {
                 'rgba(40, 167, 69, 0.9)',
                 'rgba(75, 192, 192)',
                 'rgba(220, 53, 69, 0.9)',
+                'rgba(255, 193, 7, 0.8)',
+                'rgba(0, 0, 255, 0.6)',
                 // ... otros colores para más sistemas
             ],
         }]
@@ -405,6 +403,15 @@ var pieChart = new Chart(ctx, {
     options: {
         responsive: true,
         maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    boxWidth: 20, // Puedes ajustar el ancho de la caja de los labels
+                }
+            }
+        }
     }
 });
 </script>
@@ -439,6 +446,15 @@ var doughnutChart = new Chart(ctx, {
     options: {
         responsive: true,
         maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    boxWidth: 20, // Puedes ajustar el ancho de la caja de los labels
+                }
+            }
+        }
     }
 });
 </script>
