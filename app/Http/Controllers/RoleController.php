@@ -29,7 +29,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all(1000);
+        $roles = Role::all();
 
         return view('role.index', compact('roles'));
     }
