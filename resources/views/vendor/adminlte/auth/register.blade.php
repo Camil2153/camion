@@ -121,6 +121,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const passwordInput = document.getElementById('password');
         const passwordError = document.getElementById('passwordError');
+        const registrationButton = document.querySelector('button[type="submit"]');
 
         passwordInput.addEventListener('keyup', function () {
             const password = passwordInput.value;
@@ -128,10 +129,13 @@
 
             if (password.length < 8) {
                 passwordError.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+                registrationButton.disabled = true;
             } else if (!password.match(passwordPattern)) {
                 passwordError.textContent = 'La contraseña debe contener al menos una letra minúscula, una letra mayúscula y un dígito.';
+                registrationButton.disabled = true;
             } else {
                 passwordError.textContent = ''; // Limpia el mensaje de error
+                registrationButton.disabled = false;
             }
         });
     });
