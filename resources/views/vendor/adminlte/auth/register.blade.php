@@ -46,13 +46,12 @@
 
         {{-- Email field --}}
         <div class="input-group mb-3">
-            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                   value="{{ old('email') }}" placeholder="{{ __('Correo electrónico') }}">
-
+            <input type="text" name="email" id="email" class="form-control @error('email') is-invalid @enderror"
+                value="@sistruckfaultsim.com" placeholder="usuario" aria-label="Correo electrónico">
             <div class="input-group-append">
-                <div class="input-group-text">
+                <span class="input-group-text">
                     <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
+                </span>
             </div>
 
             @error('email')
@@ -64,8 +63,8 @@
 
         {{-- Password field --}}
         <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                   placeholder="{{ __('Contraseña') }}">
+            <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror"
+                placeholder="{{ __('Contraseña') }}">
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -79,6 +78,8 @@
                 </span>
             @enderror
         </div>
+
+        <span id="passwordError" class="text-danger"></span>
 
         {{-- Confirm password field --}}
         <div class="input-group mb-3">
@@ -115,3 +116,42 @@
         </a>
     </p>
 @stop
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const passwordInput = document.getElementById('password');
+        const passwordError = document.getElementById('passwordError');
+
+        passwordInput.addEventListener('keyup', function () {
+            const password = passwordInput.value;
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+
+            if (password.length < 8) {
+                passwordError.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+            } else if (!password.match(passwordPattern)) {
+                passwordError.textContent = 'La contraseña debe contener al menos una letra minúscula, una letra mayúscula y un dígito.';
+            } else {
+                passwordError.textContent = ''; // Limpia el mensaje de error
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const emailInput = document.getElementById('email');
+        const domain = '@sistruckfaultsim.com';
+
+        emailInput.addEventListener('focus', function () {
+            // Cuando el campo recibe el enfoque, asegúrate de que el usuario pueda editar el campo completo
+            emailInput.value = emailInput.value.replace(domain, '');
+        });
+
+        emailInput.addEventListener('blur', function () {
+            // Al salir del campo, vuelve a agregar el dominio si es necesario
+            if (!emailInput.value.endsWith(domain)) {
+                emailInput.value += domain;
+            }
+        });
+    });
+</script>
