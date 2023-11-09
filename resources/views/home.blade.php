@@ -270,23 +270,22 @@ var chart = new Chart(ctx, {
 <script>
 var evolucionGastosData = @json($evolucionGastosData);
 
-var fechas = evolucionGastosData.map(function(item) {
-    return item.fec_gas;
+var meses = evolucionGastosData.map(function(item) {
+    return item.mes;
 });
 
-var montosGastos = evolucionGastosData.map(function(item) {
-    return item.mon_gas;
+var totalGastos = evolucionGastosData.map(function(item) {
+    return item.total_gastos;
 });
-
 
 var ctx = document.getElementById('evolucion-gastos-chart').getContext('2d');
 var areaChart = new Chart(ctx, {
     type: 'line', // Cambiar a 'line' para el gráfico de área
     data: {
-        labels: fechas,
+        labels: meses,
         datasets: [{
             label: 'Evolución de Gastos',
-            data: montosGastos,
+            data: totalGastos,
             backgroundColor: 'rgba(75, 192, 192)',
             borderColor: 'rgba(0, 0, 0)',
             borderWidth: 1,
@@ -306,7 +305,7 @@ var areaChart = new Chart(ctx, {
             x: {
                 title: {
                     display: true,
-                    text: 'Fechas'
+                    text: 'Meses'
                 }
             }
         }

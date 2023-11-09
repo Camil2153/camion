@@ -64,7 +64,9 @@ class HomeController extends Controller
 
         $evolucionGastosData = Gasto::where('est_gas', 'aprobado')
         ->orderBy('fec_gas')
-        ->get(['fec_gas', 'mon_gas']);
+        ->selectRaw('DATE_FORMAT(fec_gas, "%Y-%m") as mes, SUM(mon_gas) as total_gastos')
+        ->groupBy('mes')
+        ->get();
 
         $estadosFallaPorSistema = Falla::select(
             'sistemas.nom_sis',

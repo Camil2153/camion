@@ -10,7 +10,6 @@
             {{ Form::text('nom_rut', $ruta->nom_rut, ['id' => 'nom_rut', 'class' => 'form-control' . ($errors->has('nom_rut') ? ' is-invalid' : ''), 'readonly' => 'readonly']) }}
             {!! $errors->first('nom_rut', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-
         <div class="form-group">
             {{ Form::label('Origen') }}
             {{ Form::text('ori_rut', $ruta->ori_rut, ['id' => 'ori_rut', 'class' => 'form-control' . ($errors->has('ori_rut') ? ' is-invalid' : ''), 'oninput' => 'updateName()', 'onchange' => 'updateMap()']) }}
@@ -48,7 +47,7 @@
     </div>
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhGHEvQIsLhByKH2e_H2ZEtVrbYnLGcIU&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaskD-bpTHUBwXW5rz9npon8ARGLijxuU&callback=initMap" async defer></script>
 <script>
     var map;
     var geocoder;
@@ -64,6 +63,14 @@
         geocoder = new google.maps.Geocoder();
         directionsService = new google.maps.DirectionsService();
         directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+
+        // Obtiene el valor de origen y destino desde los campos en la vista
+        var origin = document.getElementById('ori_rut').value;
+        var destination = document.getElementById('des_rut').value;
+
+        if (origin && destination) {
+            updateMap(); // Llama a la función para actualizar el mapa con los valores iniciales
+        }
     }
 
     function updateMap() {
